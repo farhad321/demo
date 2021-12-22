@@ -27,9 +27,10 @@ use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Livewire\Component;
 use Spatie\Tags\Tag;
-use Str;
+use Illuminate\Support\Str;
 
 class AdResource extends Resource
 {
@@ -105,6 +106,18 @@ class AdResource extends Resource
                             ->columnSpan(2),
                         Card::make()
                             ->schema([
+                                      SpatieTagsInput::make('tags')
+                                                     ->type('ad')
+                                                     ->suggestions(function () {
+                                                      $vars = Tag::whereType('ad')
+                                                                 ->get('name')
+                                                                 ->toArray();
+                                                      return Arr::flatten($vars);
+                                                     })
+                                     ])
+                            ->columnSpan(1),
+                        Card::make()
+                            ->schema([
                                       SpatieMediaLibraryFileUpload::make('SpecialImage')
                                                                   ->collection('SpecialImage'),
                                       SpatieMediaLibraryFileUpload::make('SpecialVideo')
@@ -130,18 +143,6 @@ class AdResource extends Resource
                                                  ->content(fn(?Ad $record): string => $record ? $record->updated_at->diffForHumans() : '-'),
                                      ])
                             ->columnSpan(1),
-                        Card::make()
-                            ->schema([
-                                      SpatieTagsInput::make('tags')
-                                                     ->type('ad')
-                                                     ->suggestions(function () {
-                                                      $vars = Tag::whereType('ad')
-                                                                 ->get('name')
-                                                                 ->toArray();
-                                                      return \Arr::flatten($vars);
-                                                     })
-                                     ])
-                            ->columnSpan(1)
                        ])
               ->columns(3);
  }
