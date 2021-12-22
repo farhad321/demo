@@ -40,9 +40,8 @@ class FavoritesRelationManager extends HasManyRelationManager
  public static function table(Table $table): Table
  {
   return $table->columns([
-                          TextColumn::make('user_id')
-                                    ->label('User Name')
-                                    ->formatStateUsing(fn(string $state): string => User::find($state)->name)
+                          TextColumn::make('user.name')
+                                    ->label('Created By')
                                     ->searchable()
                                     ->sortable(),
                          ])

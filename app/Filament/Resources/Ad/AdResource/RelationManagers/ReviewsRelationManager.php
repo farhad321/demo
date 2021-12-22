@@ -66,9 +66,8 @@ class ReviewsRelationManager extends HasManyRelationManager
                                        ->trueIcon('heroicon-o-badge-check')
                                        ->falseIcon('heroicon-o-x-circle')
                                        ->sortable(),
-                          TextColumn::make('user_id')
-                                    ->label('User Name')
-                                    ->formatStateUsing(fn(string $state): string => User::find($state)->name)
+                          TextColumn::make('user.name')
+                                    ->label('Created By')
                                     ->searchable()
                                     ->sortable(),
                          ])
