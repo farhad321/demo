@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Ad\Ad;
+use App\Models\Ad\Attribute;
 use App\Models\Ad\Category as AdCategory;
 use App\Models\Address\City;
 use App\Models\Address\State;
@@ -116,10 +117,14 @@ class DatabaseSeeder extends Seeder
                 ];
                })
                ->create();
+  $adAttributes = Attribute::factory()
+                           ->count(20)
+                           ->create();
   $adCategories = AdCategory::factory()
                             ->count(20)
                             ->has(AdCategory::factory()
                                             ->count(3), 'children')
+                            ->hasAttached($adAttributes->random(rand(3, 6)))
                             ->create();
   Ad::factory()
     ->count(20)
@@ -138,6 +143,7 @@ class DatabaseSeeder extends Seeder
      'created_at' => now(),
      'updated_at' => now()
     ])
+    ->hasAttached($adAttributes->random(rand(3, 6)))
     ->has(\App\Models\Ad\Review::factory()
                                ->count(rand(10, 20))
                                ->state(fn(array $attributes, Ad $ad) => [

@@ -54,4 +54,9 @@ class Category extends Model
  {
   return $this->belongsToMany(Ad::class, 'ad_category_pivot', 'ad_id', 'ad_category_id');
  }
+
+ public function attributes(): BelongsToMany
+ {
+  return $this->belongsToMany(Attribute::class, 'ad_attribute_category_pivot', 'ad_category_id', 'ad_attribute_id');
+ }
 }

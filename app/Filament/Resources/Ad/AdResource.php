@@ -166,7 +166,8 @@ class AdResource extends Resource
    RelationManagers\CategoriesRelationManager::class,
    RelationManagers\ReportsRelationManager::class,
    RelationManagers\FavoritesRelationManager::class,
-   RelationManagers\ReviewsRelationManager::class
+   RelationManagers\ReviewsRelationManager::class,
+   RelationManagers\AttributesRelationManager::class
   ];
  }
 
