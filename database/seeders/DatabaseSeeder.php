@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
         ->create();
   $this->command->info('Blog authors and posts created.');
   // Shop
-  $categories = ShopCategory::factory()
+  /*$categories = ShopCategory::factory()
                             ->count(20)
                             ->has(ShopCategory::factory()
                                               ->count(3), 'children')
@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
                                                      ->first()->id
                       ]), 'items')
        ->create();
-  $this->command->info('Shop orders created.');
+  $this->command->info('Shop orders created.');*/
   // Ads
   $states = State::factory()
                  ->count(10)

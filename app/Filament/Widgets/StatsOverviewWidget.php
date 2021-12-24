@@ -16,11 +16,11 @@ class StatsOverviewWidget extends BaseWidget
                 ->description('32k increase')
                 ->descriptionColor('success')
                 ->descriptionIcon('heroicon-s-trending-up'),
-            Card::make('New orders', '3543')
+            Card::make('New ads', '3543')
                 ->description('7% increase')
                 ->descriptionColor('success')
                 ->descriptionIcon('heroicon-s-trending-up'),
-            Card::make('New customers', '1340')
+         Card::make('New users', '1340')
                 ->description('3% decrease')
                 ->descriptionColor('danger')
                 ->descriptionIcon('heroicon-s-trending-down'),

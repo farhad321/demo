@@ -14,6 +14,8 @@ class CreateAttributesTable extends Migration
          ->nullable();
    $table->string('type', 255)
          ->nullable();
+   $table->json('options')
+         ->nullable();
    $table->string('validation', 255)
          ->nullable();
    $table->integer('position')

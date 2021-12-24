@@ -14,11 +14,33 @@ class Attribute extends Model
  protected $fillable = [
   'name',
   'type',
+  'options',
   'validation',
   'position',
   'is_filterable',
   'is_visible_on_front',
  ];
+ protected $casts = [
+  'options' => 'array'
+ ];
+ protected $appends = [
+  'options_array',
+ ];
+
+ public function getOptionsArrayAttribute()
+ {
+  $options = $this->options;
+  if ($options === null) {
+   return [];
+  }
+  else {
+   return collect($options)
+    ->mapWithKeys(function ($item, $key) {
+     return [$item['name'] => $item['name']];
+    })
+    ->toArray();
+  }
+ }
 
  public function categories(): BelongsToMany
  {
