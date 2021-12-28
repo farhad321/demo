@@ -24,7 +24,7 @@ return [
  | doesn't conflict with the routing in your application.
  |
  */
- 'path' => env('FILAMENT_PATH', 'admin'),
+ 'path' => env('FILAMENT_PATH', '/'),
  /*
  |--------------------------------------------------------------------------
  | Filament Domain
