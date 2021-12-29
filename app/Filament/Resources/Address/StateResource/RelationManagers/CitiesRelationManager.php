@@ -20,6 +20,8 @@ class CitiesRelationManager extends HasManyRelationManager
   return $form->schema([
                         TextInput::make('name')
                                  ->required(),
+                        TextInput::make('slug')
+                                 ->required(),
                        ]);
  }
 

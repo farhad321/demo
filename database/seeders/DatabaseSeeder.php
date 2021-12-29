@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Http\Controllers\SeedController;
 use App\Models\Ad\Ad;
 use App\Models\Ad\Attribute;
 use App\Models\Ad\Category as AdCategory;
@@ -27,28 +28,27 @@ class DatabaseSeeder extends Seeder
  {
   // Admin
   User::factory()
-      ->create([
-                'name' => 'Demo User',
-                'email' => 'admin@filamentadmin.com',
-                'rule' => 'admin'
-               ]);
+   ->create([
+             'name' => 'Demo User',
+             'email' => 'admin@filamentadmin.com',
+             'rule' => 'admin'
+            ]);
   $this->command->info('Admin user created.');
-  // Blog
-  $blogCategories = BlogCategory::factory()
-                                ->count(20)
-                                ->create();
-  $this->command->info('Blog categories created.');
-  Author::factory()
-        ->count(20)
-        ->has(Post::factory()
-                  ->count(10)
-                  ->state(fn(array $attributes, Author $author) => [
-                   'blog_category_id' => $blogCategories->random(1)
-                                                        ->first()->id
-                  ]), 'posts')
-        ->create();
-  $this->command->info('Blog authors and posts created.');
-  // Shop
+  /* // Blog
+   $blogCategories = BlogCategory::factory()
+                                 ->count(20)
+                                 ->create();
+   $this->command->info('Blog categories created.');
+   Author::factory()
+         ->count(20)
+         ->has(Post::factory()
+                   ->count(10)
+                   ->state(fn(array $attributes, Author $author) => [
+                    'blog_category_id' => $blogCategories->random(1)
+                                                         ->first()->id
+                   ]), 'posts')
+         ->create();
+   $this->command->info('Blog authors and posts created.');*/ // Shop
   /*$categories = ShopCategory::factory()
                             ->count(20)
                             ->has(ShopCategory::factory()
@@ -98,79 +98,78 @@ class DatabaseSeeder extends Seeder
                                                      ->first()->id
                       ]), 'items')
        ->create();
-  $this->command->info('Shop orders created.');*/
-  // Ads
-  $states = State::factory()
+  $this->command->info('Shop orders created.');*/ // Ads
+  /*  $states = State::factory()
+                   ->count(10)
+                   ->has(City::factory()
+                             ->count(rand(10, 20)), 'cities')
+                   ->create();
+    $users = User::factory()
                  ->count(10)
-                 ->has(City::factory()
-                           ->count(rand(10, 20)), 'cities')
+                 ->state(function () use ($states) {
+                  $state = $states->random(1)
+                                  ->first();
+                  return [
+                   'state_id' => $state->id,
+                   'city_id' => $state->cities->random(1)
+                                              ->first()->id
+                  ];
+                 })
                  ->create();
-  $users = User::factory()
-               ->count(10)
-               ->state(function () use ($states) {
-                $state = $states->random(1)
-                                ->first();
-                return [
-                 'state_id' => $state->id,
-                 'city_id' => $state->cities->random(1)
-                                            ->first()->id
-                ];
-               })
-               ->create();
-  $adAttributes = Attribute::factory()
-                           ->count(20)
-                           ->create();
-  $adCategories = AdCategory::factory()
-                            ->count(20)
-                            ->has(AdCategory::factory()
-                                            ->count(3), 'children')
-                            ->hasAttached($adAttributes->random(rand(3, 6)))
-                            ->create();
-  Ad::factory()
-    ->count(20)
-    ->state(function () use ($users, $states) {
-     $state = $states->random(1)
-                     ->first();
-     return [
-      'user_id' => $users->random(1)
-                         ->first()->id,
-      'state_id' => $state->id,
-      'city_id' => $state->cities->random(1)
-                                 ->first()->id
-     ];
-    })
-    ->hasAttached($adCategories->random(rand(3, 6)), [
-     'created_at' => now(),
-     'updated_at' => now()
-    ])
-    ->hasAttached($adAttributes->random(rand(3, 6)))
-    ->has(\App\Models\Ad\Review::factory()
-                               ->count(rand(10, 20))
-                               ->state(fn(array $attributes, Ad $ad) => [
-                                'user_id' => $users->random(1)
-                                                   ->first()->id
-                               ]), 'reviews')
-    ->has(\App\Models\Ad\Report::factory()
-                               ->count(rand(10, 20))
-                               ->state(fn(array $attributes, Ad $ad) => [
-                                'user_id' => $users->random(1)
-                                                   ->first()->id
-                               ]), 'reports')
-    ->has(\App\Models\Ad\Favorite::factory()
+    $adAttributes = Attribute::factory()
+                             ->count(20)
+                             ->create();
+    $adCategories = AdCategory::factory()
+                              ->count(20)
+                              ->has(AdCategory::factory()
+                                              ->count(3), 'children')
+                              ->hasAttached($adAttributes->random(rand(3, 6)))
+                              ->create();
+    Ad::factory()
+      ->count(20)
+      ->state(function () use ($users, $states) {
+       $state = $states->random(1)
+                       ->first();
+       return [
+        'user_id' => $users->random(1)
+                           ->first()->id,
+        'state_id' => $state->id,
+        'city_id' => $state->cities->random(1)
+                                   ->first()->id
+       ];
+      })
+      ->hasAttached($adCategories->random(rand(3, 6)), [
+       'created_at' => now(),
+       'updated_at' => now()
+      ])
+      ->hasAttached($adAttributes->random(rand(3, 6)))
+      ->has(\App\Models\Ad\Review::factory()
                                  ->count(rand(10, 20))
                                  ->state(fn(array $attributes, Ad $ad) => [
                                   'user_id' => $users->random(1)
                                                      ->first()->id
-                                 ]), 'favorites')
-    ->create();
-  $this->command->info('User
-State
-City
-AdCategory
-Ad
-Review
-Report
-Favorite 
-Seeded.');
+                                 ]), 'reviews')
+      ->has(\App\Models\Ad\Report::factory()
+                                 ->count(rand(10, 20))
+                                 ->state(fn(array $attributes, Ad $ad) => [
+                                  'user_id' => $users->random(1)
+                                                     ->first()->id
+                                 ]), 'reports')
+      ->has(\App\Models\Ad\Favorite::factory()
+                                   ->count(rand(10, 20))
+                                   ->state(fn(array $attributes, Ad $ad) => [
+                                    'user_id' => $users->random(1)
+                                                       ->first()->id
+                                   ]), 'favorites')
+      ->create();
+    $this->command->info('User
+  State
+  City
+  AdCategory
+  Ad
+  Review
+  Report
+  Favorite
+  Seeded.');*/
  }
 }

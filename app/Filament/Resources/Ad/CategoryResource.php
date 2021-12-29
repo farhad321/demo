@@ -46,6 +46,9 @@ class CategoryResource extends Resource
                                         ->required()
                                         ->unique(Category::class, 'slug', fn($record) => $record),
                               ]),
+                 TextInput::make('seo_title')
+                          ->required()
+                          ->maxLength(60),
                  BelongsToSelect::make('parent_id')
                                 ->label('Parent')
                                 ->relationship('parent', 'name')
@@ -58,7 +61,10 @@ class CategoryResource extends Resource
                            ->disableToolbarButtons([
                                                     'attachFiles',
                                                     'codeBlock',
-                                                   ])
+                                                   ]),
+                 TextInput::make('seo_description')
+                          ->required()
+                          ->maxLength(160),
                 ])
        ->columnSpan(2),
    Card::make()

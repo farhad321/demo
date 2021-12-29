@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
@@ -23,7 +24,8 @@ class Ad extends Model implements HasMedia
  protected $fillable = [
   'title',
   'slug',
-  'description',
+  'content',
+  'excerpt',
   'is_visible',
   'price',
   'seo_title',
@@ -38,6 +40,12 @@ class Ad extends Model implements HasMedia
   'is_visible' => 'boolean',
   'attributes' => 'json',
  ];
+
+ public function tags(): MorphToMany
+ {
+  return $this->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
+              ->orderBy('order_column');
+ }
 
  public function user(): BelongsTo
  {

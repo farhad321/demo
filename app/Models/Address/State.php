@@ -19,6 +19,7 @@ class State extends Model
   */
  protected $fillable = [
   'name',
+  'slug',
  ];
  public function cities(): HasMany
  {

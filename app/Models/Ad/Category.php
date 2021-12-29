@@ -30,7 +30,8 @@ class Category extends Model
   'is_visible',
   'seo_title',
   'seo_description',
-  'attributes'
+  'attributes',
+  'parent_id'
  ];
  /**
   * @var array<string, string>

@@ -15,6 +15,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryMultipleFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\FileUpload;
@@ -57,9 +58,6 @@ class AdResource extends Resource
                                       TextInput::make('seo_title')
                                                ->required()
                                                ->maxLength(60),
-                                      TextInput::make('seo_description')
-                                               ->required()
-                                               ->maxLength(160),
                                       TextInput::make('price')
                                                ->numeric(),
                                       Toggle::make('is_visible')
@@ -71,11 +69,15 @@ class AdResource extends Resource
                                       ]),
                         Card::make()
                             ->schema([
-                                      RichEditor::make('description')
+                                      RichEditor::make('content')
                                                 ->disableToolbarButtons([
                                                                          'attachFiles',
                                                                          'codeBlock',
-                                                                        ])
+                                                                        ]),
+                                      Textarea::make('excerpt'),
+                                      TextInput::make('seo_description')
+                                               ->required()
+                                               ->maxLength(160),
                                      ])
                             ->columnSpan(3),
                         Card::make()
@@ -119,6 +121,7 @@ class AdResource extends Resource
                         Card::make()
                             ->schema([
                                       SpatieMediaLibraryFileUpload::make('SpecialImage')
+                                                                  ->disk('ads')
                                                                   ->collection('SpecialImage'),
                                       SpatieMediaLibraryFileUpload::make('SpecialVideo')
                                                                   ->collection('SpecialVideo')
@@ -155,6 +158,8 @@ class AdResource extends Resource
                                     ->sortable(),
                           TextColumn::make('state')
                                     ->getStateUsing(fn($record): ?string => $record->state?->name),
+                          TextColumn::make('city')
+                                    ->getStateUsing(fn($record): ?string => $record->city?->name),
                          ])
                ->filters([//
                          ]);

@@ -26,6 +26,8 @@ class StateResource extends Resource
   return $form->schema([
                         TextInput::make('name')
                                  ->required(),
+                        TextInput::make('slug')
+                                 ->required(),
                        ]);
  }
 

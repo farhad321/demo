@@ -15,7 +15,9 @@ class CreateAdsTable extends Migration
    $table->string('slug')
          ->unique()
          ->nullable();
-   $table->longText('description')
+   $table->longText('content')
+         ->nullable();
+   $table->longText('excerpt')
          ->nullable();
    $table->boolean('is_visible')
          ->default(false);
