@@ -172,13 +172,14 @@ class SeedPostController extends Controller
                          foreach ($post->taxonomies as $taxonomy) {
                           switch ($taxonomy->taxonomy) {
                            case 'category':
-                            $category = Category::whereSlug($taxonomy->term->slug)
-                                                ->first();
-                            $ad->categories()
-                               ->syncWithoutDetaching([$category->id]);
+                            $category = \App\Models\Blog\Category::whereSlug($taxonomy->term->slug)
+                                                                 ->first();
+                            $ad->category()
+                               ->associate($category);
+                            $ad->save();
                             break;
-                           case 'product_tag':
-                            $tag = Tag::whereSlug($taxonomy->term->slug)
+                           case 'post_tag':
+                            $tag = Tag::whereSlug(urlencode($taxonomy->term->slug))
                                       ->first();
                             if ($tag) {
                              $ad->tags()
@@ -187,7 +188,7 @@ class SeedPostController extends Controller
                             else {
                              $ad->tags()
                                 ->syncWithoutDetaching(Tag::create([
-                                                                    'type' => 'ad',
+                                                                    'type' => 'post',
                                                                     'name' => $taxonomy->term->name,
                                                                     'slug' => $taxonomy->term->slug,
                                                                    ]));
@@ -202,18 +203,18 @@ class SeedPostController extends Controller
 
  public function categories()
  {
-  $categories = Taxonomy::where('taxonomy', 'product_cat')
+  $categories = Taxonomy::where('taxonomy', 'category')
                         ->where('parent', 0)
                         ->get();
   foreach ($categories as $categoryOld) {
-   $categoryParent = Category::firstOrCreate([
-                                              'slug' => $categoryOld->term->slug
-                                             ], [
-                                              'name' => $categoryOld->term->name,
-                                              'description' => $categoryOld->description,
-                                              'is_visible' => true,
-                                              'position' => $categoryOld->term->term_order
-                                             ]);
+   $categoryParent = \App\Models\Blog\Category::firstOrCreate([
+                                                               'slug' => $categoryOld->term->slug
+                                                              ], [
+                                                               'name' => $categoryOld->term->name,
+                                                               'description' => $categoryOld->description,
+                                                               'is_visible' => true,
+//                                              'position' => $categoryOld->term->term_order
+                                                              ]);
    $this->children($categoryOld, $categoryParent);
   }
  }
@@ -223,17 +224,24 @@ class SeedPostController extends Controller
   $childrenCategory = Taxonomy::whereParent($categoryOld->term_taxonomy_id)
                               ->get();
   foreach ($childrenCategory as $category) {
-   $parent = Category::firstOrCreate([
-                                      'slug' => $category->term->slug
-                                     ], [
-                                      'parent_id' => $categoryParent->id,
-                                      'name' => $category->term->name,
-                                      'description' => $category->description,
-                                      'is_visible' => true,
-                                      'position' => $category->term->term_order
-                                     ]);
+   $parent = \App\Models\Blog\Category::firstOrCreate([
+                                                       'slug' => $category->term->slug
+                                                      ], [
+                                                       'parent_id' => $categoryParent->id,
+                                                       'name' => $category->term->name,
+                                                       'description' => $category->description,
+                                                       'is_visible' => true,
+//                                      'position' => $category->term->term_order
+                                                      ]);
    $this->children($category, $parent);
   }
+ }
+
+ public function postAll()
+ {
+  $this->posts();
+  $this->categories();
+  $this->tags();
  }
 }
 

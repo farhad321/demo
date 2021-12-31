@@ -18,6 +18,7 @@
       "laravel/framework": "^8.65",
       "laravel/sanctum": "^2.11",
       "laravel/tinker": "^2.5",
+      "morilog/jalali": "3.*",
       "squirephp/countries-en": "^3.2",
       "squirephp/currencies-en": "^3.2"
     },

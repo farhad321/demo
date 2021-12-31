@@ -16,21 +16,13 @@ class SeedController extends Controller
 {
  public function ads()
  {
-  return // \App\Models\Ad\AdAttribute::with('attribute')
-//                                  ->get();
-   $posts = Post::
-//   with('attachment', 'comments')
-//   ->has('comments')
-//                ->
-   type('product')
-                ->published()
-                ->chunk(20, function ($posts) {
-                 $this->loop($posts);
-                })
-//               ->count()
-//  ->limit(100)
-//   ->get()
-   ;
+  return $posts = Post::
+
+  type('product')
+                      ->published()
+                      ->chunk(20, function ($posts) {
+                       $this->loop($posts);
+                      });
  }
 
  public function userId($post): int
@@ -66,9 +58,6 @@ class SeedController extends Controller
  public function loop($posts): void
  {
   foreach ($posts as $post) {
-//   return
-//         $WUser = \Corcel\Model\User::whereId($post->author_id)
-//                             ->get()->toArray();
    if (Ad::whereSlug($post->slug)
          ->exists()) {
     continue;
@@ -209,7 +198,7 @@ class SeedController extends Controller
                                ->syncWithoutDetaching([$category->id]);
                             break;
                            case 'product_tag':
-                            $tag = Tag::whereSlug($taxonomy->term->slug)
+                            $tag = Tag::whereSlug(urlencode($taxonomy->term->slug))
                                       ->first();
                             if ($tag) {
                              $ad->tags()
@@ -233,10 +222,12 @@ class SeedController extends Controller
 
  public function categories()
  {
+//  return
   $categories = Taxonomy::where('taxonomy', 'product_cat')
                         ->where('parent', 0)
                         ->get();
   foreach ($categories as $categoryOld) {
+
    $categoryParent = Category::firstOrCreate([
                                               'slug' => $categoryOld->term->slug
                                              ], [
@@ -265,6 +256,13 @@ class SeedController extends Controller
                                      ]);
    $this->children($category, $parent);
   }
+ }
+
+ public function adAll()
+ {
+  $this->ads();
+  $this->categories();
+  $this->tags();
  }
 }
 

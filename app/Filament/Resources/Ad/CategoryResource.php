@@ -45,6 +45,13 @@ class CategoryResource extends Resource
                                         ->disabled()
                                         ->required()
                                         ->unique(Category::class, 'slug', fn($record) => $record),
+                               Toggle::make('is_visible')
+                                     ->label('Visible to customers.')
+                                     ->default(true),
+                               TextInput::make('position')
+                                        ->default(0)
+                                        ->required()
+                                        ->numeric(),
                               ]),
                  TextInput::make('seo_title')
                           ->required()
@@ -54,9 +61,6 @@ class CategoryResource extends Resource
                                 ->relationship('parent', 'name')
                                 ->searchable()
                                 ->placeholder('Select parent category'),
-                 Toggle::make('is_visible')
-                       ->label('Visible to customers.')
-                       ->default(true),
                  RichEditor::make('description')
                            ->disableToolbarButtons([
                                                     'attachFiles',

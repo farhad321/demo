@@ -35,30 +35,31 @@ class PostResource extends Resource
                 Forms\Components\Card::make()
                     ->schema([
                         Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
-                        Forms\Components\TextInput::make('slug')
-                            ->disabled()
-                            ->required()
-                            ->unique(Post::class, 'slug', fn ($record) => $record),
-                        Forms\Components\MarkdownEditor::make('content')
-                            ->required()
-                            ->columnSpan([
-                                'sm' => 2,
-                            ]),
-                        Forms\Components\BelongsToSelect::make('blog_author_id')
-                            ->relationship('author', 'name')
-                            ->searchable()
-                            ->required(),
-                        Forms\Components\BelongsToSelect::make('blog_category_id')
-                            ->relationship('category', 'name')
-                            ->searchable()
-                            ->required(),
-                        Forms\Components\DatePicker::make('published_at')
-                            ->label('Published Date'),
-                        SpatieTagsInput::make('tags')
-                                       ->type('post')
+                                                  ->required()
+                                                  ->reactive()
+                                                  ->afterStateUpdated(fn($state, callable $set) => $set('slug',
+                                                                                                        Str::slug($state))),
+                              Forms\Components\TextInput::make('slug')
+                                                        ->disabled()
+                                                        ->required()
+                                                        ->unique(Post::class, 'slug', fn($record) => $record),
+                              Forms\Components\MarkdownEditor::make('content')
+                                                             ->required()
+                                                             ->columnSpan([
+                                                                           'sm' => 2,
+                                                                          ]),
+                              Forms\Components\BelongsToSelect::make('user_id')
+                                                              ->relationship('user', 'name')
+                                                              ->searchable()
+                                                              ->required(),
+                              Forms\Components\BelongsToSelect::make('blog_category_id')
+                                                              ->relationship('category', 'name')
+                                                              ->searchable()
+                                                              ->required(),
+                              Forms\Components\DatePicker::make('published_at')
+                                                         ->label('Published Date'),
+                              SpatieTagsInput::make('tags')
+                                             ->type('post')
                             ->required(),
                     ])
                     ->columns([
@@ -89,7 +90,7 @@ class PostResource extends Resource
                 Tables\Columns\TextColumn::make('slug')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('author.name')
+                       Tables\Columns\TextColumn::make('user.name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('category.name')
@@ -139,26 +140,32 @@ class PostResource extends Resource
 
     protected static function getGlobalSearchEloquentQuery(): Builder
     {
-        return parent::getGlobalSearchEloquentQuery()->with(['author', 'category']);
+     return parent::getGlobalSearchEloquentQuery()
+                  ->with([
+                          'user',
+                          'category'
+                         ]);
     }
 
     public static function getGloballySearchableAttributes(): array
     {
-        return ['title', 'slug', 'author.name', 'category.name'];
+     return [
+      'title',
+      'slug',
+      'user.name',
+      'category.name'
+     ];
     }
 
     public static function getGlobalSearchResultDetails(Model $record): array
     {
-        $details = [];
-
-        if ($record->author) {
-            $details['Author'] = $record->author->name;
-        }
-
-        if ($record->category) {
-            $details['Category'] = $record->category->name;
-        }
-
-        return $details;
+     $details = [];
+     if ($record->user) {
+      $details['User'] = $record->user->name;
+     }
+     if ($record->category) {
+      $details['Category'] = $record->category->name;
+     }
+     return $details;
     }
 }
