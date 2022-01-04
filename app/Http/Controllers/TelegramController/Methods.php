@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\TelegramController;
 
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Telegram\Bot\Api;
+use Telegram\Bot\Keyboard\Keyboard;
 use Telegram\Bot\Objects\Update;
 
 trait Methods
@@ -64,6 +67,35 @@ trait Methods
                       'chat_id' => $u->getChat()->id,
                       'message_id' => $telegramLastMessageId,
                      ]);
+  }
+ }
+
+ public function pagination(Collection|array $ads, int $adsCount, int $perPage, mixed $page, Keyboard $keyboard): void
+ {
+  $pagination = new LengthAwarePaginator($ads, $adsCount, $perPage, $page, [
+   'path' => '',
+   'pageName' => ''
+  ]);
+  if ($pagination->hasPages()) {
+   $paginationInlineButton = $pagination->linkCollection()
+                                        ->reject(function ($item) {
+                                         return $item['url'] == null;
+                                        })
+                                        ->map(function ($item) {
+                                         $pageNumber = \Str::of($item['url'])
+                                                           ->after('?=');
+                                         $label = $item['label'];
+                                         $x = \Str::of($label);
+                                         !$x->contains("Next") ?: $label = '▶';
+                                         !$x->contains("Previous") ?: $label = '◀';
+                                         $params = [
+                                          'text' => $label . ($item['active'] === true ? '✅' : ''),
+                                          'callback_data' => 'adsListPage' . $pageNumber
+                                         ];
+                                         return Keyboard::inlineButton($params);
+                                        })
+                                        ->toArray();
+   $keyboard->row(...$paginationInlineButton);
   }
  }
 }
