@@ -13,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 class Category extends Model
 {
  use HasFactory;
- use InteractsWithMedia;
+// use InteractsWithMedia;
 
  /**
   * @var string

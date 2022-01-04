@@ -161,7 +161,7 @@ class SeedPostController extends Controller
  public function tags()
  {
   return $posts = Post::
-  with('taxonomies')
+  with('taxonomies', 'attachment')
                       ->type('post')
                       ->published()
                       ->chunk(20, function ($posts) {
@@ -194,6 +194,18 @@ class SeedPostController extends Controller
                                                                    ]));
                             }
                             break;
+                          }
+                         }
+                         foreach ($post->attachment as $attach) {
+                          if ($post->thumbnail->attachment->ID == $attach->ID) {
+                           $ad->addMedia(storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file'))
+//  $ad->addMediaFromUrl($attach->url)
+                              ->toMediaCollection('SpecialImage');
+                          }
+                          else {
+                           $ad->addMedia(storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file'))
+//  $ad->addMediaFromUrl($attach->url)
+                              ->toMediaCollection('gallery');
                           }
                          }
                         });

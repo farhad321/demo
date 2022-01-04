@@ -29,6 +29,19 @@ return new class () extends Migration {
    $table->string('password')
          ->nullable();
    $table->rememberToken();
+   $table->bigInteger('telegram_id')
+         ->nullable();
+   $table->string('telegram_first_name')
+         ->nullable();
+   $table->string('telegram_last_name')
+         ->nullable();
+   $table->string('telegram_username')
+         ->nullable();
+   $table->string('telegram_last_message')
+         ->nullable();
+   $table->bigInteger('telegram_last_message_id')
+         ->nullable();
+   $table->json('extra');
    $table->timestamps();
   });
  }

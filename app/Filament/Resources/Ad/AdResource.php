@@ -122,6 +122,7 @@ class AdResource extends Resource
                             ->schema([
                                       SpatieMediaLibraryFileUpload::make('SpecialImage')
                                                                   ->disk('ads')
+                                                                  ->directory('storage/app/public/aaaaaaaaaaa')
                                                                   ->collection('SpecialImage'),
                                       SpatieMediaLibraryFileUpload::make('SpecialVideo')
                                                                   ->collection('SpecialVideo')

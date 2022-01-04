@@ -6,12 +6,15 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
+use Spatie\MediaLibrary\HasMedia;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
  use HasFactory;
  use HasTags;
+ use InteractsWithMedia;
 
  /**
   * @var string

@@ -15,12 +15,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable implements FilamentUser, HasMedia
 {
  use HasApiTokens;
  use HasFactory;
  use Notifiable;
+ use InteractsWithMedia;
 
  /**
   * @var array<int, string>
@@ -33,6 +36,13 @@ class User extends Authenticatable implements FilamentUser
   'rule',
   'email',
   'password',
+  'telegram_id',
+  'telegram_first_name',
+  'telegram_last_name',
+  'telegram_username',
+  'telegram_last_message',
+  'telegram_last_message_id',
+  'extra'
  ];
  /**
   * @var array<int, string>
@@ -47,6 +57,7 @@ class User extends Authenticatable implements FilamentUser
  protected $casts = [
   'email_verified_at' => 'datetime',
   'birthday' => 'date',
+  'extra' => 'json'
  ];
 
  public function canAccessFilament(): bool
@@ -82,5 +93,15 @@ class User extends Authenticatable implements FilamentUser
  public function city(): BelongsTo
  {
   return $this->belongsTo(City::class);
+ }
+
+ public function setExtraAttribute($value)
+ {
+  $this->attributes['extra'] = json_encode($value);
+ }
+
+ public function getExtraAttribute()
+ {
+  return json_decode($this->attributes['extra']);
  }
 }
