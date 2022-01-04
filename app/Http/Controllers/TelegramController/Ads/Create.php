@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\TelegramController\Ads;
+use App\Http\Controllers\TelegramController\Ads\Fields\City;
+use App\Http\Controllers\TelegramController\Ads\Fields\Content;
+use App\Http\Controllers\TelegramController\Ads\Fields\Media;
+use App\Http\Controllers\TelegramController\Ads\Fields\State;
+use App\Http\Controllers\TelegramController\Ads\Fields\Title;
 use App\Models\Ad\Ad;
 use stdClass;
 use Telegram\Bot\Api;
@@ -85,11 +90,11 @@ trait Create
                                             'callback_data' => 'profileFullNameRequest'
                                            ]);
   return Keyboard::make()
-                 ->inline()
-                 ->row($inlineButton, $inlineButton1)
-                 ->row($inlineButton2, $inlineButton3)
-                 ->row($inlineButton4, $inlineButton5)
-                 ->row($inlineButton6, $inlineButton8, $inlineButton9, $inlineButton10)
-                 ->row($inlineButton7);
+   ->inline()
+   ->row($inlineButton, $inlineButton1)
+   ->row($inlineButton2, $inlineButton3)
+   ->row($inlineButton4, $inlineButton5)
+   ->row($inlineButton6, $inlineButton8, $inlineButton9, $inlineButton10)
+   ->row($inlineButton7);
  }
 }
