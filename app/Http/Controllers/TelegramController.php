@@ -9,6 +9,7 @@ use App\Http\Controllers\TelegramController\Register;
 use App\Http\Controllers\TelegramController\Start;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Str;
 use Telegram;
 use Telegram\Bot\Api;
 use Telegram\Bot\Keyboard\Keyboard;
@@ -157,6 +158,21 @@ class TelegramController extends Controller
       break;
      case 'register':
       $this->register($t, $u, $m);
+      break;
+     case 'adsAcceptTheRules':
+      $this->adsAcceptTheRules($t, $u, $m);
+     case 'adsAcceptTheRulesConfirmation':
+      $this->adsAcceptTheRulesConfirmation($t, $u, $m);
+      break;
+     default:
+      $data = $cq->data;
+      if (Str::is('adsEdit*', $data)) {
+       $adId = (int)Str::after($data, 'adsEdit');
+      }
+      elseif (Str::is('adsListPage*', $data)) {
+       $page = (int)Str::after($data, 'adsListPage');
+       $this->adsList($t, $u, $m, $page);
+      }
       break;
     }
     break;

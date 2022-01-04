@@ -46,7 +46,7 @@ trait Register
    ->user()
    ->update(['phone' => $m->contact->phoneNumber]);
   //پیام ربات
-  $registerMessageId = auth()->user()->extra->registerMessageId;
+  $registerMessageId = auth()->user()->extra?->registerMessageId;
   if ($registerMessageId) {
    $t->deleteMessage([
                       'chat_id' => $u->getChat()->id,

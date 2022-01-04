@@ -147,25 +147,28 @@ Route::get('/getUpdates', function () {
 //
 //
 Route::get('/t', function () {
- return $model = \Corcel\Model\Post::published()
-                                   ->with('attachment')
-                                   ->whereHas('attachment')
-                                   ->limit(2)
-                                   ->get()//                            ->first()
-  ;
- $meta = $model->attachment[0]->getMeta('_wp_attached_file');
-// return
-// storage_path('app/public/uploads');
-//  $meta;
-// return $model;
-//// return
-//// $model->slug;
- $ad = Post::whereSlug($model->slug)
-           ->first();
- $ad->addMedia(storage_path('app/public/uploads/') . $meta)
-////  ->addMediaFromUrl($model->image)
-    ->toMediaCollection('spatial');
+ $r = new App\Http\Controllers\TelegramController();
+ $r->adsList();
 //
-// ->disk;
- return $ad->load('media');
+// return $model = \Corcel\Model\Post::published()
+//                                   ->with('attachment')
+//                                   ->whereHas('attachment')
+//                                   ->limit(2)
+//                                   ->get()//                            ->first()
+//  ;
+// $meta = $model->attachment[0]->getMeta('_wp_attached_file');
+//// return
+//// storage_path('app/public/uploads');
+////  $meta;
+//// return $model;
+////// return
+////// $model->slug;
+// $ad = Post::whereSlug($model->slug)
+//           ->first();
+// $ad->addMedia(storage_path('app/public/uploads/') . $meta)
+//////  ->addMediaFromUrl($model->image)
+//    ->toMediaCollection('spatial');
+////
+//// ->disk;
+// return $ad->load('media');
 });
