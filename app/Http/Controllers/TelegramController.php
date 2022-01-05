@@ -66,10 +66,10 @@ class TelegramController extends Controller
          case 'لطفا عنوان آگهی را ارسال کنید':
           $this->adsCreateTitleStore($t, $u, $m);
           break;
-         case 'لطفا استان را مشخص کنید':
-          $this->adsCreateStateStore($t, $u, $m);
-          break;
-         case 'لطفا نام شهر را مشخص کنید':
+//         case 'لطفا استان را انتخاب کنید':
+//          $this->adsCreateStateStore($t, $u, $m);
+//          break;
+         case 'لطفا  شهر را انتخاب کنید':
           $this->adsCreateCityStore($t, $u, $m);
           break;
          case 'لطفا متن آگهی را وارد کنید':

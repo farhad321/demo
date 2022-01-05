@@ -71,7 +71,7 @@ trait Create
                                 'callback_data' => 'adsCreateGalleryRequest'
                                ]);
   $b6 = Keyboard::inlineButton([
-                                'text' => $newAd?->city?->name ?? '❌',
+                                'text' => isset($newAd->city_id) ? \App\Models\Address\City::find($newAd->city_id)->name : '❌',
                                 'callback_data' => 'adsCreateCityRequest'
                                ]);
   $b8 = Keyboard::inlineButton([
@@ -79,7 +79,7 @@ trait Create
                                 'callback_data' => 'adsCreateCityRequest'
                                ]);
   $b9 = Keyboard::inlineButton([
-                                'text' => $newAd?->state?->name ?? '❌',
+                                'text' => isset($newAd->state_id) ? \App\Models\Address\State::find($newAd->state_id)->name : '❌',
                                 'callback_data' => 'adsCreateStateRequest'
                                ]);
   $b10 = Keyboard::inlineButton([
