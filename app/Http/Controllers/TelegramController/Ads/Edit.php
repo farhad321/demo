@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\TelegramController\Ads;
-use App\Http\Controllers\TelegramController\Ads\Fields\City;
-use App\Http\Controllers\TelegramController\Ads\Fields\Content;
-use App\Http\Controllers\TelegramController\Ads\Fields\Media;
-use App\Http\Controllers\TelegramController\Ads\Fields\State;
-use App\Http\Controllers\TelegramController\Ads\Fields\Title;
+use App\Http\Controllers\TelegramController\Ads\EditFields\City;
+use App\Http\Controllers\TelegramController\Ads\EditFields\Content;
+use App\Http\Controllers\TelegramController\Ads\EditFields\Media;
+use App\Http\Controllers\TelegramController\Ads\EditFields\State;
+use App\Http\Controllers\TelegramController\Ads\EditFields\Title;
 
 trait Edit
 {

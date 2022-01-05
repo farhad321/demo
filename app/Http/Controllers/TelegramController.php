@@ -64,16 +64,43 @@ class TelegramController extends Controller
           $this->profilePasswordStore($t, $u, $m);
           break;
          case 'لطفا عنوان آگهی را ارسال کنید':
-          $this->adsTitleStore($t, $u, $m);
+          $this->adsNewTitleStore($t, $u, $m);
           break;
          case 'لطفا استان را مشخص کنید':
-          $this->adsStateStore($t, $u, $m);
+          $this->adsNewStateStore($t, $u, $m);
           break;
          case 'لطفا نام شهر را مشخص کنید':
-          $this->adsCityStore($t, $u, $m);
+          $this->adsNewCityStore($t, $u, $m);
           break;
          case 'لطفا متن آگهی را وارد کنید':
-          $this->adsContentStore($t, $u, $m);
+          $this->adsNewContentStore($t, $u, $m);
+          break;
+         case 'لطفا قیمت را وارد کنید':
+          $this->adsNewPriceStore($t, $u, $m);
+          break;
+         case 'لطفا دسته بندی را انتخاب کنید':
+          $this->adsNewCatgoryStore($t, $u, $m);
+          break;
+         case 'لطفا عکس را ارسال کنید':
+          $this->adsNewGalleryStore($t, $u, $m);
+          break;
+         case 'لطفا عنوان آگهی را ویرایش کنید.':
+          $this->adsEditTitleStore($t, $u, $m);
+          break;
+         case 'لطفا استان را ویرایش کنید.':
+          $this->adsEditStateStore($t, $u, $m);
+          break;
+         case 'لطفا نام شهر را ویرایش کنید.':
+          $this->adsEditCityStore($t, $u, $m);
+          break;
+         case 'لطفا متن آگهی را ویرایش کنید.':
+          $this->adsEditContentStore($t, $u, $m);
+          break;
+         case 'لطفا قیمت را ویرایش کنید.':
+          $this->adsEditPriceStore($t, $u, $m);
+          break;
+         case 'لطفا عکس را ویرایش کنید.':
+          $this->adsEditGalleryStore($t, $u, $m);
           break;
         }
         break;
@@ -135,26 +162,53 @@ class TelegramController extends Controller
      case 'adsCreate':
       $this->adsCreate($t, $u, $m);
       break;
-     case 'adsEdit':
-      $this->adsEdit($t, $u, $m);
+     case 'adsCreateFinish':
+      $this->adsCreateFinish($t, $u, $m);
       break;
-     case 'adsDelete':
-      $this->adsDelete($t, $u, $m);
+     case 'adsCreateReset':
+      $this->adsCreateReset($t, $u, $m);
       break;
-     case 'adsTitleRequest':
-      $this->adsTitleRequest($t, $u, $m);
+     case 'adsCreateTitleRequest':
+      $this->adsCreateTitleRequest($t, $u, $m);
       break;
-     case 'adsStateRequest':
-      $this->adsStateRequest($t, $u, $m);
+     case 'adsCreateStateRequest':
+      $this->adsCreateStateRequest($t, $u, $m);
       break;
-     case 'adsCityRequest':
-      $this->adsCityRequest($t, $u, $m);
+     case 'adsCreateCityRequest':
+      $this->adsCreateCityRequest($t, $u, $m);
       break;
-     case 'adsContentRequest':
-      $this->adsContentRequest($t, $u, $m);
+     case 'adsCreateContentRequest':
+      $this->adsCreateContentRequest($t, $u, $m);
       break;
-     case 'adsGallery':
-      $this->adsGallery($t, $u, $m);
+     case 'adsCreatePriceRequest':
+      $this->adsCreatePriceRequest($t, $u, $m);
+      break;
+     case 'adsCreateCategoryRequest':
+      $this->adsCreateCatgoryRequest($t, $u, $m);
+      break;
+     case 'adsCreateGalleryRequest':
+      $this->adsCreateGalleryRequest($t, $u, $m);
+      break;
+     case 'adsEditTitleRequest':
+      $this->adsEditTitleRequest($t, $u, $m);
+      break;
+     case 'adsEditStateRequest':
+      $this->adsEditStateRequest($t, $u, $m);
+      break;
+     case 'adsEditCityRequest':
+      $this->adsEditCityRequest($t, $u, $m);
+      break;
+     case 'adsEditContentRequest':
+      $this->adsEditContentRequest($t, $u, $m);
+      break;
+     case 'adsEditPriceRequest':
+      $this->adsEditPriceRequest($t, $u, $m);
+      break;
+     case 'adsEditCategoryRequest':
+      $this->adsEditCatgoryRequest($t, $u, $m);
+      break;
+     case 'adsEditGalleryRequest':
+      $this->adsEditGalleryRequest($t, $u, $m);
       break;
      case 'register':
       $this->register($t, $u, $m);
@@ -165,13 +219,42 @@ class TelegramController extends Controller
       $this->adsAcceptTheRulesConfirmation($t, $u, $m);
       break;
      default:
-      $data = $cq->data;
-      if (Str::is('adsEdit*', $data)) {
-       $adId = (int)Str::after($data, 'adsEdit');
-      }
-      elseif (Str::is('adsListPage*', $data)) {
-       $page = (int)Str::after($data, 'adsListPage');
-       $this->adsList($t, $u, $m, $page);
+      $d = $cq->data;
+      $s = Str::of($d);
+      switch (true) {
+       case $s->is('adsListPage*') :
+        $this->adsList($t, $u, $m, (int)Str::after($d, 'adsListPage'));
+        break;
+       case $s->is('adsEdit*') :
+        $this->adsEdit($t, $u, $m, (int)Str::after($d, 'adsEdit'));
+        break;
+       case $s->is('adsEditDelete*') :
+        $this->adsEditDelete($t, $u, $m, (int)Str::after($d, 'adsEditDelete'));
+        break;
+       case $s->is('adsEditStateStore*') :
+        $this->adsEditStateStore($t, $u, $m, (int)Str::after($d, 'adsEditStateStore'));
+        break;
+       case $s->is('adsEditCityStore*') :
+        $this->adsEditCityStore($t, $u, $m, (int)Str::after($d, 'adsEditCityStore'));
+        break;
+       case $s->is('adsEditCategoryRequest*') :
+        $this->adsEditCatgoryRequest($t, $u, $m, (int)Str::after($d, 'adsEditCategoryRequest'));
+        break;
+       case $s->is('adsEditCategoryStore*') :
+        $this->adsEditCategoryStore($t, $u, $m, (int)Str::after($d, 'adsEditCategoryStore'));
+        break;
+       case $s->is('adsCreateStateStore*') :
+        $this->adsCreateStateStore($t, $u, $m, (int)Str::after($d, 'adsCreateStateStore'));
+        break;
+       case $s->is('adsCreateCityStore*') :
+        $this->adsCreateCityStore($t, $u, $m, (int)Str::after($d, 'adsCreateCityStore'));
+        break;
+       case $s->is('adsCreateCategoryRequest*') :
+        $this->adsCreateCatgoryRequest($t, $u, $m, (int)Str::after($d, 'adsCreateCategoryRequest'));
+        break;
+       case $s->is('adsCreateCategoryStore*') :
+        $this->adsCreateCategoryStore($t, $u, $m, (int)Str::after($d, 'adsCreateCategoryStore'));
+        break;
       }
       break;
     }

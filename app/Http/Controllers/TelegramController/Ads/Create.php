@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\TelegramController\Ads;
-use App\Http\Controllers\TelegramController\Ads\Fields\City;
-use App\Http\Controllers\TelegramController\Ads\Fields\Content;
-use App\Http\Controllers\TelegramController\Ads\Fields\Media;
-use App\Http\Controllers\TelegramController\Ads\Fields\State;
-use App\Http\Controllers\TelegramController\Ads\Fields\Title;
+
+use App\Http\Controllers\TelegramController\Ads\CreateFields\City;
+use App\Http\Controllers\TelegramController\Ads\CreateFields\Content;
+use App\Http\Controllers\TelegramController\Ads\CreateFields\Media;
+use App\Http\Controllers\TelegramController\Ads\CreateFields\State;
+use App\Http\Controllers\TelegramController\Ads\CreateFields\Title;
 use App\Models\Ad\Ad;
 use stdClass;
 use Telegram\Bot\Api;
@@ -42,59 +43,59 @@ trait Create
    * @var $newAd Ad
    * */
   $newAd = auth()->user()->extra->adsCreateNewAd;
-  $inlineButton = Keyboard::inlineButton([
-                                          'text' => $newAd->title ?? '❌',
-                                          'callback_data' => 'profileFullNameRequest'
-                                         ]);
-  $inlineButton1 = Keyboard::inlineButton([
-                                           'text' => 'عنوان',
-                                           'callback_data' => 'profileFullNameRequest'
-                                          ]);
-  $inlineButton2 = Keyboard::inlineButton([
-                                           'text' => $newAd->content ?? '❌',
-                                           'callback_data' => 'profileFullNameRequest'
-                                          ]);
-  $inlineButton3 = Keyboard::inlineButton([
-                                           'text' => 'متن',
-                                           'callback_data' => 'profileFullNameRequest'
-                                          ]);
-  $inlineButton4 = Keyboard::inlineButton([
-                                           'text' => auth()
-                                            ->user()
-                                            ->getMedia('avatar')
-                                            ->count() ? '✅' : '❌',
-                                           'callback_data' => 'profileAvatarRequest'
-                                          ]);
-  $inlineButton5 = Keyboard::inlineButton([
-                                           'text' => 'عکس ',
-                                           'callback_data' => 'profileAvatarRequest'
-                                          ]);
-  $inlineButton7 = Keyboard::inlineButton([
-                                           'text' => 'بازگشت',
-                                           'callback_data' => 'startBack'
-                                          ]);
-  $inlineButton6 = Keyboard::inlineButton([
-                                           'text' => $newAd->city->name ?? '❌',
-                                           'callback_data' => 'profileFullNameRequest'
-                                          ]);
-  $inlineButton8 = Keyboard::inlineButton([
-                                           'text' => 'شهر',
-                                           'callback_data' => 'profileFullNameRequest'
-                                          ]);
-  $inlineButton9 = Keyboard::inlineButton([
-                                           'text' => $newAd->state->name ?? '❌',
-                                           'callback_data' => 'profileFullNameRequest'
-                                          ]);
-  $inlineButton10 = Keyboard::inlineButton([
-                                            'text' => 'استان',
-                                            'callback_data' => 'profileFullNameRequest'
-                                           ]);
+  $b = Keyboard::inlineButton([
+                               'text' => $newAd->title ?? '❌',
+                               'callback_data' => 'adsCreateTitleRequest'
+                              ]);
+  $b1 = Keyboard::inlineButton([
+                                'text' => 'عنوان',
+                                'callback_data' => 'adsCreateTitleRequest'
+                               ]);
+  $b2 = Keyboard::inlineButton([
+                                'text' => $newAd->content ?? '❌',
+                                'callback_data' => 'adsCreateContentRequest'
+                               ]);
+  $b3 = Keyboard::inlineButton([
+                                'text' => 'متن',
+                                'callback_data' => 'adsCreateContentRequest'
+                               ]);
+  $b4 = Keyboard::inlineButton([
+                                'text' => auth()
+                                 ->user()
+                                 ->getMedia('adsCreateGallery')
+                                 ->count() ? '✅' : '❌',
+                                'callback_data' => 'adsCreateGalleryRequest'
+                               ]);
+  $b5 = Keyboard::inlineButton([
+                                'text' => 'عکس ها ',
+                                'callback_data' => 'adsCreateGalleryRequest'
+                               ]);
+  $b6 = Keyboard::inlineButton([
+                                'text' => $newAd?->city?->name ?? '❌',
+                                'callback_data' => 'adsCreateCityRequest'
+                               ]);
+  $b8 = Keyboard::inlineButton([
+                                'text' => 'شهر',
+                                'callback_data' => 'adsCreateCityRequest'
+                               ]);
+  $b9 = Keyboard::inlineButton([
+                                'text' => $newAd?->state?->name ?? '❌',
+                                'callback_data' => 'adsCreateStateRequest'
+                               ]);
+  $b10 = Keyboard::inlineButton([
+                                 'text' => 'استان',
+                                 'callback_data' => 'adsCreateStateRequest'
+                                ]);
+  $b7 = Keyboard::inlineButton([
+                                'text' => 'بازگشت',
+                                'callback_data' => 'startBack'
+                               ]);
   return Keyboard::make()
-   ->inline()
-   ->row($inlineButton, $inlineButton1)
-   ->row($inlineButton2, $inlineButton3)
-   ->row($inlineButton4, $inlineButton5)
-   ->row($inlineButton6, $inlineButton8, $inlineButton9, $inlineButton10)
-   ->row($inlineButton7);
+                 ->inline()
+                 ->row($b, $b1)
+                 ->row($b2, $b3)
+                 ->row($b4, $b5)
+                 ->row($b6, $b8, $b9, $b10)
+                 ->row($b7);
  }
 }
