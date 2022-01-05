@@ -4,9 +4,10 @@ namespace App\Http\Controllers\TelegramController\Ads;
 
 use App\Http\Controllers\TelegramController\Ads\CreateFields\City;
 use App\Http\Controllers\TelegramController\Ads\CreateFields\Content;
-use App\Http\Controllers\TelegramController\Ads\CreateFields\Media;
+use App\Http\Controllers\TelegramController\Ads\CreateFields\Gallery;
 use App\Http\Controllers\TelegramController\Ads\CreateFields\State;
 use App\Http\Controllers\TelegramController\Ads\CreateFields\Title;
+use App\Http\Controllers\TelegramController\Methods;
 use App\Models\Ad\Ad;
 use stdClass;
 use Telegram\Bot\Api;
@@ -15,7 +16,7 @@ use Telegram\Bot\Objects\Update;
 
 trait Create
 {
- use Title, Content, State, City, Media;
+ use Title, Content, State, City, Gallery, Methods;
 
  public function adsCreate(Api $t, Update $u): void
  {

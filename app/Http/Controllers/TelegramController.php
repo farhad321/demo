@@ -66,12 +66,6 @@ class TelegramController extends Controller
          case 'لطفا عنوان آگهی را ارسال کنید':
           $this->adsCreateTitleStore($t, $u, $m);
           break;
-//         case 'لطفا استان را انتخاب کنید':
-//          $this->adsCreateStateStore($t, $u, $m);
-//          break;
-         case 'لطفا  شهر را انتخاب کنید':
-          $this->adsCreateCityStore($t, $u, $m);
-          break;
          case 'لطفا متن آگهی را وارد کنید':
           $this->adsCreateContentStore($t, $u, $m);
           break;
@@ -80,9 +74,6 @@ class TelegramController extends Controller
           break;
          case 'لطفا دسته بندی را انتخاب کنید':
           $this->adsCreateCatgoryStore($t, $u, $m);
-          break;
-         case 'لطفا عکس را ارسال کنید':
-          $this->adsCreateGalleryStore($t, $u, $m);
           break;
          case 'لطفا عنوان آگهی را ویرایش کنید.':
           $this->adsEditTitleStore($t, $u, $m);
@@ -119,6 +110,15 @@ class TelegramController extends Controller
       switch (auth()->user()->telegram_last_message) {
        case 'لطفا عکس پروفایل خود را ارسال کنید':
         $this->profileAvatarStore($t, $u, $m);
+        break;
+       case 'لطفا عکس ها را ارسال کنید.':
+        $this->adsCreateGalleryStore($t, $u, $m);
+        break;
+       default:
+        $t->deleteMessage([
+                           'chat_id' => $u->getChat()->id,
+                           'message_id' => $m->messageId,
+                          ]);
         break;
       }
       break;
