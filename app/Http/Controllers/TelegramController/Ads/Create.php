@@ -32,7 +32,7 @@ trait Create
   $r = $t->editMessageText([
                             'chat_id' => $u->getChat()->id,
                             'message_id' => $this->getLastMessageId(),
-                            'text' => 'ایجاد آگهی جدید',
+                            'text' => 'ایجاد آگهی جدید' . $this->flashMassage(),
                             'reply_markup' => $this->adsCreateKeyboard()
                            ]);
  }
@@ -97,13 +97,5 @@ trait Create
                  ->row($b4, $b5)
                  ->row($b6, $b8, $b9, $b10)
                  ->row($b7);
- }
-
- public function updateUserExtra($function): void
- {
-  $user = auth()->user();
-  $x = $user->extra;
-  $x = $function($x);
-  $user->update(['extra' => $x,]);
  }
 }

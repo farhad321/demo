@@ -98,4 +98,52 @@ trait Methods
    $keyboard->row(...$paginationInlineButton);
   }
  }
+
+ public function updateUserExtra($function): void
+ {
+  $user = auth()->user();
+  $x = $user->extra;
+  $x = $function($x);
+  $user->update(['extra' => $x,]);
+ }
+
+ public function flashMassage(): string
+ {
+  $m = '';
+  if (isset(auth()->user()->extra->errorMessage)) {
+   $m .= '
+   🚫' . auth()->user()->extra->errorMessage . '🚫
+   ';
+   $this->updateUserExtra(function ($x) {
+    unset($x->errorMessage);
+    return $x;
+   });
+  }
+  elseif (isset(auth()->user()->extra->successMessage)) {
+   $m .= '
+   ✅' . auth()->user()->extra->successMessage . '✅
+   ';
+   $this->updateUserExtra(function ($x) {
+    unset($x->successMessage);
+    return $x;
+   });
+  }
+  return $m;
+ }
+
+ public function errorMessage(string $message): void
+ {
+  $this->updateUserExtra(function ($x) use ($message) {
+   $x->errorMessage = '' . $message . '';
+   return $x;
+  });
+ }
+
+ public function successMessage(string $message): void
+ {
+  $this->updateUserExtra(function ($x) use ($message) {
+   $x->successMessage = '' . $message . '';
+   return $x;
+  });
+ }
 }
