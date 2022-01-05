@@ -64,25 +64,25 @@ class TelegramController extends Controller
           $this->profilePasswordStore($t, $u, $m);
           break;
          case 'لطفا عنوان آگهی را ارسال کنید':
-          $this->adsNewTitleStore($t, $u, $m);
+          $this->adsCreateTitleStore($t, $u, $m);
           break;
          case 'لطفا استان را مشخص کنید':
-          $this->adsNewStateStore($t, $u, $m);
+          $this->adsCreateStateStore($t, $u, $m);
           break;
          case 'لطفا نام شهر را مشخص کنید':
-          $this->adsNewCityStore($t, $u, $m);
+          $this->adsCreateCityStore($t, $u, $m);
           break;
          case 'لطفا متن آگهی را وارد کنید':
-          $this->adsNewContentStore($t, $u, $m);
+          $this->adsCreateContentStore($t, $u, $m);
           break;
          case 'لطفا قیمت را وارد کنید':
-          $this->adsNewPriceStore($t, $u, $m);
+          $this->adsCreatePriceStore($t, $u, $m);
           break;
          case 'لطفا دسته بندی را انتخاب کنید':
-          $this->adsNewCatgoryStore($t, $u, $m);
+          $this->adsCreateCatgoryStore($t, $u, $m);
           break;
          case 'لطفا عکس را ارسال کنید':
-          $this->adsNewGalleryStore($t, $u, $m);
+          $this->adsCreateGalleryStore($t, $u, $m);
           break;
          case 'لطفا عنوان آگهی را ویرایش کنید.':
           $this->adsEditTitleStore($t, $u, $m);
@@ -215,9 +215,6 @@ class TelegramController extends Controller
       break;
      case 'adsAcceptTheRules':
       $this->adsAcceptTheRules($t, $u, $m);
-     case 'adsAcceptTheRulesConfirmation':
-      $this->adsAcceptTheRulesConfirmation($t, $u, $m);
-      break;
      default:
       $d = $cq->data;
       $s = Str::of($d);

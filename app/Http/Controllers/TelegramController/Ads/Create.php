@@ -22,13 +22,13 @@ trait Create
   if (!isset(auth()->user()->extra->adsAcceptTheRulesMessageId)) {
    $this->adsAcceptTheRules($t, $u);
    return;
-  }
-  $user = auth()->user();
-  $x = $user->extra ?? new stdClass();
-  if (!isset($x->adsCreateNewAd)) {
-   $x->adsCreateNewAd = new Ad();
-  }
-  $user->update(['extra' => $x,]);
+  };
+  $this->updateUserExtra(function ($x) {
+   if (!isset($x->adsCreate)) {
+    $x->adsCreate = new stdClass();
+   }
+   return $x;
+  });
   $r = $t->editMessageText([
                             'chat_id' => $u->getChat()->id,
                             'message_id' => $this->getLastMessageId(),
@@ -42,7 +42,7 @@ trait Create
   /**
    * @var $newAd Ad
    * */
-  $newAd = auth()->user()->extra->adsCreateNewAd;
+  $newAd = auth()->user()->extra->adsCreate;
   $b = Keyboard::inlineButton([
                                'text' => $newAd->title ?? '❌',
                                'callback_data' => 'adsCreateTitleRequest'
@@ -97,5 +97,13 @@ trait Create
                  ->row($b4, $b5)
                  ->row($b6, $b8, $b9, $b10)
                  ->row($b7);
+ }
+
+ public function updateUserExtra($function): void
+ {
+  $user = auth()->user();
+  $x = $user->extra;
+  $x = $function($x);
+  $user->update(['extra' => $x,]);
  }
 }

@@ -11,10 +11,27 @@ trait AcceptTheRules
 {
  public function adsAcceptTheRules(Api $t, Update $u): void
  {
-  $r = $t->sendMessage([
-                        'chat_id' => $u->getChat()->id,
-                        'message_id' => $this->getLastMessageId(),
-                        'text' => 'قوانین ثبت آگهی
+  $keyboad = Keyboard::make()
+                     ->inline()
+                     ->row(Keyboard::inlineButton([
+                                                   'text' => 'قبول قوانین',
+                                                   'callback_data' => 'adsCreate'
+                                                  ]));
+  $r = $t->editMessageText([
+                            'chat_id' => $u->getChat()->id,
+                            'message_id' => $this->getLastMessageId(),
+                            'text' => $this->AcceptTheRulesContent(),
+                            'reply_markup' => $keyboad
+                           ]);
+  $user = auth()->user();
+  $x = $user->extra ?? new stdClass();
+  $x->adsAcceptTheRulesMessageId = $r->messageId;
+  $user->update(['extra' => $x,]);
+ }
+
+ public function AcceptTheRulesContent(): string
+ {
+  return 'قوانین ثبت آگهی
 چنانچه از ناحیه مراجع ذیصلاح قانونی دستور حذف آگهی صادر شده باشد، Kiusk.ca فوراً اقدام به حذف آگهی می‌نماید. همچنین در صورتی که گزارش تخلف کاربران نسبت به آگهی بیشتر از 5 مورد باشد، (Kiusk.ca (Kiusk Group Ltd به صلاحدید خود ممکن است اقدام به حذف آگهی نماید. در دو فرض اخیر  (Kiusk.ca (Kiusk Group Ltd هیچ‌گونه مسئولیتی بابت آگهی حذف شده به کاربران ندارد.
 
 آگهی‌دهندگان با ثبت آگهی خود در (Kiusk.ca (Kiusk Group Ltd تأیید می‌کنند که آگهی ایشان شامل مواردی که در ادامه آورده می‌شوند نخواهد بود و همچنین دارای سن بالای ۱۸ سال هستند.
@@ -77,29 +94,6 @@ trait AcceptTheRules
 
 شما ممکن است به یک سرویس،توسط سرویسشخص ثالث ( third-party) وصل شوید که به ما اجازه دسترسی ذخیره ،و یا استفاده از ان سرویس ، توسط مجوزی که شما به ان سرویس داده است.
 
-اگر شما فکر میکنید اکانت شما مورد خطر قرار گرفته و یا استفاده نابجا  شده از طریق ایمیل info@Kiusk.ca با ما مکاتبه کنید.',
-                        'reply_markup' => Keyboard::make()
-                                                  ->inline()
-                                                  ->row(Keyboard::inlineButton([
-                                                                                'text' => 'قبول قوانین',
-                                                                                'callback_data' => 'adsCreate'
-                                                                               ]))
-                       ]);
-  $user = auth()->user();
-  $x = $user->extra ?? new stdClass();
-  $x->adsAcceptTheRulesMessageId = $r->messageId;
-  $user->update(['extra' => $x,]);
- }
-
- public function adsAcceptTheRulesConfirmation(Api $t, Update $u)
- {
-  //پیام ربات
-  if (isset(auth()->user()->extra->adsAcceptTheRulesMessageId)) {
-   $t->deleteMessage([
-                      'chat_id' => $u->getChat()->id,
-                      'message_id' => auth()->user()->extra->adsAcceptTheRulesMessageId,
-                     ]);
-  }
-  $this->adsCreate($t, $u);
+اگر شما فکر میکنید اکانت شما مورد خطر قرار گرفته و یا استفاده نابجا  شده از طریق ایمیل info@Kiusk.ca با ما مکاتبه کنید.';
  }
 }
