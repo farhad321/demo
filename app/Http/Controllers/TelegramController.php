@@ -72,9 +72,6 @@ class TelegramController extends Controller
          case 'لطفا قیمت را وارد کنید':
           $this->adsCreatePriceStore($t, $u, $m);
           break;
-         case 'لطفا دسته بندی را انتخاب کنید':
-          $this->adsCreateCatgoryStore($t, $u, $m);
-          break;
          case 'لطفا عنوان آگهی را ویرایش کنید.':
           $this->adsEditTitleStore($t, $u, $m);
           break;
@@ -184,7 +181,7 @@ class TelegramController extends Controller
       $this->adsCreatePriceRequest($t, $u, $m);
       break;
      case 'adsCreateCategoryRequest':
-      $this->adsCreateCatgoryRequest($t, $u, $m);
+      $this->adsCreateCategoryRequest($t, $u, $m);
       break;
      case 'adsCreateGalleryRequest':
       $this->adsCreateGalleryRequest($t, $u, $m);
@@ -247,7 +244,7 @@ class TelegramController extends Controller
         $this->adsCreateCityStore($t, $u, $m, (int)Str::after($d, 'adsCreateCityStore'));
         break;
        case $s->is('adsCreateCategoryRequest*') :
-        $this->adsCreateCatgoryRequest($t, $u, $m, (int)Str::after($d, 'adsCreateCategoryRequest'));
+        $this->adsCreateCategoryRequest($t, $u, $m, (int)Str::after($d, 'adsCreateCategoryRequest'));
         break;
        case $s->is('adsCreateCategoryStore*') :
         $this->adsCreateCategoryStore($t, $u, $m, (int)Str::after($d, 'adsCreateCategoryStore'));

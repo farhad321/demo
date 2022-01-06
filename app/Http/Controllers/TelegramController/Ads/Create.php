@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\TelegramController\Ads;
 
+use App\Http\Controllers\TelegramController\Ads\CreateFields\Category;
 use App\Http\Controllers\TelegramController\Ads\CreateFields\City;
 use App\Http\Controllers\TelegramController\Ads\CreateFields\Content;
 use App\Http\Controllers\TelegramController\Ads\CreateFields\Gallery;
@@ -16,7 +17,7 @@ use Telegram\Bot\Objects\Update;
 
 trait Create
 {
- use Title, Content, State, City, Gallery, Methods;
+ use Title, Content, State, City, Gallery, Category, Methods;
 
  public function adsCreate(Api $t, Update $u): void
  {
@@ -44,6 +45,14 @@ trait Create
    * @var $newAd Ad
    * */
   $newAd = auth()->user()->extra->adsCreate;
+  $b_1 = Keyboard::inlineButton([
+                                 'text' => isset($newAd->category_id) ? \App\Models\Ad\Category::find($newAd->category_id)->name : '❌',
+                                 'callback_data' => 'adsCreateCategoryRequest'
+                                ]);
+  $b1_1 = Keyboard::inlineButton([
+                                  'text' => 'دسته بندی',
+                                  'callback_data' => 'adsCreateCategoryRequest'
+                                 ]);
   $b = Keyboard::inlineButton([
                                'text' => $newAd->title ?? '❌',
                                'callback_data' => 'adsCreateTitleRequest'
@@ -60,11 +69,12 @@ trait Create
                                 'text' => 'متن',
                                 'callback_data' => 'adsCreateContentRequest'
                                ]);
+  $count = auth()
+   ->user()
+   ->getMedia('adsCreateGallery')
+   ->count();
   $b4 = Keyboard::inlineButton([
-                                'text' => auth()
-                                 ->user()
-                                 ->getMedia('adsCreateGallery')
-                                 ->count() ? '✅' : '❌',
+                                'text' => $count ? "تعداد عکس ها: " . $count . '✅' : '❌',
                                 'callback_data' => 'adsCreateGalleryRequest'
                                ]);
   $b5 = Keyboard::inlineButton([
@@ -93,6 +103,7 @@ trait Create
                                ]);
   return Keyboard::make()
                  ->inline()
+                 ->row($b_1, $b1_1)
                  ->row($b, $b1)
                  ->row($b2, $b3)
                  ->row($b4, $b5)

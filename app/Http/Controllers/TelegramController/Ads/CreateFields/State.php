@@ -26,6 +26,7 @@ trait State
  {
   $this->updateUserExtra(function ($x) use ($m, $stateId) {
    $x->adsCreate->state_id = $stateId;
+   unset($x->adsCreate->city_id);
    return $x;
   });
   $this->adsCreate($t, $u);
