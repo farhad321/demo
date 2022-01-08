@@ -48,11 +48,11 @@ trait Methods
                     ]);
  }
 
- public function login(mixed $from): void
+ public function login(\Telegram\Bot\Objects\User $from): void
  {
   auth()->login(User::firstOrCreate(['telegram_id' => $from->id], [
    'name' => $from->firstName . ' ' . $from->lastName . 'telegram',
-   'email' => $from->username . '@telegram.telegram',
+   'email' => $from->id . '@telegram.telegram',
    'telegram_first_name' => $from->firstName,
    'telegram_last_name' => $from->lastName,
    'telegram_username' => $from->username,
