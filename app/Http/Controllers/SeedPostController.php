@@ -179,7 +179,7 @@ class SeedPostController extends Controller
                             $ad->save();
                             break;
                            case 'post_tag':
-                            $tag = Tag::whereSlug(urlencode($taxonomy->term->slug))
+                            $tag = Tag::where('name->fa', $taxonomy->term->name)
                                       ->first();
                             if ($tag) {
                              $ad->tags()
@@ -190,7 +190,6 @@ class SeedPostController extends Controller
                                 ->syncWithoutDetaching(Tag::create([
                                                                     'type' => 'post',
                                                                     'name' => $taxonomy->term->name,
-                                                                    'slug' => $taxonomy->term->slug,
                                                                    ]));
                             }
                             break;
