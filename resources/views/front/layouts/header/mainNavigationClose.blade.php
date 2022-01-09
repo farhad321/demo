@@ -66,4 +66,13 @@
             pb-5">
   <h3>آخرین آگهی‌ها</h3>
  </div>
+ <div class="d-none d-lg-block">eqhtqt</div>
+
+</div>
+<div class="background">
+ <div class="background-image original-size"
+      style="background-image: url({{asset('images/hero-background-icons (1).jpg')}});">
+  <img src="{{asset('./images/hero-background-icons (1).jpg')}}"
+       alt="کیوسک | نیازمندی های ایرانیان کانادا | آگهی رایگان نیازمندی ها">
+ </div>
 </div>

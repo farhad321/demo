@@ -1,4 +1,4 @@
-<div class="col">
+<div class="col more-content">
  <div class="card">
   @if(count($ad->media))
    <img src="{{$ad->media[0]}}"

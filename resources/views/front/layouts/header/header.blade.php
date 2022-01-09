@@ -4,10 +4,4 @@
 @else
  @include('front.layouts.header.mainNavigationClose')
 @endif
-<div class="background">
- <div class="background-image original-size"
-      style="background-image: url({{asset('images/hero-background-icons (1).jpg')}});">
-  <img src="{{asset('./images/hero-background-icons (1).jpg')}}"
-       alt="کیوسک | نیازمندی های ایرانیان کانادا | آگهی رایگان نیازمندی ها">
- </div>
-</div>
+

@@ -9,7 +9,7 @@
             aria-controls="navbarNavDropdown"
             aria-expanded="false"
             aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon bg-white"></span>
+     <span class=""><i class="fas fa-bars text-white"></i></span>
     </button>
     <div class="collapse navbar-collapse"
          id="navbarNavDropdown">
