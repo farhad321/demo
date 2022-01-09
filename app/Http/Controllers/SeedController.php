@@ -198,7 +198,7 @@ class SeedController extends Controller
                                ->syncWithoutDetaching([$category->id]);
                             break;
                            case 'product_tag':
-                            $tag = Tag::whereSlug(urlencode($taxonomy->term->slug))
+                            $tag = Tag::where('name->fa', $taxonomy->term->name)
                                       ->first();
                             if ($tag) {
                              $ad->tags()
@@ -209,13 +209,27 @@ class SeedController extends Controller
                                 ->syncWithoutDetaching(Tag::create([
                                                                     'type' => 'ad',
                                                                     'name' => $taxonomy->term->name,
-                                                                    'slug' => $taxonomy->term->slug,
                                                                    ]));
                             }
                             break;
                           }
                          }
                         });
+                        foreach ($post->attachment as $attach) {
+                         $file = storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file');
+                         if (file_exists($file)) {
+                          if ($post?->thumbnail?->attachment->ID == $attach->ID) {
+                           $ad->addMedia($file)
+//  $ad->addMediaFromUrl($attach->url)
+                              ->toMediaCollection('SpecialImage');
+                          }
+                          else {
+                           $ad->addMedia($file)
+//  $ad->addMediaFromUrl($attach->url)
+                              ->toMediaCollection('gallery');
+                          }
+                         }
+                        }
                        }
                       });
  }
@@ -227,7 +241,6 @@ class SeedController extends Controller
                         ->where('parent', 0)
                         ->get();
   foreach ($categories as $categoryOld) {
-
    $categoryParent = Category::firstOrCreate([
                                               'slug' => $categoryOld->term->slug
                                              ], [

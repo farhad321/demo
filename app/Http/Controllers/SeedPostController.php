@@ -197,15 +197,18 @@ class SeedPostController extends Controller
                           }
                          }
                          foreach ($post->attachment as $attach) {
-                          if ($post->thumbnail->attachment->ID == $attach->ID) {
-                           $ad->addMedia(storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file'))
+                          $file = storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file');
+                          if (file_exists($file)) {
+                           if ($post?->thumbnail?->attachment->ID == $attach->ID) {
+                            $ad->addMedia($file)
 //  $ad->addMediaFromUrl($attach->url)
-                              ->toMediaCollection('SpecialImage');
-                          }
-                          else {
-                           $ad->addMedia(storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file'))
+                               ->toMediaCollection('SpecialImage');
+                           }
+                           else {
+                            $ad->addMedia($file)
 //  $ad->addMediaFromUrl($attach->url)
-                              ->toMediaCollection('gallery');
+                               ->toMediaCollection('gallery');
+                           }
                           }
                          }
                         });

@@ -10,7 +10,7 @@ class Register extends Component
  public $email;
  public $phone;
  public $password;
- public $password_confirmation;
+// public $password_confirmation;
  protected $rules = [
   'email' => 'required|email|unique:users,email',
   'phone' => 'required|numeric|unique:users,phone',
@@ -34,14 +34,14 @@ class Register extends Component
   $user = User::create([
                         'email' => $this->email,
                         'phone' => $this->phone,
-                        'password' => encrypt($this->password),
+                        'password' => bcrypt($this->password),
                        ]);
   auth()->login($user);
-  return redirect()->route('front.panel.user.ad.index');
+  return redirect()->intended('front.panel.user.ad.index');
  }
 
  public function render()
  {
-  return view('livewire.register');
+  return view('livewire.front.auth.register');
  }
 }

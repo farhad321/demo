@@ -121,14 +121,13 @@ class AdResource extends Resource
                         Card::make()
                             ->schema([
                                       SpatieMediaLibraryFileUpload::make('SpecialImage')
-                                                                  ->disk('ads')
-                                                                  ->directory('storage/app/public/aaaaaaaaaaa')
                                                                   ->collection('SpecialImage'),
                                       SpatieMediaLibraryFileUpload::make('SpecialVideo')
                                                                   ->collection('SpecialVideo')
                                                                   ->acceptedFileTypes(['video/*']),
-                                      SpatieMediaLibraryMultipleFileUpload::make('Gallery')
-                                                                          ->collection('Gallery'),
+                                      SpatieMediaLibraryFileUpload::make('Gallery')
+                                                                  ->collection('Gallery')
+                                                                  ->multiple(),
                                      ])
                             ->columns([
                                        'sm' => 2,

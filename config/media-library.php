@@ -1,4 +1,7 @@
 <?php
+
+use App\Services\MediaLibrary\CustomPathGenerator;
+
 return [
  /*
   * The disk on which to store added files and derived images by default. Choose
@@ -47,7 +50,8 @@ return [
  /*
   * The class that contains the strategy for determining a media file's path.
   */
- 'path_generator' => Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator::class,
+ 'path_generator' => CustomPathGenerator::class,
+// 'path_generator' => Spatie\MediaLibrary\Support\PathGenerator\DefaultPathGenerator::class,
  /*
   * When urls to files get generated, this class will be called. Use the default
   * if your files are stored locally above the site root or on s3.

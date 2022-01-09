@@ -42,7 +42,8 @@ return new class () extends Migration {
          ->nullable();
    $table->bigInteger('telegram_last_message_id')
          ->nullable();
-   $table->json('extra');
+   $table->json('extra')
+         ->nullable();
    $table->timestamps();
   });
  }
