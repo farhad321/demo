@@ -256,3 +256,24 @@ Route::group(['as' => ''], function () {
   $r->adsList();
  });
 });
+Route::get('/test', function () {
+ return Ad::with([
+                  'state',
+                  'media' => function ($q) {
+                   $q->whereCollectionName('SpecialImage');
+                  },
+//          'categories' => function ($q) {
+//           $q->wherePivot('is_main', 1)
+//             ->first();
+//          }
+//           'mainCategory2'
+                  'aaa'
+                 ])
+//   ->whereHas('aaa')
+// ->whereHas('categories', function ($q) {
+// return $q->wherePivot('is_main', 1);
+// })
+//  ->where('id', '>', 372)
+          ->limit(5)
+          ->get();
+});

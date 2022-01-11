@@ -8,7 +8,7 @@ class AdsController extends Controller
 {
  public function frontAdCreate()
  {
-  return view('front.pages.ads.show');
+  return view('front.pages.ads.create.create');
  }
 
  public function frontAdShow()

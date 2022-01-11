@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Front\Ad;
 
 use App\Models\Ad\Ad;
+use LaravelIdea\Helper\App\Models\Ad\_IH_Category_QB;
 use LaravelIdea\Helper\Spatie\MediaLibrary\MediaCollections\Models\_IH_Media_QB;
 use Livewire\Component;
 
@@ -39,8 +40,10 @@ class LastAds extends Component
                    'state',
                    'media' => function ($q) {
                     $q->whereCollectionName('SpecialImage');
-                   }
+                   },
+                   'mainCategory'
                   ])
+           ->where('id', '>', 372)
            ->paginate(20, '*', 'adsPage', $this->page);
   return $ads;
  }

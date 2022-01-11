@@ -45,6 +45,8 @@ class CategoriesRelationManager extends BelongsToManyRelationManager
    BooleanColumn::make('is_visible')
                 ->label('Visibility')
                 ->sortable(),
+   BooleanColumn::make('is_main')
+                ->sortable(),
    TextColumn::make('updated_at')
              ->label('Updated Date')
              ->date()
@@ -53,5 +55,14 @@ class CategoriesRelationManager extends BelongsToManyRelationManager
   return $table->columns($columns)
                ->filters([//
                          ]);
+ }
+
+ public static function attachForm(Form $form): Form
+ {
+  return $form->schema([
+                        static::getAttachFormRecordSelect(),
+                        Forms\Components\Toggle::make('is_main'),
+                        // ...
+                       ]);
  }
 }

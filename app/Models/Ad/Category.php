@@ -53,7 +53,9 @@ class Category extends Model
 
  public function ads(): belongsToMany
  {
-  return $this->belongsToMany(Ad::class, 'ad_category_pivot', 'ad_id', 'ad_category_id');
+  return $this->belongsToMany(Ad::class, 'ad_category_pivot', 'ad_id', 'ad_category_id')
+              ->withPivot('is_main')
+              ->withTimestamps();
  }
 
  public function attributes(): BelongsToMany

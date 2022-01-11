@@ -64,7 +64,15 @@ class Ad extends Model implements HasMedia
 
  public function categories(): BelongsToMany
  {
-  return $this->belongsToMany(Category::class, 'ad_category_pivot', 'ad_id', 'ad_category_id');
+  return $this->belongsToMany(Category::class, 'ad_category_pivot', 'ad_id', 'ad_category_id')
+              ->withPivot('is_main')
+              ->withTimestamps();
+ }
+
+ public function mainCategory()
+ {
+  return $this->belongsToMany(Category::class, 'ad_category_pivot', 'ad_id', 'ad_category_id')
+              ->wherePivot('is_main', 1);
  }
 
  public function favorites(): HasMany
@@ -93,4 +101,10 @@ class Ad extends Model implements HasMedia
  {
   return $this->hasMany(AdAttribute::class);
  }
+
+// public function specialImage()
+// {
+//  return $this->media()
+//              ->first();
+// }
 }

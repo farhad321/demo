@@ -23,6 +23,6 @@ class CustomPathGenerator implements PathGenerator
 
  public function getBasePath(\Spatie\MediaLibrary\MediaCollections\Models\Media $media): string
  {
-  return $media->model_type . '\\' . $media->model_id . '\\';
+  return $media->model_type . '\\' . $media->model_id . '\\' . $media->collection_name . '\\' . $media->id . '\\';
  }
 }

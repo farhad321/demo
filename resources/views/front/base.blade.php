@@ -3,6 +3,7 @@
       dir="rtl">
 <head>
  @include('front.layouts.head')
+ @yield('head')
  @include('front.layouts.Seo')
  @yield('seo')
 </head>
@@ -24,9 +25,8 @@
 @include('front.layouts.modal-category.modal-category')
 @include('front.layouts.returnToTop')
 <!-- script -->
-<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="{{asset('js/script.js')}}"></script>
+@include('front.layouts.script')
+@yield('script')
 @livewireScripts
 </body>
 </html>
