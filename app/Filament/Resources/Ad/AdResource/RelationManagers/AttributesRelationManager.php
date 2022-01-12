@@ -21,7 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 
 class AttributesRelationManager extends BelongsToManyRelationManager
 {
- protected static string $relationship = 'attributes';
+ protected static string $relationship = 'attrs';
  protected static ?string $recordTitleAttribute = 'name';
  protected static ?string $inverseRelationship = 'ads';
 

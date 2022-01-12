@@ -23,7 +23,7 @@ use Filament\Tables\Columns\TextColumn;
 
 class Attributes2RelationManager extends HasManyRelationManager
 {
- protected static string $relationship = 'attributes2';
+ protected static string $relationship = 'attrs2';
  protected static ?string $recordTitleAttribute = 'id';
 
  public static function form(Form $form): Form

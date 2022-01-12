@@ -90,14 +90,14 @@ class Ad extends Model implements HasMedia
   return $this->hasMany(Review::class);
  }
 
- public function attributes(): BelongsToMany
+ public function attrs(): BelongsToMany
  {
   return $this->belongsToMany(Attribute::class, 'ad_attribute_pivot', 'ad_id', 'ad_attribute_id')
               ->withPivot('text', 'boolean', 'integer', 'float', 'date_time', 'date', 'json',)
               ->withTimestamps();
  }
 
- public function attributes2(): HasMany
+ public function attrs2(): HasMany
  {
   return $this->hasMany(AdAttribute::class);
  }

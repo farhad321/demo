@@ -58,7 +58,7 @@ class Category extends Model
               ->withTimestamps();
  }
 
- public function attributes(): BelongsToMany
+ public function attrs(): BelongsToMany
  {
   return $this->belongsToMany(Attribute::class, 'ad_attribute_category_pivot', 'ad_category_id', 'ad_attribute_id');
  }
