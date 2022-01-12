@@ -23,12 +23,14 @@
      @endif
      @foreach($categories as $category)
 
-      @if($category->children_count)
+      @if($category['children_count'])
        <li class="list-group-item"
-           wire:click="getChildren({{$category->id}})">{{$category->name}} <i class="fas fa-chevron-left C"></i></li>
+           wire:click="getChildren({{$category['id']}})">{{$category['name']}} <i class="fas fa-chevron-left C"></i>
+       </li>
       @else
        <li class="list-group-item"
-           wire:click="selectCategory({{$category->id}})">{{$category->name}} <i class="fas fa-chevron-left C"></i></li>
+           wire:click="selectCategory({{$category['id']}})">{{$category['name']}} <i class="fas fa-chevron-left C"></i>
+       </li>
 
       @endif
      @endforeach
@@ -78,7 +80,9 @@
          role="alert">
      <div class="d-flex justify-content-between">
       <p> شما در حال ارسال آگهی در دسته‌بندی {{\App\Models\Ad\Category::find($selectedCategory)->name}} هستید.</p>
-      <button class="btn-primary p-1">تغیر دسته بندی</button>
+      <button class="btn-primary p-1"
+              wire:click="goTo('category')">تغیر دسته بندی
+      </button>
      </div>
     </div>
    </div>
@@ -172,7 +176,7 @@
        <h2>تصاویر آگهی</h2>
       </div>
       <p class="text-center">افزودنِ عکس بازدید آگهی شما را تا سه برابر افزایش می‌دهد.</p>
-      <div class="container-file">
+      <div class="container-file ">
        <div class="dropzone">
         <label for="files"
                class="dropzone-container">
@@ -210,7 +214,26 @@
                wire:model="photos"/>
        </div>
       </div>
-      @error('photos') <span class=" text-danger">{{ $message }}</span> @enderror
+      @php
+       $message='';
+      @endphp
+      @foreach($errors->getMessageBag()->messages() as $key=>$error)
+       @dump($key,$errors->getMessageBag()->messages())
+       @if (Str::is('photos*',$key))
+        @foreach ($error as $e)
+         @php
+          $message.=$e;
+         @endphp
+        @endforeach
+       @endif
+      @endforeach
+
+      @if($message)
+       <span class=" text-danger">{{ $message }}</span>
+      @endif
+     </div>
+     <div class="row g-3">
+      @include('front.pages.ads.create.attributes',['formAttributes'=>$formAttributes])
      </div>
     </form>
    </div>
@@ -345,6 +368,9 @@
        </div>
       </div>
       @error('photos') <span class=" text-danger">{{ $message }}</span> @enderror
+     </div>
+     <div class="row g-3">
+      @include('front.pages.ads.create.review-attributes',['formAttributes'=>$formAttributes])
      </div>
     </form>
    </div>

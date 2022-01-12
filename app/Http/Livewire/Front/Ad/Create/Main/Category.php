@@ -7,28 +7,31 @@ use App\Http\Livewire\Front\Ad\Create\Main;
 trait Category
 {
  public int $backToCategory = 0;
- public string $selectedCategory = '10';
+ public string $selectedCategory = '';
  public array $categories = [];
 
  public function selectCategory($id)
  {
   $this->selectedCategory = $id;
-  $this->step = 'form';
+  $this->goTo('form');
  }
 
  public function isFirstParent($category_id): bool
  {
-  return $this->getFirstParent()
-              ->contains($category_id);
+  return in_array($category_id, $this->getFirstParent());
+//  return $this->getFirstParent()
+//              ->contains($category_id);
  }
 
  public function getChildrenThisCategory($category_id)
  {
+  $category_id = $category_id === 0 ? null : $category_id;
   return \App\Models\Ad\Category::whereParentId($category_id)
                                 ->withCount('children')
                                 ->orderBy('position')
                                 ->orderBy('name')
-                                ->get();
+                                ->get()
+                                ->toArray();
  }
 
  public function getFirstParent()
@@ -49,7 +52,8 @@ trait Category
    $this->categories = [...$this->getFirstParent()];
   }
   else {
-   $this->backToCategory = \App\Models\Ad\Category::find($this->backToCategory)->parent_id;
+   $parentId = \App\Models\Ad\Category::find($this->backToCategory)->parent_id;
+   $this->backToCategory = $parentId === null ? 0 : $parentId;
    $this->categories = [...$this->getChildrenThisCategory($this->backToCategory)];
   }
  }
