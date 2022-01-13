@@ -10,6 +10,7 @@ class AdCategory extends Migration
  {
   Schema::create('ad_category_pivot', function (Blueprint $table) {
    $table->id();
+   $table->boolean('is_main');
    $table->timestamps();
   });
  }

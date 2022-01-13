@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -111,8 +112,7 @@ class Ad extends Model implements HasMedia
  public function registerMediaConversions(Media $media = null): void
  {
   $this->addMediaConversion('thumb')
-       ->width(400)
-       ->height(300)
-       ->performOnCollections('Gallery');
+       ->fit(Manipulations::FIT_CONTAIN, 400, 400)
+       ->performOnCollections('Gallery', 'SpecialImage');
  }
 }

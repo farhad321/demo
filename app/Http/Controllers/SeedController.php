@@ -74,8 +74,8 @@ class SeedController extends Controller
 //              'seo_description' => ,
 //              'views' => ,
 //              'attributes' => ,
-//              'created_at' => ,
-//              'updated_at' => ,
+                'created_at' => $post->created_at,
+                'updated_at' => $post->updated_at,
                 'user_id' => $this->userId($post),
 //   'state_id' => function () {
 //    return State::factory()

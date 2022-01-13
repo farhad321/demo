@@ -9,6 +9,7 @@ use App\Http\Controllers\SeedController;
 use App\Http\Controllers\SeedPostController;
 use App\Http\Controllers\TelegramController;
 use App\Models\Ad\Ad;
+use App\Models\Ad\Category;
 use App\Models\Blog\Post;
 use App\Models\User;
 
@@ -153,7 +154,7 @@ Route::group(['as' => 'front.'], function () {
         ->name('index');
    Route::get('product-category/{slug?}', [
     AdsController::class,
-    'frontAdCategoryIndexFirstPage'
+    'frontAdCategoryIndex'
    ])
         ->name('index.first.page');
   });
@@ -257,6 +258,48 @@ Route::group(['as' => ''], function () {
  });
 });
 Route::get('/test', function () {
+ request()->request->add([
+                          'page' => 1
+                         ]);
+ $slug = 'تدریس-خصوصی';
+ $category = Category::whereSlug(urlencode($slug))
+                     ->first();
+//  return
+ $ads = Ad::
+ whereHas('categories', function (Builder $q) use ($slug) {
+  return $q->whereSlug(urlencode($slug));
+ })
+          ->with('categories')
+          ->latest()
+          ->paginate(16);
+// $urls = $this->getUrls($ads);
+ $linkCollection = $ads->linkCollection();
+ $urls = $linkCollection->map(function ($item, $key) {
+  $item['disabled'] = false;
+  $stringable = Str::of($item['label']);
+  if ($stringable->contains([
+                             'Next',
+                             'Previous'
+                            ]) && request()->fullUrl() == $item['url']) {
+   $item['disabled'] = true;
+  }
+//  if ($stringable->contains('Previous')) {
+//   $item['label'] = '&laquo;';
+//  }
+//  elseif ($stringable->contains('Next')) {
+//   $item['label'] = '&raquo;';
+//  }
+  $item['url'] = Str::of($item['url'])
+                    ->replaceMatches("/\/page\/\d*/", '',)
+                    ->replaceMatches("/\?/", '/',)
+                    ->replaceMatches("/\=/", '/',);
+  return $item;
+ });
+ return $urls;
+////  return view('ad.category', compact('urls', 'ads', 'category'));
+// return view('front.pages.ads.category.index',compact('urls', 'ads', 'category'));
+//
+//
  return \App\Models\Ad\Category::with('attrs')
                                ->find(66)
 

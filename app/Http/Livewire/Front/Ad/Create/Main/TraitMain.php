@@ -50,6 +50,8 @@ trait TraitMain
    ->media()
    ->whereCollectionName('newAdGalleryWeb')
    ->get();
+  $ad->categories()
+     ->attach($this->selectedCategory, ['is_main' => true]);
   foreach ($medias as $key => $media) {
    if ($key === 0) {
     $media->move($ad, 'SpecialImage');

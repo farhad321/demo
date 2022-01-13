@@ -74,89 +74,54 @@
    </div>
    <!--  -->
    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-5">
-    <div class="col">
-     <div class="card">
-      <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-           class="card-img-top"
-           alt="...">
-      <span class="favorite_7636 bookmark"
-            data-toggle="tooltip"
-            data-placement="top"
-            title=""></span>
-      <span class="ad_visit">78 بازدید</span>
-      <h4 class="location">
-       <a href="">انتاریو</a>
-      </h4>
-      <span class="price"><span>تماس بگیرید</span></span>
-      <div class="card-body card-bg">
-       <h5 class="card-title">Card title</h5>
-       <div class="meta">
-        <figure>
-         <i class="fa fa-calendar-o"></i>2 ماه قبل
-        </figure>
-        <figure>
-         <i class="fa fa-folder-open-o"></i><a href="">انجام
-          امور خرید و فروش و اجاره</a>
-        </figure>
-       </div>
-      </div>
+    @forelse ($ads as $ad)
+     <livewire:front.ad.card :ad="$ad"
+                             :wire:key="$ad['id']"/>
+     {{--   {{$ad['id']}}--}}
+     <br>
+    @empty
+     <div class="border-blue">
+      <p>هیچ آگهی هنوز ثبت نشده است.</p>
      </div>
-    </div>
-    <div class="col">
-     <div class="card">
-      <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-           class="card-img-top"
-           alt="...">
-      <span class="favorite_7636 bookmark"
-            data-toggle="tooltip"
-            data-placement="top"
-            title=""></span>
-      <span class="ad_visit">78 بازدید</span>
-      <h4 class="location">
-       <a href="">انتاریو</a>
-      </h4>
-      <span class="price"><span>تماس بگیرید</span></span>
-      <div class="card-body card-bg">
-       <h5 class="card-title">Card title</h5>
-       <div class="meta">
-        <figure>
-         <i class="fa fa-calendar-o"></i>2 ماه قبل
-        </figure>
-        <figure>
-         <i class="fa fa-folder-open-o"></i><a href="">انجام
-          امور خرید و فروش و اجاره</a>
-        </figure>
-       </div>
-      </div>
-     </div>
-    </div>
-    <div class="col">
-     <div class="card">
-      <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-           class="card-img-top"
-           alt="...">
-      <span class="favorite_7636 bookmark"
-            data-toggle="tooltip"
-            data-placement="top"
-            title=""></span>
-      <span class="ad_visit">78 بازدید</span>
-      <h4 class="location">
-       <a href="">انتاریو</a>
-      </h4>
-      <span class="price"><span>تماس بگیرید</span></span>
-      <div class="card-body card-bg">
-       <h5 class="card-title">Card title</h5>
-       <div class="meta">
-        <figure>
-         <i class="fa fa-calendar-o"></i>2 ماه قبل
-        </figure>
-        <figure>
-         <i class="fa fa-folder-open-o"></i><a href="">انجام
-          امور خرید و فروش و اجاره</a>
-        </figure>
-       </div>
-      </div>
-     </div>
+    @endforelse
+    <div class="mt-3 w-100 d-flex justify-content-center">
+     <nav aria-label="Page navigation example">
+      <ul class="pagination">
+       {{-- <li class="page-item">
+         <a class="page-link bg-transparent"
+            href="#"
+            aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+         </a>
+        </li>
+        <li class="page-item "><a class="page-link bg-transparent"
+                                  href="#">1</a></li>
+        <li class="page-item"><a class="page-link bg-transparent"
+                                 href="#">2</a></li>
+        <li class="page-item"><a class="page-link bg-transparent"
+                                 href="#">3</a></li>
+        <li class="page-item">
+         <a class="page-link bg-transparent"
+            href="#"
+            aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+         </a>
+        </li>--}}
+       @foreach($urls as $url)
+        <li class="page-item rounded @if($url['active']) active @endif@if($url['disabled'] )disabled
+@endif"><a class="page-link  bg-transparent"
+           href="{{$url['url']}}">{!! $url['label'] !!}</a></li>
+
+        {{--        <li class="page-item">--}}
+        {{--         <a class="page-link bg-transparent"--}}
+        {{--            href="#"--}}
+        {{--            aria-label="Next">--}}
+        {{--          <span aria-hidden="true">&raquo;</span>--}}
+        {{--         </a>--}}
+        {{--        </li>--}}
+       @endforeach
+      </ul>
+     </nav>
     </div>
    </div>
   </div>

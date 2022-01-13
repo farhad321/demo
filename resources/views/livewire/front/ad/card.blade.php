@@ -1,7 +1,9 @@
-<div class="col more-content">
+<div class="col
+@if(request()->routeIs('front.home'))more-content
+@endif">
  <div class="card">
   @if(count($ad->media))
-   <img src="{{$ad->media->where('collection_name','SpecialImage')->first()->original_url}}"
+   <img src="{{$ad->media->where('collection_name','SpecialImage')->first()->getUrl('thumb')}}"
         class="card-img-top"
         alt="...">
   @endif
