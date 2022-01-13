@@ -9,7 +9,7 @@
     <label for="inputEmail4"
            class="form-label">{{$attribute['name']}}</label>
     <input type="text"
-           wire:model="formAttributes.0.text"
+           wire:model="formAttributes.{{$key}}.text"
            class="form-control @error("formAttributes.".$key.".text") is-invalid @enderror"
            id="inputEmail4">
     @error("formAttributes.".$key.".text") <span class=" text-danger">{{ $message }}</span> @enderror

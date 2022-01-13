@@ -22,8 +22,8 @@ class Main extends Component
   'ad.price' => 'required|numeric',
   'ad.state_id' => 'required|numeric',
   'ad.city_id' => 'required|numeric',
-  'photos.*' => 'image|max:1024',
-  'photos' => 'array|max:10',
+//  'photos.*' => 'image|max:1024',
+//  'photos' => 'array|max:10',
  ];
  protected $validationAttributes = [
   'ad.price' => 'قیمت',

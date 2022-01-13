@@ -23,7 +23,7 @@ class AdsController extends Controller
 
  public function frontAdCategoryIndexFirstPage()
  {
-  //
+  return view('front.pages.ads.category.index');
  }
 
  public function frontAdTagIndex()

@@ -218,7 +218,6 @@
        $message='';
       @endphp
       @foreach($errors->getMessageBag()->messages() as $key=>$error)
-       @dump($key,$errors->getMessageBag()->messages())
        @if (Str::is('photos*',$key))
         @foreach ($error as $e)
          @php
@@ -227,7 +226,6 @@
         @endforeach
        @endif
       @endforeach
-
       @if($message)
        <span class=" text-danger">{{ $message }}</span>
       @endif

@@ -11,6 +11,8 @@ trait Media
   $this->validate([
                    'photos.*' => 'image|max:1024',
                    'photos' => 'array|max:10',
+                  ], [], [
+                   'photos.*' => 'فایل'
                   ]);
   $user = auth()->user();
   foreach ($this->photos as $photo) {

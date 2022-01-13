@@ -50,8 +50,13 @@ trait TraitMain
    ->media()
    ->whereCollectionName('newAdGalleryWeb')
    ->get();
-  foreach ($medias as $media) {
-   $media->move($ad, 'Gallery');
+  foreach ($medias as $key => $media) {
+   if ($key === 0) {
+    $media->move($ad, 'SpecialImage');
+   }
+   else {
+    $media->move($ad, 'Gallery');
+   }
   }
   foreach ($this->formAttributes as $attribute) {
 //   $ad->attrs()->attach([

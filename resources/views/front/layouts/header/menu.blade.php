@@ -1,5 +1,5 @@
 <a class="navbar-brand"
-   href="">
+   href="{{route('front.home')}}">
  <img src="{{asset('images/4611.png')}}">
 </a>
 <button class="navbar-toggler border-0"
@@ -51,7 +51,7 @@
   <!--  -->
  </li>
  <li class="nav-item submit_ad">
-  <a href=""
+  <a href="{{route('front.ad.create')}}"
      class="btn btn-primary text-caps btn-rounded btn-framed">
    <i class="fa fa-plus"
       aria-hidden="true"></i> ثبت آگهی </a>
