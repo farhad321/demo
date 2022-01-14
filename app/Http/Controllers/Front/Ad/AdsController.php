@@ -44,24 +44,11 @@ class AdsController extends Controller
                            'category' => $category->id,
                           ]);
   $ads0 = $this->searchCategoryAds();
-//  return
   $urls = $this->getUrls($ads0);
   $ads = [];
   foreach ($ads0->items() as $key => $item) {
    $ads[$key] = $item->toArray();
   }
-//  return
-//  $ads = Ad::
-//  whereHas('categories', function (Builder $q) use ($slug) {
-//   return $q->whereSlug(urlencode($slug));
-//  })
-//           ->whereIsVisible(true)
-//           ->with('mainCategory', 'media')
-//           ->latest()
-//           ->paginate(16);
-////  return
-//  $urls = $this->getUrls($ads);
-//  return view('ad.category', compact('urls', 'ads', 'category'));
   return view('front.pages.ads.category.index', compact('urls', 'ads', 'category'));
  }
 

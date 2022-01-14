@@ -4,7 +4,7 @@ $(document).ready(function () {
         e.preventDefault();
         $(".more-content:hidden").slice(0, 4).slideDown();
         if ($(".more-content:hidden").length == 0) {
-            $(".loadmore").text("وجود ندارد").addClass("noContent");
+            $(".loadmore").addClass("noContent");
         }
     });
 
