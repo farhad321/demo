@@ -113,8 +113,23 @@ class Ad extends Model implements HasMedia
 // }
  public function registerMediaConversions(Media $media = null): void
  {
+//  $this->addMediaConversion('thumb0')
+//       ->fit(Manipulations::FIT_CROP, 400, 333)
+//       ->performOnCollections('Gallery', 'SpecialImage');
+//  $this->addMediaConversion('thumb1')
+//       ->fit(Manipulations::FIT_CONTAIN, 400, 333)
+//       ->performOnCollections('Gallery', 'SpecialImage');
+//  $this->addMediaConversion('thumb2')
+//       ->fit(Manipulations::FIT_FILL, 400, 333)
+//       ->performOnCollections('Gallery', 'SpecialImage');
+//  $this->addMediaConversion('thumb3')
+//       ->fit(Manipulations::FIT_MAX, 400, 333)
+//       ->performOnCollections('Gallery', 'SpecialImage');
+//  $this->addMediaConversion('thumb4')
+//       ->fit(Manipulations::FIT_STRETCH, 400, 333)
+//       ->performOnCollections('Gallery', 'SpecialImage');
   $this->addMediaConversion('thumb')
-       ->fit(Manipulations::FIT_CONTAIN, 300, 300)
+       ->crop(Manipulations::CROP_CENTER, 400, 333)
        ->performOnCollections('Gallery', 'SpecialImage');
  }
 }

@@ -3,13 +3,12 @@
 @endif">
  <div class="card">
   @if(count($ad['media']))
+
    @php
-    foreach ($ad['media'] as $item){
-if ($item['collection_name'] ==='SpecialImage'){
- $m=new \Spatie\MediaLibrary\MediaCollections\Models\Media($item);
-    $src=$m->getUrl('thumb');
-}
-}
+    $id=Arr::where($ad['media'],function ($value,$key){
+   return $value['collection_name']==='SpecialImage';
+   })[0]['id'];
+    $src=\Spatie\MediaLibrary\MediaCollections\Models\Media::find($id)->getUrl('thumb')
    @endphp
    <img src="{{$src}}"
         class="card-img-top "
@@ -29,6 +28,22 @@ if ($item['collection_name'] ==='SpecialImage'){
   <span class="price"><span>تماس بگیرید</span></span>
   <div class="card-body card-bg">
    <h5 class="card-title">{{$ad['title']}}</h5>
+   {{--   <div id="app_basic">--}}
+   {{-- <div
+      id="aa"
+
+      @input="dd"
+         v-bind:title="timestamp"
+         class="experiment-block"
+         @click="ee"
+         :key="{{$ad->id}}"
+         wire:model="ddd">@{{ message }}
+    </div>--}}
+   {{--    <input type="text"--}}
+   {{--           wire:model="rrr.aa">--}}
+   {{--    <input type="text"--}}
+   {{--           wire:model="ad.title">--}}
+   {{--   </div>--}}
    <div class="meta">
     <figure>
      <i class="fa fa-calendar-o"></i>{{jdate($ad['created_at'])->ago()}}

@@ -194,8 +194,15 @@ class SeedController extends Controller
                            case 'product_cat':
                             $category = Category::whereSlug($taxonomy->term->slug)
                                                 ->first();
-                            $ad->categories()
-                               ->syncWithoutDetaching([$category->id]);
+                            $mainCategoryId = $post->getMeta('_yoast_wpseo_primary_product_cat');
+                            if ($mainCategoryId && $mainCategoryId == $taxonomy->term->term_id) {
+                             $ad->categories()
+                                ->attach($category->id, ['is_main' => true]);
+                            }
+                            else {
+                             $ad->categories()
+                                ->attach($category->id);
+                            }
                             break;
                            case 'product_tag':
                             $tag = Tag::where('name->fa', $taxonomy->term->name)

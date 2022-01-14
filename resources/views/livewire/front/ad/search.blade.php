@@ -10,7 +10,9 @@
      <div class="form-floating">
       <select class="form-select"
               wire:model="city_id">
-       <option selected>تمام شهر‌ها</option>
+       <option value="0"
+               selected>تمام شهر‌ها
+       </option>
        @foreach($cities->where('parent_id',null) as $city)
         <option value="{{$city->id}}">{{$city->name}}</option>
        @endforeach
@@ -21,7 +23,9 @@
      <div class="form-floating">
       <select class="form-select"
               wire:model="category_id">
-       <option selected>همه دسته‌بندی‌ها</option>
+       <option value="0"
+               selected>همه دسته‌بندی‌ها
+       </option>
        @foreach($categories->where('parent_id',null) as $category)
 
         <option value="{{$category->id}}">{{$category->name}}</option>

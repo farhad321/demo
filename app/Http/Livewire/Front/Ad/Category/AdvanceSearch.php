@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Front\Ad;
+namespace App\Http\Livewire\Front\Ad\Category;
 
 use App\Http\Controllers\Front\Ad\AdsController;
 use App\Models\Ad\Ad;
@@ -16,7 +16,7 @@ class AdvanceSearch extends Component
 {
  public function render()
  {
-  return view('livewire.front.ad.advance-search');
+  return view('livewire.front.ad.category.advance-search');
  }
 
  public string $page = '';
@@ -95,7 +95,7 @@ class AdvanceSearch extends Component
     $item['label'] = '&raquo;';
    }
    $item['url'] = Str::of($item['url'])
-    ->replaceMatches("/\/page\/\d*/", '',)
+                     ->replaceMatches("/\/page\/\d*/", '',)
 //                     ->replaceMatches("/\?/", '/',)
 //                     ->replaceMatches("/\=/", '/',)
    ;
