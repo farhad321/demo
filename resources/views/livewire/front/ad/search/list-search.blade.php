@@ -1,7 +1,9 @@
 <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-5">
  @forelse ($ads as $ad)
-  <livewire:front.ad.card :ad="$ad"
-                          :wire:key="$ad['id']"/>
+  <livewire:front.ad.search.card-search :ad="$ad"
+                                        :wire:key="$ad['id']"/>
+  {{--  <livewire:front.ad.card :ad="$ad"--}}
+  {{--                          :wire:key="$ad['id']"/>--}}
   <br>
  @empty
   <div class="border-blue w-100">

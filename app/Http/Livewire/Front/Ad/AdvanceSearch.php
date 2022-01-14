@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Front\Ad;
 
+use App\Http\Controllers\Front\Ad\AdsController;
 use App\Models\Ad\Ad;
 use App\Models\Ad\Category;
 use App\Models\Address\City;
@@ -26,9 +27,9 @@ class AdvanceSearch extends Component
 //////////////////////////
  public int $min = 0;
  public int $max = 0;
- public Boolean $specialAd;
+ public bool $specialAd = false;
  public string $orderBy = '';
- const orderByView = 'view';
+ const orderByView = 'views';
  const orderByRelation = '';
  protected $rules = [
   'min' => 'lte:max',
@@ -64,53 +65,15 @@ class AdvanceSearch extends Component
  public function startSearch()
  {
   $this->validate();
-//  dump(request()->all(),$this->category_id);
-//  dump('requ)');
-//  dump(request()->all());
   request()->request->add([
-                           'page' => $this->page
+                           'page' => $this->page,
+                           'min' => $this->min,
+                           'max' => $this->max,
+                           'specialAd' => $this->specialAd,
+                           'orderBy' => $this->orderBy,
                           ]);
-//  return
-  $ads = Ad::
-  when($this->min || $this->max, function ($q) {
-   $q->whereNotNull('price');
-   $q->when($this->min, function ($q, $value) {
-    $q->where('price', '>=', $value);
-   });
-   $q->when($this->max, function ($q, $value) {
-    $q->where('price', '<=', $value);
-   });
-  })
-           ->when(request('city'), function ($q, $value) {
-            $q->whereCityId($value);
-           })
-           ->when(request('s'), function ($q, $value) {
-            $q->where(function ($q) use ($value) {
-             $q->OrWhere('title', 'like', '%' . $value . '%')
-               ->OrWhere('content', 'like', '%' . $value . '%')
-               ->orWhereHas('tags', function (Builder $q) use ($value) {
-                $q->where('name->fa', $value);
-               });
-            });
-           })
-           ->when(request('category'), function ($q, $value) {
-            $q->whereHas('categories', function (Builder $q) use ($value) {
-             $q->where('ad_categories.id', $value);
-            });
-           })
-           ->when($this->orderBy, function ($q, $value) {
-            $q->orderBy($value);
-           })
-           ->whereIsVisible(true)
-           ->with('mainCategory', 'media', 'state')
-           ->latest()
-           ->paginate(16)
-           ->withPath(route('front.home'))
-           ->withQueryString();
-//  return
-  $urls = $this->getUrlsSearch($ads);
-//  dump($ads->items());
-  $this->emit('newAds', $ads->items(), $urls);
+  $ads = (new AdsController())->searchAds();
+  $this->emit('newAds', $ads->items(), $this->getUrlsSearch($ads));
  }
 
  public function getUrlsSearch($ads): \Illuminate\Support\Collection
@@ -132,7 +95,7 @@ class AdvanceSearch extends Component
     $item['label'] = '&raquo;';
    }
    $item['url'] = Str::of($item['url'])
-                     ->replaceMatches("/\/page\/\d*/", '',)
+    ->replaceMatches("/\/page\/\d*/", '',)
 //                     ->replaceMatches("/\?/", '/',)
 //                     ->replaceMatches("/\=/", '/',)
    ;

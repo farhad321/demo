@@ -26,30 +26,12 @@ class AdsController extends Controller
   request()->request->add([
                            'page' => request()->page ?? $page
                           ]);
-//  return
-  $ads = Ad::
-  when(request('s'), function ($q, $value) {
-   $q->where(function ($q) use ($value) {
-    $q->OrWhere('title', 'like', '%' . $value . '%')
-      ->OrWhere('content', 'like', '%' . $value . '%')
-      ->orWhereHas('tags', function (Builder $q) use ($value) {
-       $q->where('name->fa', $value);
-      });
-   });
-  })
-           ->when(request('category'), function ($q, $value) {
-            $q->whereHas('categories', function (Builder $q) use ($value) {
-             $q->where('ad_categories.id', $value);
-            });
-           })
-           ->whereIsVisible(true)
-           ->with('mainCategory', 'media', 'state')
-           ->latest()
-           ->paginate(16)
-           ->withQueryString();
-//  return
-  $urls = $this->getUrlsSearch($ads);
-//  return view('ad.category', compact('urls', 'ads', 'category'));
+  $ads0 = $this->searchAds();
+  $urls = $this->getUrlsSearch($ads0);
+  $ads = [];
+  foreach ($ads0->items() as $key => $item) {
+   $ads[$key] = $item->toArray();
+  }
   return view('front.pages.ads.search.index', compact('urls', 'ads'));
  }
 
@@ -133,5 +115,47 @@ class AdsController extends Controller
    return $item;
   });
   return $urls;
+ }
+
+ public function searchAds(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
+ {
+  $ads = Ad::
+  when(request('min') || request('max'), function ($q) {
+   $q->whereNotNull('price');
+   $q->when(request('min'), function ($q, $v) {
+    $q->where('price', '>=', $v);
+   });
+   $q->when(request('max'), function ($q, $v) {
+    $q->where('price', '<=', $v);
+   });
+  })
+           ->when(request('city'), function ($q, $v) {
+            $q->whereCityId($v);
+           })
+           ->when(request('s'), function ($q, $v) {
+//            $q->where(function ($q) use ($v) {
+            $q->OrWhere(function ($q) use ($v) {
+             $q->OrWhere('title', 'like', '%' . $v . '%')
+               ->OrWhere('content', 'like', '%' . $v . '%')
+               ->orWhereHas('tags', function (Builder $q) use ($v) {
+                $q->where('name->fa', $v);
+               });
+            });
+           })
+           ->when(request('category'), function ($q, $v) {
+            $q->whereHas('categories', function (Builder $q) use ($v) {
+             $q->where('ad_categories.id', $v);
+            });
+           })
+           ->when(request('orderBy'), function ($q, $v) {
+            $q->orderBy($v);
+           })
+           ->whereIsVisible(true)
+           ->with('mainCategory', 'media', 'state')
+           ->latest()
+           ->paginate(16)
+           ->withPath(route('front.home'))
+           ->withQueryString();
+  return $ads;
  }
 }
