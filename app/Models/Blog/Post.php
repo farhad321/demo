@@ -30,7 +30,9 @@ class Post extends Model implements HasMedia
   'published_at',
   'seo_title',
   'seo_description',
-  'user_id'
+  'user_id',
+  'created_at',
+  'updated_at'
  ];
  /**
   * @var array<string, string>

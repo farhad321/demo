@@ -136,6 +136,11 @@ Route::group(['as' => 'front.'], function () {
  ])
       ->name('about-us');
  Route::group(['as' => 'ad.'], function () {
+//  Route::get('', [
+//   AdsController::class,
+//   'frontAdSearch'
+//  ])
+//       ->name('search');
   Route::get('newad', [
    AdsController::class,
    'frontAdCreate'
@@ -258,6 +263,10 @@ Route::group(['as' => ''], function () {
  });
 });
 Route::get('/test', function () {
+ return \Corcel\Model\Post::with('attachment', 'thumbnail')
+                          ->whereHas('attachment')
+                          ->whereDoesntHave('thumbnail')
+                          ->first()?->thumbnail == null;
  request()->request->add([
                           'page' => 1
                          ]);

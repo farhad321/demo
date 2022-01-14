@@ -7,72 +7,8 @@
 @section('content')
  <section class=" blog-block m-0 p-4">
   <div class="container border-0 border-bottom">
-   <div class="accordion bg-transparent filter"
-        id="accordionExample">
-    <div class="accordion-item bg-transparent position-relative">
-     <h2 class="accordion-header bg-transparent"
-         id="headingOne">
-      <button class="accordion-button bg-transparent right-apprance"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseTen"
-              aria-expanded="true"
-              aria-controls="collapseTen">
-       جستجو پیشرفته
-      </button>
-     </h2>
-     <select class="form-select absolot">
-      <option selected>Open this select menu</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-     </select>
-     <div id="collapseTen"
-          class="accordion-collapse collapse bg-transparent"
-          aria-labelledby="headingTen"
-          data-bs-parent="#accordionExample">
-      <div class="accordion-body">
-       <div class="row g-2 align-items-center">
-        <div class="col-md-3">
-         <input type="checkbox">
-         <label for="">اگهی ویژه</label>
-        </div>
-        <form class="row g-3 col-md-9">
-         <div class="col-md-4">
-          <label class="form-label"
-                 for="specificSizeSelect">Preference</label>
-          <select class="form-select"
-                  id="specificSizeSelect">
-           <option selected>Choose...</option>
-           <option value="1">One</option>
-           <option value="2">Two</option>
-           <option value="3">Three</option>
-          </select>
-         </div>
-         <div class="col-md-4">
-          <label for="inputEmail4"
-                 class="form-label">Email</label>
-          <input type="email"
-                 class="form-control"
-                 id="inputEmail4">
-         </div>
-         <div class="col-md-4">
-          <label for="inputPassword4"
-                 class="form-label">Password</label>
-          <input type="password"
-                 class="form-control"
-                 id="inputPassword4">
-         </div>
-        </form>
-       </div>
-       <div>
-        <button class="btn btn-primary mt-3 mt-md-0">جستجو</button>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
-   <!--  -->
+  @include('front.pages.ads.layouts.advanceSearch')
+  <!--  -->
    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-3 mt-5">
     @forelse ($ads as $ad)
      <livewire:front.ad.card :ad="$ad"
@@ -80,8 +16,8 @@
      {{--   {{$ad['id']}}--}}
      <br>
     @empty
-     <div class="border-blue">
-      <p>هیچ آگهی هنوز ثبت نشده است.</p>
+     <div class="border-blue w-100">
+      <p>هیچ آگهی پیدا نشده است.</p>
      </div>
     @endforelse
     <div class="mt-3 w-100 d-flex justify-content-center">
@@ -108,7 +44,7 @@
          </a>
         </li>--}}
        @foreach($urls as $url)
-        <li class="page-item rounded @if($url['active']) active @endif@if($url['disabled'] )disabled
+        <li class="page-item rounded @if($url['active']) active @endif  @if($url['disabled'] )disabled
 @endif"><a class="page-link  bg-transparent"
            href="{{$url['url']}}">{!! $url['label'] !!}</a></li>
 

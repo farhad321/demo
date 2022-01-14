@@ -71,6 +71,30 @@ return [
  "timezone" => "فیلد :attribute باید یک منطقه صحیح باشد.",
  "unique" => ":attribute قبلا انتخاب شده است.",
  "url" => "فرمت آدرس :attribute اشتباه است.",
+ 'gt' => [
+  'numeric' => ':attribute باید بزرگتر از :value باشد.',
+  'file' => ':attribute باید بیشتر از کیلوبایت :value باشد.',
+  'string' => ':attribute باید بزرگتر از کاراکترهای :value باشد.',
+  'array' => ':attribute باید بیش از موارد :value داشته باشد.',
+ ],
+ 'gte' => [
+  'numeric' => ':attribute باید بزرگتر یا مساوی با :value باشد.',
+  'file' => ':attribute باید بزرگتر یا مساوی با :value کیلوبایت باشد.',
+  'string' => ':attribute باید بزرگتر یا مساوی با نویسه های :value باشد.',
+  'array' => ':attribute باید دارای آیتم های :value یا بیشتر باشد.',
+ ],
+ 'lt' => [
+  'numeric' => ':attribute باید کمتر از :value باشد.',
+  'file' => ':attribute باید کمتر از :value کیلوبایت باشد.',
+  'string' => ':attribute باید کمتر از کاراکترهای :value باشد.',
+  'array' => ':attribute باید کمتر از موارد :value داشته باشد.',
+ ],
+ 'lte' => [
+  'numeric' => ':attribute باید کمتر یا مساوی با :value باشد.',
+  'file' => ':attribute باید کمتر یا مساوی :value کیلوبایت باشد.',
+  'string' => 'صفت : باید کمتر یا مساوی با نویسه های :value باشد.',
+  'array' => ':attribute نباید بیش از موارد :value داشته باشد.',
+ ],
  /*
  |--------------------------------------------------------------------------
  | Custom Validation Language Lines

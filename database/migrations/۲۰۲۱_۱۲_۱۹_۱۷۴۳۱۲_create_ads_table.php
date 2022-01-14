@@ -23,9 +23,9 @@ class CreateAdsTable extends Migration
          ->default(false);
    $table->decimal('price', 12, 3)
          ->nullable();
-   $table->string('seo_title', 60)
+   $table->string('seo_title')
          ->nullable();
-   $table->string('seo_description', 160)
+   $table->string('seo_description')
          ->nullable();
    $table->bigInteger('views')
          ->default(0);

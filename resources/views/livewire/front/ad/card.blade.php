@@ -3,8 +3,8 @@
 @endif">
  <div class="card">
   @if(count($ad->media))
-   <img src="{{$ad->media->where('collection_name','SpecialImage')->first()->getUrl('thumb')}}"
-        class="card-img-top"
+   <img src="{{$ad->media->where('collection_name','SpecialImage')?->first()?->getUrl('thumb')}}"
+        class="card-img-top "
         alt="...">
   @endif
   <span class="favorite_7636 bookmark"

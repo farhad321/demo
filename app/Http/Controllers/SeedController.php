@@ -70,9 +70,9 @@ class SeedController extends Controller
                 'excerpt' => $post->excerpt,
                 'is_visible' => 1,
 //              'price' =>,
-//              'seo_title' =>,
-//              'seo_description' => ,
-//              'views' => ,
+                'seo_title' => $post->_yoast_wpseo_title,
+                'seo_description' => $post->_yoast_wpseo_metadesc,
+                'views' => $post->post_views_count,
 //              'attributes' => ,
                 'created_at' => $post->created_at,
                 'updated_at' => $post->updated_at,
@@ -160,7 +160,7 @@ class SeedController extends Controller
  public function tags()
  {
   return $posts = Post::
-  with('taxonomies')
+  with('taxonomies', 'thumbnail', 'attachment')
                       ->type('product')
                       ->published()
                       ->chunk(20, function ($posts) {
@@ -215,19 +215,30 @@ class SeedController extends Controller
                           }
                          }
                         });
-                        foreach ($post->attachment as $attach) {
+                        $storeThumbnail = false;
+                        foreach ($post->attachment as $key => $attach) {
                          $file = storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file');
                          if (file_exists($file)) {
                           if ($post?->thumbnail?->attachment->ID == $attach->ID) {
                            $ad->addMedia($file)
-//  $ad->addMediaFromUrl($attach->url)
+                              ->toMediaCollection('SpecialImage');
+                          }
+                          elseif ($post?->thumbnail == null && $key == 0) {
+                           $storeThumbnail = true;
+                           $ad->addMedia($file)
                               ->toMediaCollection('SpecialImage');
                           }
                           else {
                            $ad->addMedia($file)
-//  $ad->addMediaFromUrl($attach->url)
                               ->toMediaCollection('gallery');
                           }
+                         }
+                        }
+                        if ($post?->thumbnail !== null && !$storeThumbnail) {
+                         $file = storage_path('app/public/uploads/') . $post?->thumbnail->attachment->getMeta('_wp_attached_file');
+                         if (file_exists($file)) {
+                          $ad->addMedia($file)
+                             ->toMediaCollection('SpecialImage');
                          }
                         }
                        }

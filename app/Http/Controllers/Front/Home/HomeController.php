@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Front\Home;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Front\Ad\AdsController;
 
 class HomeController extends Controller
 {
  public function frontHome()
  {
+  if (request()->query('s') || request()->query('city_categories') || request()->query('category')) {
+   return (new AdsController())->frontAdSearch();
+  }
   return view('front.pages.home.home.home');
  }
 

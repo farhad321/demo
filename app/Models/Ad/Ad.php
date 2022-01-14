@@ -36,7 +36,9 @@ class Ad extends Model implements HasMedia
   'attributes',
   'user_id',
   'state_id',
-  'city_id'
+  'city_id',
+  'created_at',
+  'updated_at'
  ];
  protected $casts = [
   'is_visible' => 'boolean',
@@ -112,7 +114,7 @@ class Ad extends Model implements HasMedia
  public function registerMediaConversions(Media $media = null): void
  {
   $this->addMediaConversion('thumb')
-       ->fit(Manipulations::FIT_CONTAIN, 400, 400)
+       ->fit(Manipulations::FIT_CONTAIN, 300, 300)
        ->performOnCollections('Gallery', 'SpecialImage');
  }
 }
