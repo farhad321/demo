@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class Card extends Component
 {
+ use Favorite;
  public Ad $ad;
 
  public function render()

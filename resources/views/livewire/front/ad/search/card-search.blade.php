@@ -11,9 +11,12 @@ if ($item['collection_name'] ==='SpecialImage'){
 }
 }
    @endphp
-   <img src="{{$src}}"
-        class="card-img-top "
-        alt="...">
+   <a href="{{route('front.ad.show',['slug'=>$ad['slug']])}}">
+    <img src="{{$src}}"
+         class="card-img-top "
+         alt="...">
+   </a>
+
   @endif
   <span class="favorite_7636 bookmark"
         data-toggle="tooltip"

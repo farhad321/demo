@@ -26,7 +26,8 @@
    <a href="{{route('front.blog.category.news.index.first.page')}}"
       class="nav-link {{!request()->routeIs('front.blog.category.news.index*')?:'active-link-primary'}}">اخبار</a>
   </li>
-  @include('front.layouts.header.category-menu.category-menu2')
+  @include('front.layouts.header.category-menu.category-menu')
+  {{--  @include('front.layouts.header.category-menu.category-menu2')--}}
   <li class="nav-item">
    <a href="{{route('front.rules')}}"
       class="nav-link {{!request()->routeIs('front.rules')?:'active-link-primary'}}">قوانین و مقررات</a>

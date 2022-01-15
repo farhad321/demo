@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front\Ad;
 use App\Http\Controllers\Controller;
 use App\Models\Ad\Ad;
 use App\Models\Ad\Category;
+use App\Models\Address\City;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelIdea\Helper\App\Models\Ad\_IH_Ad_QB;
 use Str;
@@ -16,9 +17,11 @@ class AdsController extends Controller
   return view('front.pages.ads.create.create');
  }
 
- public function frontAdShow()
+ public function frontAdShow($slug)
  {
-  return view('front.pages.ads.show');
+  $ad = Ad::whereSlug(urlencode($slug))
+          ->first();
+  return view('front.pages.ads.show', compact('ad'));
  }
 
  public function frontAdSearch($page = 1)
@@ -50,6 +53,23 @@ class AdsController extends Controller
    $ads[$key] = $item->toArray();
   }
   return view('front.pages.ads.category.index', compact('urls', 'ads', 'category'));
+ }
+
+ public function frontAdCategoryCityIndex($slug, $page = 1)
+ {
+  $city = City::whereName($slug)
+              ->first();
+  request()->request->add([
+                           'page' => $page,
+                           'city' => $city->id,
+                          ]);
+  $ads0 = $this->searchCategoryAds();
+  $urls = $this->getUrls($ads0);
+  $ads = [];
+  foreach ($ads0->items() as $key => $item) {
+   $ads[$key] = $item->toArray();
+  }
+  return view('front.pages.ads.city-category.index', compact('urls', 'ads', 'city'));
  }
 
  public function frontAdTagIndex()

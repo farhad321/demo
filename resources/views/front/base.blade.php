@@ -28,5 +28,6 @@
 @include('front.layouts.script')
 @yield('script')
 @livewireScripts
+<livewire:front.sweet-alert/>
 </body>
 </html>

@@ -3,15 +3,25 @@
 @endif">
  <div class="card">
   @if(count($ad->media))
-   <img src="{{$ad->media->where('collection_name','SpecialImage')?->first()?->getUrl('thumb')}}"
-        class="card-img-top "
-        alt="...">
+   <a href="{{route('front.ad.show',['slug'=>$ad->slug])}}">
+    <img src="{{$ad->media->where('collection_name','SpecialImage')?->first()?->getUrl('thumb')}}"
+         class="card-img-top "
+         alt="...">
+   </a>
+
   @endif
-  <span class="favorite_7636 bookmark"
+  <span class="favorite_7636 bookmark   @if($isFavorite)btn-primary
+@elsebtn-danger
+@endif"
         data-toggle="tooltip"
         data-placement="top"
-        wire:click="addToFavorites"
+        wire:click="favorite"
         title=""></span>
+  @if($local)
+   <script !src="">
+     document.cookie = 'favorites=@json($favorits); expires=Thu, 18 Dec 2045 12:00:00 UTC; path=/';
+   </script>
+  @endif
   <span class="ad_visit">{{$ad->views}} بازدید</span>
   @if($ad?->state)
    <h4 class="location">

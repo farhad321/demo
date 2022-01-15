@@ -151,6 +151,18 @@ Route::group(['as' => 'front.'], function () {
    'frontAdShow'
   ])
        ->name('show');
+  Route::group(['as' => 'category.city.'], function () {
+   Route::get('blog/city_categories/{slug?}/page/{page?}', [
+    AdsController::class,
+    'frontAdCategoryCityIndex'
+   ])
+        ->name('index');
+   Route::get('blog/city_categories/{slug?}', [
+    AdsController::class,
+    'frontAdCategoryCityIndex'
+   ])
+        ->name('index.first.page');
+  });
   Route::group(['as' => 'category.'], function () {
    Route::get('product-category/{slug?}/page/{page?}', [
     AdsController::class,

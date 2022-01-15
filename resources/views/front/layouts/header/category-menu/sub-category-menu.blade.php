@@ -6,7 +6,7 @@
   ->sortBy('name');
    @endphp
 
-   @includeWhen($children->count(),'front.layouts.header.sub-category-menu',['children'=>$children,'all'=>$all])
+   @includeWhen($children->count(),'front.layouts.header.category-menu.sub-category-menu',['children'=>$children,'all'=>$all])
   </li>
  @endforeach
 </ul>
