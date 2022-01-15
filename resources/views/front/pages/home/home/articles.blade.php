@@ -7,214 +7,65 @@
        class="carousel slide"
        data-bs-ride="carousel">
    <div class="carousel-inner">
-    <div class="carousel-item active">
-     <div class="row row-cols-1 row-cols-md-3 row-cols-md-4 g-3 flex-nowrap flex-md-wrap">
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
+    @php
+     $posts=\App\Models\Blog\Post::with('category')->latest()->limit(8)->get()->chunk(4);
+    @endphp
+    @foreach($posts as $key=>$group)
+
+
+
+     <div class="carousel-item @if($loop->first) active @endif">
+      <div class="row row-cols-1 row-cols-md-3 row-cols-md-4 g-3 flex-nowrap flex-md-wrap">
+       @foreach($group as $key=>$post)
+        @php
+
+         $t=jdate($post->created_at);
+
+        @endphp
+
+
+
+        <div class="col">
+         <div class="card">
+          <a href="{{route('front.blog.show',[$t->getYear(),$t->getMonth(),$t->getDay(),$post->slug])}}">
+           <img src="{{$post->getFirstMediaUrl('thumb')}}"
+                class="card-img-top"
+                alt="...">
+          </a>
+          <p class="blog-detail">
+           <span>
+            <i class="fa fa-calendar-o"></i>{{jdate($post->created_at)->ago()}}</span>
+           <span>
+            <i class="fa fa-bookmark-o"></i>
+            {{$post->category->name}} </span>
+           <span><i class="fa fa-pie-chart"
+                    aria-hidden="true"></i>{{$post->views}}</span>
+          </p>
+          <div class="card-body card-bg">
+           <a href="{{route('front.blog.show',[$t->getYear(),$t->getMonth(),$t->getDay(),$post->slug])}}"
+              class="card-title">
+            <h4 class="blog-item">{!! strip_tags(Str::padRight($post->title, 100))  !!}</h4>
+           </a>
+           @php
+
+            $content= Str::replace($post->title, '', $post->content);
+           $content= strip_tags($content);
+           @endphp
+           <p class="cart-text blog-meta">{!!  Str::limit($content) !!}</p>
+          </div>
+         </div>
         </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
-        </div>
-       </div>
+       @endforeach
       </div>
      </div>
-    </div>
-    <div class="carousel-item">
-     <div class="row row-cols-1 row-cols-md-3 row-cols-md-4 g-3 flex-nowrap flex-md-wrap">
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="./images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <p class="blog-detail">
-         <span>
-          <i class="fa fa-calendar-o"></i> 1 هفته قبل </span>
-         <span>
-          <i class="fa fa-bookmark-o"></i>
-          وبلاگ </span>
-         <span><i class="fa fa-pie-chart"
-                  aria-hidden="true"></i> 33 بازدید</span>
-        </p>
-        <div class="card-body card-bg">
-         <a href=""
-            class="card-title">
-          <h4 class="blog-item">اجاره خانه در کانادا و انواع خانه اجاره ای</h4>
-         </a>
-         <p class="cart-text blog-meta">
-          بازدیدها: 12یکی از عمده‌ترین مشکلاتی که ممکن است در ابتدای امر، تازه
-          واردین به کشور کانادا... </p>
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
+
+
+
+
+
+
+
+    @endforeach
    </div>
    <button class="carousel-control-prev prev"
            type="button"

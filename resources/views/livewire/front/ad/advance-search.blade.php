@@ -14,9 +14,8 @@
   </h2>
   <select class="form-select absolot"
           wire:model="orderBy">
-   <option selected>Open this select menu</option>
-   <option value="{{\App\Http\Livewire\Front\Ad\AdvanceSearch::orderByRelation}}">ارتباط</option>
-   <option value="{{\App\Http\Livewire\Front\Ad\AdvanceSearch::orderByView}}">بازدید</option>
+   <option value="{{\App\Http\Livewire\Front\Ad\AdvanceSearch::orderByRelation}}">مرتب کردن براساس ارتباط</option>
+   <option value="{{\App\Http\Livewire\Front\Ad\AdvanceSearch::orderByView}}">مرتب کردن براساس بازدید</option>
   </select>
   <div id="collapseTen"
        class="accordion-collapse collapse bg-transparent"
@@ -32,17 +31,17 @@
       @error('specialAd') <span class=" text-danger">{{ $message }}</span> @enderror
      </div>
      <form class="row g-3 col-md-9">
-      <div class="col-md-4">
-       <label class="form-label"
-              for="specificSizeSelect">Preference</label>
-       <select class="form-select"
-               id="specificSizeSelect">
-        <option selected>Choose...</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-       </select>
-      </div>
+      {{-- <div class="col-md-4">
+        <label class="form-label"
+               for="specificSizeSelect">Preference</label>
+        <select class="form-select"
+                id="specificSizeSelect">
+         <option selected>Choose...</option>
+         <option value="1">One</option>
+         <option value="2">Two</option>
+         <option value="3">Three</option>
+        </select>
+       </div>--}}
       <div class="col-md-4">
        <label for="inputEmail4"
               class="form-label">کمترین قیمت</label>

@@ -22,13 +22,19 @@ return new class () extends Migration {
                ->nullable()
                ->constrained()
                ->nullOnDelete();
-            $table->string('title');
-            $table->string('slug')->unique();
-            $table->longText('content');
-            $table->date('published_at')->nullable();
-            $table->string('seo_title', 60)->nullable();
-            $table->string('seo_description', 160)->nullable();
-            $table->timestamps();
+         $table->string('title');
+         $table->string('slug')
+               ->unique();
+         $table->longText('content');
+         $table->date('published_at')
+               ->nullable();
+         $table->string('seo_title', 60)
+               ->nullable();
+         $table->string('seo_description', 160)
+               ->nullable();
+         $table->bigInteger('views')
+               ->default(0);
+         $table->timestamps();
         });
     }
 

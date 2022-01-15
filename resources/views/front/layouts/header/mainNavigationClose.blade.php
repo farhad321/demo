@@ -17,7 +17,7 @@
  </p>
  <div class="collapse"
       id="collapseExample">
-  <form action=""
+ {{-- <form action=""
         class="mt-5 mb-5 pb-5">
    <div class="container">
     <div class="row align-items-center">
@@ -60,14 +60,14 @@
      </div>
     </div>
    </div>
-  </form>
+  </form>--}}
+  @livewire('front.ad.search')
  </div>
  <div class="container p-0 pt-5
             pb-5">
   <h3>آخرین آگهی‌ها</h3>
  </div>
  <div class="d-none d-lg-block">eqhtqt</div>
-
 </div>
 <div class="background">
  <div class="background-image original-size"

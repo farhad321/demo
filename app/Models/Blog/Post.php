@@ -6,7 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
 use Spatie\MediaLibrary\HasMedia;
 
@@ -49,5 +51,15 @@ class Post extends Model implements HasMedia
  public function category(): BelongsTo
  {
   return $this->belongsTo(Category::class, 'blog_category_id');
+ }
+
+ public function registerMediaConversions(Media $media = null): void
+ {
+  $this->addMediaConversion('thumb')
+       ->crop(Manipulations::CROP_CENTER, 400, 333)
+       ->performOnCollections('SpecialImage');
+  $this->addMediaConversion('singlePage')
+       ->crop(Manipulations::CROP_CENTER, 641, 534)
+       ->performOnCollections('SpecialImage');
  }
 }

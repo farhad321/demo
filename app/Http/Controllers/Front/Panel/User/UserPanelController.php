@@ -8,12 +8,11 @@ class UserPanelController extends Controller
 {
  public function frontPanelUserAdIndex()
  {
-  if (auth()->check()) {
-   return view('front.pages.panel.user.ads.ads');
-  }
-  else {
-   return view('front.pages.home.login&register');
-  }
+//  if (auth()->check()) {
+  return view('front.pages.panel.user.ads.ads');
+//  }
+//  else {
+//  }
  }
 
  public function frontPanelUserFavoriteIndex()

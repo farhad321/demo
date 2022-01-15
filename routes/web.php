@@ -120,6 +120,11 @@ Route::group(['as' => 'front.'], function () {
   'frontHome'
  ])
       ->name('home');
+ Route::get('login-register', [
+  HomeController::class,
+  'frontLoginRegister'
+ ])
+      ->name('login-register');
  Route::get('قوانین-و-مقررات', [
   HomeController::class,
   'frontRules'
@@ -216,6 +221,7 @@ Route::group(['as' => 'front.'], function () {
  });
  Route::group([
                'as' => 'panel.user.',
+               'middleware' => 'auth'
               ], function () {
   Route::get('profile/{user?}', [
 //  Route::get('profile/?user={user?}', [

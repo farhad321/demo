@@ -130,6 +130,6 @@ class Ad extends Model implements HasMedia
 //       ->performOnCollections('Gallery', 'SpecialImage');
   $this->addMediaConversion('thumb')
        ->crop(Manipulations::CROP_CENTER, 400, 333)
-       ->performOnCollections('Gallery', 'SpecialImage');
+       ->performOnCollections('SpecialImage');
  }
 }

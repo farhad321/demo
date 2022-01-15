@@ -15,6 +15,11 @@ class HomeController extends Controller
   return view('front.pages.home.home.home');
  }
 
+ public function frontLoginRegister()
+ {
+  return view('front.pages.home.login&register');
+ }
+
  public function frontRules()
  {
   return view('front.pages.home.rules');

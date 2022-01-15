@@ -20,7 +20,7 @@
 @endsection
 
 @section('script')
- <script>
+{{-- <script>
    new Vue({
      el: "#app_basic2",
      data: {
@@ -81,5 +81,5 @@
               @{{ todo_item_prop.text }}
      </li>`,
    })
- </script>
+ </script>--}}
 @endsection
