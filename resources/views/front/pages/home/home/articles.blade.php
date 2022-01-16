@@ -8,7 +8,9 @@
        data-bs-ride="carousel">
    <div class="carousel-inner">
     @php
-     $posts=\App\Models\Blog\Post::with('category')->latest()->limit(8)->get()->chunk(4);
+     $posts=\App\Models\Blog\Post::with(['category','media' => function ($q) {
+                    $q->whereCollectionName('SpecialImage');
+                   },])->latest()->limit(8)->get()->chunk(4);
     @endphp
     @foreach($posts as $key=>$group)
 
@@ -28,7 +30,7 @@
         <div class="col">
          <div class="card">
           <a href="{{route('front.blog.show',[$t->getYear(),$t->getMonth(),$t->getDay(),$post->slug])}}">
-           <img src="{{$post->getFirstMediaUrl('thumb')}}"
+           <img src="{{$post->getFirstMedia('SpecialImage')?->getUrl('thumb')}}"
                 class="card-img-top"
                 alt="...">
           </a>

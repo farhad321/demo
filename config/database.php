@@ -74,6 +74,18 @@ return [
       'strict' => false,
       'engine' => null,
      ],
+     'wordpress_mini' => [ // for WordPress database (used by Corcel)
+      'driver' => 'mysql',
+      'host' => 'localhost',
+      'database' => 'kiusk_wordpress_ac_mini',
+      'username' => 'root',
+      'password' => '',
+      'charset' => 'utf8',
+      'collation' => 'utf8_unicode_ci',
+      'prefix' => 'wp_',
+      'strict' => false,
+      'engine' => null,
+     ],
      'pgsql' => [
       'driver' => 'pgsql',
       'url' => env('DATABASE_URL'),

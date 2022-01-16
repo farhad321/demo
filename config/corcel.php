@@ -13,7 +13,8 @@ return [
  | database, but this one is only for your WordPress tables.
  |
  */
- 'connection' => 'wordpress',
+ 'connection' => 'wordpress_mini',
+// 'connection' => 'wordpress',
  /*
  |--------------------------------------------------------------------------
  | Registered Custom Post Types

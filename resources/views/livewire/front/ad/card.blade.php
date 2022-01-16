@@ -3,8 +3,9 @@
 @endif">
  <div class="card">
   @if(count($ad->media))
+
    <a href="{{route('front.ad.show',['slug'=>$ad->slug])}}">
-    <img src="{{$ad->media->where('collection_name','SpecialImage')?->first()?->getUrl('thumb')}}"
+    <img src="{{$ad->getFirstMedia('SpecialImage')?->getUrl('thumb')}}"
          class="card-img-top "
          alt="...">
    </a>
@@ -23,14 +24,19 @@
    </script>
   @endif
   <span class="ad_visit">{{$ad->views}} بازدید</span>
-  @if($ad?->state)
+  @if($ad?->state || $ad?->city)
    <h4 class="location">
-    <a href="">{{$ad?->state?->name}}</a>
+    <a href="{{route('front.ad.category.city.index.first.page',$ad?->state?->name)}}">{{$ad?->state?->name}}</a>
+    @if($ad?->city)
+     <a href="{{route('front.ad.category.city.index.first.page',$ad?->city?->name)}}">{{$ad?->city?->name}}</a>
+    @endif
    </h4>
   @endif
   <span class="price"><span>تماس بگیرید</span></span>
   <div class="card-body card-bg">
-   <h5 class="card-title">{{$ad->title}}</h5>
+   <a href="{{route('front.ad.show',['slug'=>$ad->slug])}}">
+    <h5 class="card-title">{{$ad->title}}</h5>
+   </a>
    {{--   <div id="app_basic">--}}
    {{-- <div
       id="aa"

@@ -15,10 +15,4 @@ class Card extends Component
   return view('livewire.front.ad.card');
  }
 
- public function addToFavorites()
- {
-  $this->ad->favorites()
-           ->create(['user_id' => auth()->id()]);
-//  \Cookie::
- }
 }

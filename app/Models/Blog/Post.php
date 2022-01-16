@@ -43,6 +43,7 @@ class Post extends Model implements HasMedia
   'published_at' => 'date',
  ];
 
+
  public function user(): BelongsTo
  {
   return $this->belongsTo(User::class);
@@ -60,6 +61,9 @@ class Post extends Model implements HasMedia
        ->performOnCollections('SpecialImage');
   $this->addMediaConversion('singlePage')
        ->crop(Manipulations::CROP_CENTER, 641, 534)
+       ->performOnCollections('SpecialImage');
+  $this->addMediaConversion('frontBlogCategoryIndexBlog')
+       ->crop(Manipulations::CROP_CENTER, 150, 150)
        ->performOnCollections('SpecialImage');
  }
 }

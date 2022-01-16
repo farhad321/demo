@@ -1,6 +1,9 @@
 <?php
 
-namespace App\Http\Livewire\Front\Ad;
+namespace App\Http\Livewire\Front\Ad\Search;
+
+use App\Models\Ad\Ad;
+
 trait Favorite
 {
  public $local;
@@ -9,21 +12,27 @@ trait Favorite
 
  public function favorite()
  {
+  $ad = new Ad();
+  $ad->fill($this->ad);
+  $ad->id = $this->ad['id'];
+//  dump('sssssssssss',$ad,'sssssssssss');
   if (auth()->check()) {
    if ($this->isFavorite) {
-    $this->ad->favorites()
-             ->where('user_id', auth()->id())
-             ->delete();
+    $a = $ad->favorites()
+            ->where('user_id', auth()->id())
+            ->delete();
+//    dump('a',$a,'a');
     $this->favorits = json_encode([]);
     $mainMassage = 'آگهی با موفقیت از علاقمندی های شما حذف شد.';
     $this->isFavorite = false;
    }
    else {
     $this->isFavorite = true;
-    $this->ad->favorites()
-             ->create([
-                       'user_id' => auth()->id(),
-                      ]);
+    $b = $ad->favorites()
+            ->create([
+                      'user_id' => auth()->id(),
+                     ]);
+//    dump('b',$b,'b');
     $this->favorits = json_encode([]);
    }
    $message = '( بر روی همه سیستم هایی که با این حساب وارد شده اید ، در دسترس است.)';
@@ -32,7 +41,7 @@ trait Favorite
    $this->local = true;
    $storedFavorites = json_decode(json_decode($_COOKIE['favorites']));
    if ($this->isFavorite) {
-    $newList = array_diff($storedFavorites, [$this->ad->id]);
+    $newList = array_diff($storedFavorites, [$this->ad['id']]);
     $newList = array_values($newList);
     $mainMassage = 'آگهی با موفقیت از علاقمندی های شما حذف شد.';
     $this->isFavorite = false;
@@ -40,7 +49,7 @@ trait Favorite
    else {
     $this->isFavorite = true;
     $newList = array_merge($storedFavorites, [
-     $this->ad->id,
+     $this->ad['id'],
     ]);
    }
    $this->favorits = json_encode($newList);
@@ -58,9 +67,9 @@ trait Favorite
 
  public function mountFavorite(): void
  {
+//  dump($this->ad);
   if (auth()->check()) {
-   $exists = $this->ad->favorites->count();
-   if ($exists) {
+   if (isset($this->ad['favorites']) && count($this->ad['favorites'])) {
     $this->isFavorite = true;
    }
   }
@@ -68,7 +77,7 @@ trait Favorite
    if (isset($_COOKIE['favorites'])) {
     $storedFavorites = json_decode(json_decode($_COOKIE['favorites']));
     $first = \Arr::first($storedFavorites, function ($value) {
-     return $value == $this->ad->id;
+     return $value == $this->ad['id'];
     });
     if ($first) {
      $this->isFavorite = true;

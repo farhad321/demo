@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ad\Ad;
 use App\Models\Ad\Category;
 use App\Models\Address\City;
+use App\Models\Address\State;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelIdea\Helper\App\Models\Ad\_IH_Ad_QB;
 use Str;
@@ -19,7 +20,14 @@ class AdsController extends Controller
 
  public function frontAdShow($slug)
  {
-  $ad = Ad::whereSlug(urlencode($slug))
+  $ad = Ad::with([
+                  'favorites' => function ($q) {
+                   if (auth()->check()) {
+                    $q->whereUserId(auth()->id());
+                   }
+                  }
+                 ])
+          ->whereSlug(urlencode($slug))
           ->first();
   return view('front.pages.ads.show', compact('ad'));
  }
@@ -59,10 +67,25 @@ class AdsController extends Controller
  {
   $city = City::whereName($slug)
               ->first();
-  request()->request->add([
-                           'page' => $page,
-                           'city' => $city->id,
-                          ]);
+  if ($city) {
+   request()->request->add([
+                            'page' => $page,
+                            'city' => $city->id,
+                           ]);
+  }
+  else {
+   $state = State::whereName($slug)
+                 ->first();
+   if ($state) {
+    request()->request->add([
+                             'page' => $page,
+                             'state' => $state->id,
+                            ]);
+   }
+   else {
+    abort(404);
+   }
+  }
   $ads0 = $this->searchCategoryAds();
   $urls = $this->getUrls($ads0);
   $ads = [];
@@ -134,16 +157,27 @@ class AdsController extends Controller
 
  public function searchAds(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
  {
-  $ads = Ad::
-  when(request('min') || request('max'), function ($q) {
-   $q->whereNotNull('price');
-   $q->when(request('min'), function ($q, $v) {
-    $q->where('price', '>=', $v);
-   });
-   $q->when(request('max'), function ($q, $v) {
-    $q->where('price', '<=', $v);
-   });
-  })
+  $ads = Ad::with([
+                   'state',
+                   'media' => function ($q) {
+                    $q->whereCollectionName('SpecialImage');
+                   },
+                   'mainCategory',
+                   'favorites' => function ($q) {
+                    if (auth()->check()) {
+                     $q->whereUserId(auth()->id());
+                    }
+                   }
+                  ])
+           ->when(request('min') || request('max'), function ($q) {
+            $q->whereNotNull('price');
+            $q->when(request('min'), function ($q, $v) {
+             $q->where('price', '>=', $v);
+            });
+            $q->when(request('max'), function ($q, $v) {
+             $q->where('price', '<=', $v);
+            });
+           })
            ->when(request('city'), function ($q, $v) {
             $q->whereCityId($v);
            })
@@ -176,16 +210,27 @@ class AdsController extends Controller
 
  public function searchCategoryAds(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
  {
-  $ads = Ad::
-  when(request('min') || request('max'), function ($q) {
-   $q->whereNotNull('price');
-   $q->when(request('min'), function ($q, $v) {
-    $q->where('price', '>=', $v);
-   });
-   $q->when(request('max'), function ($q, $v) {
-    $q->where('price', '<=', $v);
-   });
-  })
+  $ads = Ad::with([
+                   'state',
+                   'media' => function ($q) {
+                    $q->whereCollectionName('SpecialImage');
+                   },
+                   'mainCategory',
+                   'favorites' => function ($q) {
+                    if (auth()->check()) {
+                     $q->whereUserId(auth()->id());
+                    }
+                   }
+                  ])
+           ->when(request('min') || request('max'), function ($q) {
+            $q->whereNotNull('price');
+            $q->when(request('min'), function ($q, $v) {
+             $q->where('price', '>=', $v);
+            });
+            $q->when(request('max'), function ($q, $v) {
+             $q->where('price', '<=', $v);
+            });
+           })
            ->when(request('city'), function ($q, $v) {
             $q->whereCityId($v);
            })
@@ -211,6 +256,7 @@ class AdsController extends Controller
            ->with('mainCategory', 'media', 'state')
            ->latest()
            ->paginate(16);
+  dump($ads->items());
   return $ads;
  }
 }

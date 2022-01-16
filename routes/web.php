@@ -281,56 +281,10 @@ Route::group(['as' => ''], function () {
  });
 });
 Route::get('/test', function () {
- return \Corcel\Model\Post::with('attachment', 'thumbnail')
-                          ->whereHas('attachment')
-                          ->whereDoesntHave('thumbnail')
-                          ->first()?->thumbnail == null;
- request()->request->add([
-                          'page' => 1
-                         ]);
- $slug = 'تدریس-خصوصی';
- $category = Category::whereSlug(urlencode($slug))
-                     ->first();
-//  return
- $ads = Ad::
- whereHas('categories', function (Builder $q) use ($slug) {
-  return $q->whereSlug(urlencode($slug));
- })
-          ->with('categories')
-          ->latest()
-          ->paginate(16);
-// $urls = $this->getUrls($ads);
- $linkCollection = $ads->linkCollection();
- $urls = $linkCollection->map(function ($item, $key) {
-  $item['disabled'] = false;
-  $stringable = Str::of($item['label']);
-  if ($stringable->contains([
-                             'Next',
-                             'Previous'
-                            ]) && request()->fullUrl() == $item['url']) {
-   $item['disabled'] = true;
-  }
-//  if ($stringable->contains('Previous')) {
-//   $item['label'] = '&laquo;';
-//  }
-//  elseif ($stringable->contains('Next')) {
-//   $item['label'] = '&raquo;';
-//  }
-  $item['url'] = Str::of($item['url'])
-                    ->replaceMatches("/\/page\/\d*/", '',)
-                    ->replaceMatches("/\?/", '/',)
-                    ->replaceMatches("/\=/", '/',);
-  return $item;
- });
- return $urls;
-////  return view('ad.category', compact('urls', 'ads', 'category'));
-// return view('front.pages.ads.category.index',compact('urls', 'ads', 'category'));
-//
-//
- return \App\Models\Ad\Category::with('attrs')
-                               ->find(66)
+ return \App\Models\Tag::
 
-//  ->attrs
-//                       ->toArray()
-  ;
+ withCount('ads', 'posts')
+                       ->orderBy('posts_count', 'desc')
+                       ->limit(10)
+                       ->get();
 });
