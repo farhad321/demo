@@ -131,7 +131,7 @@ class Ad extends Model implements HasMedia
   $this->addMediaConversion('thumb')
        ->crop(Manipulations::CROP_CENTER, 400, 333)
        ->performOnCollections('SpecialImage');
-  $this->addMediaConversion('70*70')
+  $this->addMediaConversion('70_70')
        ->crop(Manipulations::CROP_CENTER, 70, 70)
        ->performOnCollections('SpecialImage');
  }

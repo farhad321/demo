@@ -41,7 +41,7 @@
            <div class="d-flex">
             <div>
              <a href="{{route('front.ad.show',[$ad->slug])}}">
-              <img src="{{$ad->getFirstMedia('SpecialImage')->getUrl('70*70')}}"
+              <img src="{{$ad->getFirstMedia('SpecialImage')->getUrl('70_70')}}"
                    alt=""
                    width="70px"
                    height="70px">

@@ -21,7 +21,7 @@
                  $q->whereCollectionName('SpecialImage');
                 },])->latest()->limit(8)->get()->chunk(4);
  @endphp
- @include('front.pages.home.home.articles',['posts'=>$posts,'title'=>'وبلاگ'])
+ @include('front.pages.home.home.articles',['posts'=>$posts,'title'=>'وبلاگ','css'=>'row-cols-md-4'])
 @endsection
 
 @section('script')
