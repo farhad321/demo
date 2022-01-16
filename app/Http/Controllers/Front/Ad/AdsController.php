@@ -159,6 +159,7 @@ class AdsController extends Controller
  {
   $ads = Ad::with([
                    'state',
+                   'city',
                    'media' => function ($q) {
                     $q->whereCollectionName('SpecialImage');
                    },
@@ -212,6 +213,7 @@ class AdsController extends Controller
  {
   $ads = Ad::with([
                    'state',
+                   'city',
                    'media' => function ($q) {
                     $q->whereCollectionName('SpecialImage');
                    },
@@ -256,7 +258,6 @@ class AdsController extends Controller
            ->with('mainCategory', 'media', 'state')
            ->latest()
            ->paginate(16);
-  dump($ads->items());
   return $ads;
  }
 }

@@ -31,24 +31,24 @@ if ($item['collection_name'] ==='SpecialImage'){
    </script>
   @endif
   <span class="ad_visit">{{$ad['views']}} بازدید</span>
-  @if($ad['state'])
-   <h4 class="location">
-    <a href="">{{$ad['state']['name']}}</a>
-   </h4>
-  @endif
-  <span class="price"><span>تماس بگیرید</span></span>
-  <div class="card-body card-bg">
-   <h5 class="card-title">{{$ad['title']}}</h5>
-   <div class="meta">
-    <figure>
-     <i class="fa fa-calendar-o"></i>{{jdate($ad['created_at'])->ago()}}
-    </figure>
-    @if(count($ad['main_category']))
+   @if($ad['state'])
+    <h4 class="location">
+     <a href="">{{$ad['state']['name']}}</a>
+    </h4>
+   @endif
+   <span class="price"><span>تماس بگیرید</span></span>
+   <div class="card-body card-bg">
+    <h5 class="card-title">{{$ad['title']}}</h5>
+    <div class="meta">
      <figure>
-      <i class="fa fa-folder-open-o"></i><a href="">{{$ad['main_category'][0]['name']}}</a>
+      <i class="fa fa-calendar-o"></i> {{jdate($ad['created_at'])->ago()}}
      </figure>
-    @endif
+     @if(count($ad['main_category']))
+      <figure>
+       <i class="fa fa-folder-open-o"></i><a href="">{{$ad['main_category'][0]['name']}}</a>
+      </figure>
+     @endif
+    </div>
    </div>
-  </div>
  </div>
 </div>

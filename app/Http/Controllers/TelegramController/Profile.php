@@ -157,7 +157,7 @@ trait Profile
                        'file_id' => $m->photo[0]['file_id'],
                       ]);
   $fileUrl = 'http://api.telegram.org/file/bot' . config('telegram.bots.mybot.token') . '/' . $file->filePath;
-  dump($m->photo, gettype($m->photo[0]), $file, $fileUrl);
+//  dump($m->photo, gettype($m->photo[0]), $file, $fileUrl);
 //  sleep(5);
   $filename = 'temp-image.jpg';
   $tempImage = tempnam(sys_get_temp_dir(), $filename);

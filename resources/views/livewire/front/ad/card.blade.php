@@ -55,7 +55,7 @@
    {{--   </div>--}}
    <div class="meta">
     <figure>
-     <i class="fa fa-calendar-o"></i>{{jdate($ad->created_at)->ago()}}
+     <i class="fa fa-calendar-o"></i> {{jdate($ad->created_at)->ago()}}
     </figure>
     @if($ad?->mainCategory->count())
      <figure>

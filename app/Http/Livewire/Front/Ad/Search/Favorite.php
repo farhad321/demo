@@ -15,13 +15,11 @@ trait Favorite
   $ad = new Ad();
   $ad->fill($this->ad);
   $ad->id = $this->ad['id'];
-//  dump('sssssssssss',$ad,'sssssssssss');
   if (auth()->check()) {
    if ($this->isFavorite) {
     $a = $ad->favorites()
             ->where('user_id', auth()->id())
             ->delete();
-//    dump('a',$a,'a');
     $this->favorits = json_encode([]);
     $mainMassage = 'آگهی با موفقیت از علاقمندی های شما حذف شد.';
     $this->isFavorite = false;
@@ -32,7 +30,6 @@ trait Favorite
             ->create([
                       'user_id' => auth()->id(),
                      ]);
-//    dump('b',$b,'b');
     $this->favorits = json_encode([]);
    }
    $message = '( بر روی همه سیستم هایی که با این حساب وارد شده اید ، در دسترس است.)';
@@ -67,7 +64,6 @@ trait Favorite
 
  public function mountFavorite(): void
  {
-//  dump($this->ad);
   if (auth()->check()) {
    if (isset($this->ad['favorites']) && count($this->ad['favorites'])) {
     $this->isFavorite = true;

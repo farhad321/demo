@@ -204,262 +204,44 @@
    </div>
   </div>
  </div>
-</section>
-<section class="blog-block m-0 p-4">
- <div class="container">
-  <div id="carouselExampleControls"
-       class="carousel slide"
-       data-bs-ride="carousel">
-   <div class="carousel-inner">
-    <div class="carousel-item active">
-     <div class="row row-cols-1 row-cols-md-3 row-cols-md-4 g-3 flex-nowrap flex-md-wrap">
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
-    <div class="carousel-item">
-     <div class="row row-cols-1 row-cols-md-3 row-cols-md-4 g-3 flex-nowrap flex-md-wrap">
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-      <div class="col">
-       <div class="card">
-        <img src="../images/fashion-model-man-portrait-handsome-guy-closeup-70413209.jpg"
-             class="card-img-top"
-             alt="...">
-        <span class="favorite_7636 bookmark"
-              data-toggle="tooltip"
-              data-placement="top"
-              title=""></span>
-        <span class="ad_visit">78 بازدید</span>
-        <h4 class="location">
-         <a href="">انتاریو</a>
-        </h4>
-        <span class="price"><span>تماس بگیرید</span></span>
-        <div class="card-body card-bg">
-         <h5 class="card-title">Card title</h5>
-         <div class="meta">
-          <figure>
-           <i class="fa fa-calendar-o"></i>2 ماه قبل
-          </figure>
-          <figure>
-           <i class="fa fa-folder-open-o"></i><a href="">انجام
-            امور خرید و فروش و اجاره</a>
-          </figure>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div>
-    </div>
-   </div>
-   <button class="carousel-control-prev ads-prev"
-           type="button"
-           data-bs-target="#carouselExampleControls"
-           data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"
-          aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-   </button>
-   <button class="carousel-control-next ads-next"
-           type="button"
-           data-bs-target="#carouselExampleControls"
-           data-bs-slide="next">
-    <span class="carousel-control-next-icon"
-          aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-   </button>
-  </div>
- </div>
-</section>
+</section>@php
+ $adsUser=App\Models\Ad\Ad::with([
+                   'state',
+                      'city',
+                   'media' => function ($q) {
+                    $q->whereCollectionName('SpecialImage');
+                   },
+                   'mainCategory',
+                   'favorites' => function ($q) {
+                    if (auth()->check()) {
+                     $q->whereUserId(auth()->id());
+                    }
+                   }
+                  ])->whereUserId($ad->user_id)->inRandomOrder()->whereNotIn('id',[$ad->id])->limit(8)->get();
+
+$adsUserIds=$adsUser->pluck('id');
+$adsUser=$adsUser->chunk(4);
+
+
+ $adsSimilar=App\Models\Ad\Ad::with([
+                   'state',
+                   'city',
+
+                   'media' => function ($q) {
+                    $q->whereCollectionName('SpecialImage');
+                   },
+                   'mainCategory',
+                   'favorites' => function ($q) {
+                    if (auth()->check()) {
+                     $q->whereUserId(auth()->id());
+                    }
+                   }
+                  ])->whereHas('categories',function ($q) use($ad){
+ $q->whereIn('ad_categories.id',$ad->categories->pluck('id'));
+ })
+->orWhere('city_id',$ad->city_id)
+->orWhere('state_id',$ad->state_id)
+->inRandomOrder()->whereNotIn('id',[$ad->id,...$adsUserIds])->limit(8)->get()->chunk(4);
+
+
+@endphp@includeWhen(count($adsUser),'livewire.front.ad.layouts.ad-slider',['ads'=>$adsUser,'title'=>'سایر آگهی‌های این کاربر','id'=>1])@includeWhen(count($adsSimilar),'livewire.front.ad.layouts.ad-slider',['ads'=>$adsSimilar,'title'=>'آگهی‌های مشابه','id'=>2])

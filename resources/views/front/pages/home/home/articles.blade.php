@@ -1,17 +1,12 @@
 <section class="index-blog blog-block pt-5 pb-5">
  <div class="container">
   <div class="section-title clearfix">
-   <h2>وبلاگ</h2>
+   <h2>{{$title}}</h2>
   </div>
   <div id="carouselExampleControls"
        class="carousel slide"
        data-bs-ride="carousel">
    <div class="carousel-inner">
-    @php
-     $posts=\App\Models\Blog\Post::with(['category','media' => function ($q) {
-                    $q->whereCollectionName('SpecialImage');
-                   },])->latest()->limit(8)->get()->chunk(4);
-    @endphp
     @foreach($posts as $key=>$group)
 
 
