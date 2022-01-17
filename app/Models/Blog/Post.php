@@ -59,10 +59,10 @@ class Post extends Model implements HasMedia
   $this->addMediaConversion('thumb')
        ->crop(Manipulations::CROP_CENTER, 400, 333)
        ->performOnCollections('SpecialImage');
-  $this->addMediaConversion('singlePage')
-       ->crop(Manipulations::CROP_CENTER, 641, 534)
-       ->performOnCollections('SpecialImage');
-  $this->addMediaConversion('frontBlogCategoryIndexBlog')
+//  $this->addMediaConversion('singlePage')
+//       ->crop(Manipulations::CROP_CENTER, 641, 534)
+//       ->performOnCollections('SpecialImage');
+  $this->addMediaConversion('150_150')
        ->crop(Manipulations::CROP_CENTER, 150, 150)
        ->performOnCollections('SpecialImage');
  }

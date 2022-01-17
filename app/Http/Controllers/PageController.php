@@ -56,7 +56,7 @@ class PageController extends Controller
  public function ad($slug)
  {
   $ad = Ad::whereSlug(urlencode($slug))
-          ->first();
+          ->firstOrFail();
   return view('ad.ad', compact('ad'));
  }
 

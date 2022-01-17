@@ -20,7 +20,7 @@
   </li>
   <li class="nav-item">
    <a href="{{route('front.blog.category.blog.index')}}"
-      class="nav-link {{!request()->routeIs('front.blog.category.blog.index')?:'active-link-primary'}} ">وبلاگ</a>
+      class="nav-link {{!request()->routeIs('front.blog.category.blog.index.first.page')?:'active-link-primary'}} ">وبلاگ</a>
   </li>
   <li class="nav-item">
    <a href="{{route('front.blog.category.news.index.first.page')}}"

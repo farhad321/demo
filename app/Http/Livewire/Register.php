@@ -37,7 +37,7 @@ class Register extends Component
                         'password' => bcrypt($this->password),
                        ]);
   auth()->login($user);
-  return redirect()->intended('front.panel.user.ad.index');
+  return redirect()->intended(route('front.panel.user.ad.index'));
  }
 
  public function render()

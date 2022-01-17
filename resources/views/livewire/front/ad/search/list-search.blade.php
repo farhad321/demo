@@ -10,15 +10,17 @@
    <p>هیچ آگهی پیدا نشده است.</p>
   </div>
  @endforelse
- <div class="mt-3 w-100 d-flex justify-content-center">
-  <nav aria-label="Page navigation example">
-   <ul class="pagination">
-    @foreach($urls as $url)
-     <li class="page-item rounded @if($url['active']) active @endif  @if($url['disabled'] )disabled
+ @if(count($ads))
+  <div class="mt-3 w-100 d-flex justify-content-center">
+   <nav aria-label="Page navigation example">
+    <ul class="pagination">
+     @foreach($urls as $url)
+      <li class="page-item rounded @if($url['active']) active @endif  @if($url['disabled'] )disabled
 @endif"><a class="page-link  bg-transparent"
            href="{{$url['url']}}">{!! $url['label'] !!}</a></li>
-    @endforeach
-   </ul>
-  </nav>
- </div>
+     @endforeach
+    </ul>
+   </nav>
+  </div>
+ @endif
 </div>

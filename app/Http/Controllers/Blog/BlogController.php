@@ -78,7 +78,7 @@ class BlogController extends Controller
  {
 //  return
   $post = Post::whereSlug(urlencode($slug))
-              ->first();
+              ->firstOrFail();
   return view('blog.post', compact('post'));
  }
 

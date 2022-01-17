@@ -34,7 +34,9 @@
        <div class="p-2">
         <ul class="p-1">
          @php
-          $ads=\App\Models\Ad\Ad::with('user')->whereIsVisible(true)->latest()->limit(10)->get();
+          $ads=\App\Models\Ad\Ad::with(['user', 'media' => function ($q) {
+                    $q->whereCollectionName('SpecialImage');
+                   },])->whereIsVisible(true)->latest()->limit(10)->get();
          @endphp
          @foreach($ads as $key=>$ad)
           <li class="border-bottom">

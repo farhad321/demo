@@ -153,7 +153,7 @@
          <span>شهر/محله</span>
          <span>
           @if($ad?->city)
-           <a href="{{route('front.ad.category.city.index.first.page',['slug'=>$ad?->city->name])}}">{{$ad?->city->name}}</a>
+           <a href="{{route('front.ad.category.city.index.first.page',['slug'=>$ad?->city->slug])}}">{{$ad?->city->name}}</a>
           @endif
          </span>
         </li>

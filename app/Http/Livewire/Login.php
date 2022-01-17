@@ -32,8 +32,9 @@ class Login extends Component
    request()
     ->session()
     ->regenerate();
+
 //   return redirect()->route('front.panel.user.ad.index');
-   return redirect()->intended('front.panel.user.ad.index');
+   return redirect()->intended(route('front.panel.user.ad.index'));
   }
   $this->addError('all', 'کاربری با این مشخصات وجود ندارد.');
 //  return back()->withErrors([

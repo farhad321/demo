@@ -65,7 +65,7 @@ class SeedController extends Controller
    \DB::transaction(function () use ($post) {
     Ad::create([
                 'title' => $post->title,
-                'slug' => $post->slug,
+                'slug' => urldecode($post->slug),
                 'content' => $post->content,
                 'excerpt' => $post->excerpt,
                 'is_visible' => 1,
@@ -109,7 +109,7 @@ class SeedController extends Controller
                   \DB::transaction(function () use ($post) {
                    Ad::create([
                                'title' => $post->title,
-                               'slug' => $post->slug,
+                               'slug' => urldecode($post->slug),
                                'content' => $post->content,
                                'excerpt' => $post->excerpt,
                                'is_visible' => 1,
@@ -165,7 +165,7 @@ class SeedController extends Controller
                       ->published()
                       ->chunk(20, function ($posts) {
                        foreach ($posts as $post) {
-                        $ad = Ad::whereSlug($post->slug)
+                        $ad = Ad::whereSlug(urldecode($post->slug))
                                 ->first();
                         \DB::transaction(function () use ($post, $ad) {
                          foreach ($post->taxonomies as $taxonomy) {
@@ -196,8 +196,8 @@ class SeedController extends Controller
                                                 ->first();
                             $mainCategoryId = $post->getMeta('_yoast_wpseo_primary_product_cat');
                             if ($mainCategoryId && $mainCategoryId == $taxonomy->term->term_id) {
-                             $ad->categories()
-                                ->attach($category->id, ['is_main' => true]);
+                             $ad?->categories()
+                                 ->attach($category->id, ['is_main' => true]);
                             }
                             else {
                              $ad->categories()
@@ -225,26 +225,32 @@ class SeedController extends Controller
                         $storeThumbnail = false;
                         foreach ($post->attachment as $key => $attach) {
                          $file = storage_path('app/public/uploads/') . $attach->getMeta('_wp_attached_file');
+                         $url = 'https://kiusk.ca/wp-content/uploads/' . $attach->getMeta('_wp_attached_file');
                          if (file_exists($file)) {
                           if ($post?->thumbnail?->attachment->ID == $attach->ID) {
                            $ad->addMedia($file)
+//                            ->addMediaFromUrl($url)
                               ->toMediaCollection('SpecialImage');
                           }
                           elseif ($post?->thumbnail == null && $key == 0) {
                            $storeThumbnail = true;
                            $ad->addMedia($file)
+//                            ->addMediaFromUrl($url)
                               ->toMediaCollection('SpecialImage');
                           }
                           else {
                            $ad->addMedia($file)
+//                            ->addMediaFromUrl($url)
                               ->toMediaCollection('gallery');
                           }
                          }
                         }
                         if ($post?->thumbnail !== null && !$storeThumbnail) {
                          $file = storage_path('app/public/uploads/') . $post?->thumbnail->attachment->getMeta('_wp_attached_file');
+                         $url = 'https://kiusk.ca/wp-content/uploads/' . $post?->thumbnail->attachment->getMeta('_wp_attached_file');
                          if (file_exists($file)) {
                           $ad->addMedia($file)
+//                           ->addMediaFromUrl($url)
                              ->toMediaCollection('SpecialImage');
                          }
                         }

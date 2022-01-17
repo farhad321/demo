@@ -150,7 +150,8 @@ Route::group(['as' => 'front.'], function () {
    AdsController::class,
    'frontAdCreate'
   ])
-       ->name('create');
+       ->name('create')
+       ->middleware('auth');
   Route::get('ads/{slug?}', [
    AdsController::class,
    'frontAdShow'
@@ -200,7 +201,12 @@ Route::group(['as' => 'front.'], function () {
     'frontBlogCategoryIndexBlog'
    ])
         ->name('blog.index');
-   Route::get('{page?}/اخبار', [
+   Route::get('weblog-2', [
+    BlogController::class,
+    'frontBlogCategoryIndexBlog'
+   ])
+        ->name('blog.index.first.page');
+   Route::get('اخبار/{page?}/', [
     BlogController::class,
     'frontBlogCategoryIndexNews'
    ])
@@ -217,6 +223,11 @@ Route::group(['as' => 'front.'], function () {
     'frontBlogTagIndex'
    ])
         ->name('index');
+   Route::get('tags/{slug?}//page/{page}', [
+    BlogController::class,
+    'frontBlogTagIndex'
+   ])
+        ->name('index.first.page');
   });
  });
  Route::group([

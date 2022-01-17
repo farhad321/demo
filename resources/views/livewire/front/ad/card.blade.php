@@ -26,9 +26,9 @@
   <span class="ad_visit">{{$ad->views}} بازدید</span>
   @if($ad?->state || $ad?->city)
    <h4 class="location">
-    <a href="{{route('front.ad.category.city.index.first.page',$ad?->state?->name)}}">{{$ad?->state?->name}}</a>
+    <a href="{{route('front.ad.category.city.index.first.page',$ad?->state?->slug)}}">{{$ad?->state?->name}}</a>
     @if($ad?->city)
-     <a href="{{route('front.ad.category.city.index.first.page',$ad?->city?->name)}}">{{$ad?->city?->name}}</a>
+     <a href="{{route('front.ad.category.city.index.first.page',$ad?->city?->slug)}}">{{$ad?->city?->name}}</a>
     @endif
    </h4>
   @endif

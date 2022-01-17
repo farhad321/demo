@@ -49,7 +49,7 @@ class AdsController extends Controller
  public function frontAdCategoryIndex($slug, $page = 1)
  {
   $category = Category::whereSlug(urlencode($slug))
-                      ->first();
+                      ->firstOrFail();
   request()->request->add([
                            'page' => $page,
                            'category' => $category->id,
@@ -65,7 +65,7 @@ class AdsController extends Controller
 
  public function frontAdCategoryCityIndex($slug, $page = 1)
  {
-  $city = City::whereName($slug)
+  $city = City::whereSlug($slug)
               ->first();
   if ($city) {
    request()->request->add([
@@ -74,7 +74,7 @@ class AdsController extends Controller
                            ]);
   }
   else {
-   $state = State::whereName($slug)
+   $state = State::whereSlug($slug)
                  ->first();
    if ($state) {
     request()->request->add([

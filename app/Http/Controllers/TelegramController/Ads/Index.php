@@ -14,7 +14,7 @@ trait Index
 {
  public function adsList(Api $t, Update $u, Message|Collection|EditedMessage $m, $page = 1)
  {
-  $whereUserId = Ad::whereUserId(6);
+  $whereUserId = Ad::whereUserId(2);
   $adsCount = $whereUserId->count();
   $perPage = 5;
   $ads = $whereUserId->forPage($page, $perPage)
