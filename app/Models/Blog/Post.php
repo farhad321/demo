@@ -65,5 +65,8 @@ class Post extends Model implements HasMedia
   $this->addMediaConversion('150_150')
        ->crop(Manipulations::CROP_CENTER, 150, 150)
        ->performOnCollections('SpecialImage');
+//  $this->addMediaConversion('300x300')
+//       ->crop(Manipulations::CROP_CENTER, 150, 150)
+//       ->performOnCollections('SpecialImage','gallery');
  }
 }

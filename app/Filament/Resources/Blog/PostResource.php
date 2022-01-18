@@ -10,6 +10,7 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\SpatieTagsInput;
 use Filament\Forms\Components\TextInput;
@@ -45,11 +46,20 @@ class PostResource extends Resource
                                                ->disabled()
                                                ->required()
                                                ->unique(Post::class, 'slug', fn($record) => $record),
-                                      MarkdownEditor::make('content')
-                                                    ->required()
-                                                    ->columnSpan([
-                                                                  'sm' => 2,
-                                                                 ]),
+//                                      MarkdownEditor::make('content')
+//                                                    ->required()
+//                                       ->fileAttachmentsDisk('local')
+//                                                    ->columnSpan([
+//                                                                  'sm' => 2,
+//                                                                 ]),
+                                      RichEditor::make('content')
+                                                ->required()
+//                                                    ->fileAttachmentsDisk('local')
+                                                ->fileAttachmentsDirectory('attachments')
+//                                       ->fileAttachmentsVisibility('public')
+                                                ->columnSpan([
+                                                              'sm' => 2,
+                                                             ]),
                                       SpatieMediaLibraryFileUpload::make('SpecialImage')
                                                                   ->disk('ads')
                                                                   ->directory('storage/app/public/aaaaaaaaaaa4455555')

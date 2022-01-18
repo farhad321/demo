@@ -15,7 +15,7 @@
     <i class="fa fa-calendar-o"></i>{{jdate($post->created_at)->ago()}}</span>
    <span>
     <i class="fa fa-bookmark-o"></i>
-    {{$post->category->name}} </span>
+    {{$post?->category?->name}} </span>
    <span><i class="fa fa-pie-chart"
             aria-hidden="true"></i>{{$post->views}}</span>
   </p>
