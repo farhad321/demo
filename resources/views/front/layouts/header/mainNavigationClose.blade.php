@@ -5,7 +5,57 @@
   </nav>
  </div>
  <p class="d-flex justify-content-between col-12 border-top container">
-  <span><a href="">خانه</a><span>/قوانین و مقررات</span></span>
+  <span>
+   <a href="">خانه</a>
+   @switch(request()->route()->getName())
+    @case('front.rules')
+    / قوانین و مقررات
+    @break
+    @case('front.contact-us')
+    / تماس با ما
+    @break
+    @case('front.ad.category.index.first.page')
+    @case('front.ad.category.index')
+    @php
+     $class=new App\Services\AdCategory\AdCategory();
+    @endphp
+    @foreach($class->categoryAddress(request()->category_page) as $category)
+     @if($loop->last)
+      @if(request()->page && request()->page >1)
+       /  <a href="{{route('front.ad.category.index.first.page',$category->slug)}}"> {{$category->name}}</a> /
+       برگه {{request()->page}}
+
+      @else
+       /  {{$category->name}}
+      @endif
+     @else
+      / <a href="{{route('front.ad.category.index.first.page',$category->slug)}}"> {{$category->name}}</a>
+     @endif
+    @endforeach
+    @break
+    @case('front.ad.index')
+    @if(request()->page && request()->page >1)
+     <a href="{{route('front.ad.index')}}">/ آگهی ها</a>
+     / برگه {{request()->page}}
+    @else
+     / آگهی ها
+    @endif
+    @break
+    @case('front.ad.show')
+    @php
+     $class=new App\Services\AdCategory\AdCategory();
+    @endphp
+    @foreach($class->categoryAddress(request()->ad->mainCategory[0]) as $category)
+     / <a href="{{route('front.ad.category.index.first.page',$category->slug)}}"> {{$category->name}}</a>
+    @endforeach
+    / {{request()->ad->title}}
+    @break
+    @case('front.blog.show')
+    / <a href="{{route('front.blog.category.blog.index.first.page')}}">وبلاگ</a>
+    / {{request()->post->title}}
+    @break
+   @endswitch
+  </span>
   <button class="btn btn-primary"
           type="button"
           data-bs-toggle="collapse"
@@ -17,62 +67,44 @@
  </p>
  <div class="collapse"
       id="collapseExample">
- {{-- <form action=""
-        class="mt-5 mb-5 pb-5">
-   <div class="container">
-    <div class="row align-items-center">
-     <div class="col-md-5 col-sm-3">
-      <input type="text"
-             class="form-control"
-             placeholder="جستجو در تمام آگهی‌ها"
-             aria-label="First name">
-     </div>
-     <div class="row g-2 col-md-5 col-sm-3">
-      <div class="col-md-5">
-       <div class="form-floating">
-        <select class="form-select"
-                id="floatingSelectGrid"
-                aria-label="Floating label select example">
-         <option selected>تمام شهر‌ها</option>
-         <option value="1">One</option>
-         <option value="2">Two</option>
-         <option value="3">Three</option>
-        </select>
-       </div>
-      </div>
-      <div class="col-md-6">
-       <div class="form-floating">
-        <select class="form-select"
-                id="floatingSelectGrid"
-                aria-label="Floating label select example">
-         <option selected>همه دسته‌بندی‌ها</option>
-         <option value="1">One</option>
-         <option value="2">Two</option>
-         <option value="3">Three</option>
-        </select>
-       </div>
-      </div>
-     </div>
-     <div class="col-md-2 col-sm-2 mt-3">
-      <button type="submit"
-              class="btn btn-primary w-100">جستجو
-      </button>
-     </div>
-    </div>
-   </div>
-  </form>--}}
   @livewire('front.ad.search')
  </div>
  <div class="container p-0 pt-5
             pb-5">
-  <h3>آخرین آگهی‌ها</h3>
+  {{--  <h3>آخرین آگهی‌ها</h3>--}}
+  @switch(request()->route()->getName())
+   @case('front.rules')
+   <h3><a href="{{route('front.rules')}}"> قوانین و مقررات</a></h3>
+   @break
+   @case('front.contact-us')
+   <h3><a href="{{route('front.contact-us')}}">تماس با ما</a></h3>
+   @break
+   @case('front.ad.category.index.first.page')
+   @case('front.ad.category.index')
+   <h3>
+    {{ request()->category_page->name .' |'}}
+    @if(request()->page &&  request()->page>1)
+     صفحه {{request()->page}} از {{request()->total_page}} |
+    @endif
+    {{' کیوسک | ثبت اگهی رایگان بیزینس های ایرانی کانادا | تورنتو | ونکوور | مونترال'}}
+   </h3>
+   @break
+   @case('front.ad.show')
+   <h3><a href="{{route('front.ad.show',request()->ad->slug)}}">{{request()->ad->title}}</a></h3>
+
+
+   @break
+   @case('front.blog.show')
+   <h3><a href="{{route('front.blog.category.blog.index.first.page')}}">{{request()->post->title}}</a></h3>
+   @break
+  @endswitch
  </div>
  <div class="d-none d-lg-block">eqhtqt</div>
-</div>
-<div class="background">
- <div class="background-image original-size"
-      style="background-image: url({{asset('images/hero-background-icons (1).jpg')}});">
-  <img src="{{asset('./images/hero-background-icons (1).jpg')}}"
-       alt="کیوسک | نیازمندی های ایرانیان کانادا | آگهی رایگان نیازمندی ها">
+ <div class="background">
+  <div class="background-image original-size"
+       style="background-image: url({{asset('images/hero-background-icons (1).jpg')}});">
+   <img src="{{asset('./images/hero-background-icons (1).jpg')}}"
+        alt="کیوسک | نیازمندی های ایرانیان کانادا | آگهی رایگان نیازمندی ها">
+  </div>
  </div>
-</div>
+</div>@dump(request()->route()->action)

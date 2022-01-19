@@ -146,6 +146,16 @@ Route::group(['as' => 'front.'], function () {
 //   'frontAdSearch'
 //  ])
 //       ->name('search');
+  Route::get('listing', [
+   AdsController::class,
+   'frontAdIndex'
+  ])
+       ->name('index.first.page');
+  Route::get('listing/page/{page?}', [
+   AdsController::class,
+   'frontAdIndex'
+  ])
+       ->name('index');
   Route::get('newad', [
    AdsController::class,
    'frontAdCreate'
@@ -206,7 +216,7 @@ Route::group(['as' => 'front.'], function () {
     'frontBlogCategoryIndexBlog'
    ])
         ->name('blog.index.first.page');
-   Route::get('اخبار/{page?}/', [
+   Route::get('اخبار/{page}', [
     BlogController::class,
     'frontBlogCategoryIndexNews'
    ])

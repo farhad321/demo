@@ -6,9 +6,9 @@
  <section class=" blog-block m-0">
   <div class="container">
    <article>
-    <div>
-     <h2>وبلاگ</h2>
-    </div>
+    {{--    <div>--}}
+    {{--     <h2>وبلاگ</h2>--}}
+    {{--    </div>--}}
     <div class="row row-cols-1 row-cols-2">
      <div class="col-12 col-md-4">
       <div class="mb-3 rounded bg-white shadow">

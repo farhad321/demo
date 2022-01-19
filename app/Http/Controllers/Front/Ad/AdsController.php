@@ -13,6 +13,24 @@ use Str;
 
 class AdsController extends Controller
 {
+ public function frontAdIndex($page = 1)
+ {
+  request()->request->add([
+                           'page' => $page,
+                          ]);
+//  return
+  $ads0 = $this->searchCategoryAds();
+  request()->request->add([
+                           'total_page' => $ads0->total(),
+                          ]);
+  $urls = $this->getUrls($ads0);
+  $ads = [];
+  foreach ($ads0->items() as $key => $item) {
+   $ads[$key] = $item->toArray();
+  }
+  return view('front.pages.ads.category.index', compact('urls', 'ads'));
+ }
+
  public function frontAdCreate()
  {
   return view('front.pages.ads.create.create');
@@ -25,10 +43,14 @@ class AdsController extends Controller
                    if (auth()->check()) {
                     $q->whereUserId(auth()->id());
                    }
-                  }
+                  },
+                  'mainCategory'
                  ])
           ->whereSlug(urlencode($slug))
           ->first();
+  request()->request->add([
+                           'ad' => $ad,
+                          ]);
   return view('front.pages.ads.show', compact('ad'));
  }
 
@@ -53,8 +75,13 @@ class AdsController extends Controller
   request()->request->add([
                            'page' => $page,
                            'category' => $category->id,
+                           'category_page' => $category,
                           ]);
+//  return
   $ads0 = $this->searchCategoryAds();
+  request()->request->add([
+                           'total_page' => $ads0->total(),
+                          ]);
   $urls = $this->getUrls($ads0);
   $ads = [];
   foreach ($ads0->items() as $key => $item) {
@@ -257,7 +284,7 @@ class AdsController extends Controller
            ->whereIsVisible(true)
            ->with('mainCategory', 'media', 'state')
            ->latest()
-           ->paginate(16);
+           ->paginate(1);
   return $ads;
  }
 }

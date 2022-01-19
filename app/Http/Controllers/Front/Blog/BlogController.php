@@ -13,9 +13,10 @@ class BlogController extends Controller
  {
   $post = Post::whereSlug($slug)
               ->firstOrFail();
-  if ($post) {
-   return view('front.pages.blog.show', compact('post'));
-  }
+  request()->request->add([
+                           'post' => $post,
+                          ]);
+  return view('front.pages.blog.show', compact('post'));
  }
 
  public function frontBlogCategoryIndexBlog($page = 1)
@@ -50,18 +51,17 @@ class BlogController extends Controller
   return view('front.pages.blog.index', compact('urls', 'posts',));
  }
 
- public function frontBlogCategoryIndexNews($slug, $page = 1)
+ public function frontBlogCategoryIndexNews($page = 1)
  {
   request()->request->add([
                            'page' => $page
                           ]);
   $posts = Post::
-  withAllTags([$slug])
-               ->with([
-                       'media' => function ($q) {
-                        $q->whereCollectionName('SpecialImage');
-                       },
-                      ])
+  with([
+        'media' => function ($q) {
+         $q->whereCollectionName('SpecialImage');
+        },
+       ])
                ->whereHas('category', function (Builder $q) {
                 return $q->whereSlug('news');
                })
