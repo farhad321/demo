@@ -199,7 +199,7 @@ class SeedController extends Controller
                              $ad?->categories()
                                  ->attach($category->id, ['is_main' => true]);
                             }
-                            else {
+                            else  if (!$mainCategoryId || $mainCategoryId !== $taxonomy->term->term_id)  {
                              $ad->categories()
                                 ->attach($category->id);
                             }

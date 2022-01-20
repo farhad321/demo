@@ -1,6 +1,6 @@
 <div class="bg-dark">
  <div class="container">
-  <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light bg-dark p-0">
    <div class="container-fluid">
     <button class="navbar-toggler"
             type="button"
@@ -13,11 +13,11 @@
     </button>
     <div class="collapse navbar-collapse"
          id="navbarNavDropdown">
-     <ul class="navbar-nav">
-      <li class="nav-item">
+     <ul class="navbar-nav pt-1 pb-1">
+      <li class="nav-item pt-1 pb-1">
        @auth
         <a href="#"
-           class="nav-link text-white">
+           class="nav-link text-white font">
          <i class="fa fa-user text-secondary"></i> خوش آمدید {{auth()->user()->name}} </a>
         <ul class="inner-ul p-0 profile">
          <li class="nav-item"><a href="{{route('front.panel.user.ad.index')}}">اگهی های من</a></li>
@@ -30,13 +30,13 @@
        @endauth
        @guest
         <a href="{{route('front.panel.user.ad.index')}}"
-           class="nav-link active text-white">
+           class="nav-link active text-white font">
          <i class="fa fa-sign-in text-secondary"></i> ورود / ثبت نام </a>
        @endguest
       </li>
       <li class="nav-item">
        <a href=""
-          class="nav-link text-white">
+          class="nav-link text-white font">
         <i class="fa fa-bookmark text-secondary"></i> علاقه‌مندی ها </a>
       </li>
      </ul>

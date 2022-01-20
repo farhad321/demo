@@ -45,7 +45,7 @@
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasRight"
           aria-controls="offcanvasRight">
-   <i class="fa fa-align-justify"
+   <i class="fa fa-align-justify me-1"
       aria-hidden="true"></i>
    دسته‌بندی‌ها
   </button>
@@ -54,7 +54,7 @@
  <li class="nav-item submit_ad">
   <a href="{{route('front.ad.create')}}"
      class="btn btn-primary text-caps btn-rounded btn-framed">
-   <i class="fa fa-plus"
+   <i class="fa fa-plus me-1"
       aria-hidden="true"></i> ثبت آگهی </a>
  </li>
 </ol>

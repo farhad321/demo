@@ -14,12 +14,12 @@
    <span>
     <i class="fa fa-calendar-o"></i>{{jdate($post->created_at)->ago()}}</span>
    <span>
-    <i class="fa fa-bookmark-o"></i>
+    <i class="fa fa-bookmark"></i>
     {{$post?->category?->name}} </span>
    <span><i class="fa fa-pie-chart"
             aria-hidden="true"></i>{{$post->views}}</span>
   </p>
-  <div class="card-body card-bg">
+  <div class="card-body card-bg  p-1 pt-2">
    <a href="{{route('front.blog.show',[$t->getYear(),$t->getMonth(),$t->getDay(),$post->slug])}}"
       class="card-title">
     <h4 class="blog-item">{!! strip_tags(Str::padRight($post->title, 100))  !!}</h4>

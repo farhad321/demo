@@ -82,20 +82,20 @@
       <span class="favorite_7636 bookmark"
             data-toggle="tooltip"
             data-placement="top"
-            title=""></span>
+            title=""><i class="far fa-bookmark text-white fs-6"></i></span>
       <span class="ad_visit">78 بازدید</span>
       <h4 class="location">
-       <a href="">انتاریو</a>
+       <a href="" class="">انتاریو</a>
       </h4>
       <span class="price"><span>تماس بگیرید</span></span>
-      <div class="card-body card-bg">
-       <h5 class="card-title">Card title</h5>
+      <div class="card-body  pt-2 pb-1 card-bg">
        <div class="meta">
+       <h5 class="card-title text-dark">Card title</h5>
         <figure>
          <i class="fa fa-calendar-o"></i>2 ماه قبل
         </figure>
         <figure>
-         <i class="fa fa-folder-open-o"></i><a href="">انجام
+         <i class="fa fa-folder-open"></i><a href="">انجام
           امور خرید و فروش و اجاره</a>
         </figure>
        </div>

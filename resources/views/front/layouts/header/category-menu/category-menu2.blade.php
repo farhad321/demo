@@ -1,6 +1,6 @@
 <li class="nav-item">
  <a href=""
-    class="nav-link child {{!request()->routeIs('front.ad.category.index*')?:'active-link-primary'}}">دسته بندی ها</a>
+    class="nav-link child {{!request()->routeIs('front.ad.category.index*')?'':'active-link-primary'}}">دسته بندی ها<i class="far fa-chevron-down"></i></a>
  <ul class="inner-ul p-0">
   @php
    $parents=\App\Models\Ad\Category::whereParentId(null)->orderBy('position')

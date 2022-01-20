@@ -4,8 +4,8 @@ return [
     /*
      * Determine if the response cache middleware should be enabled.
      */
-//    'enabled' => env('RESPONSE_CACHE_ENABLED', false),
-    'enabled' => env('RESPONSE_CACHE_ENABLED', true),
+    'enabled' => env('RESPONSE_CACHE_ENABLED', false),
+//    'enabled' => env('RESPONSE_CACHE_ENABLED', true),
 
     /*
      *  The given class will determinate if a request should be cached. The

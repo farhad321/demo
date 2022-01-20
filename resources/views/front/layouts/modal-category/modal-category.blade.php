@@ -2,7 +2,7 @@
      tabindex="-1"
      id="offcanvasRight"
      aria-labelledby="offcanvasRightLabel">
- <div class="offcanvas-header">
+ <div class="offcanvas-header border-bottom">
   <h5 id="offcanvasRightLabel">دسته بندی ها</h5>
   <button type="button"
           class="btn-close text-reset"

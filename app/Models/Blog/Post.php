@@ -35,6 +35,7 @@ class Post extends Model implements HasMedia
   'seo_title',
   'seo_description',
   'user_id',
+  'views',
   'created_at',
   'updated_at'
  ];

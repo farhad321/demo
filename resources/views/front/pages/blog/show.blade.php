@@ -10,5 +10,9 @@
 
 @section('script.blog')
 
-
+ <script>
+   $(document).ready(function () {
+     Livewire.emit('viewed')
+   })
+ </script>
 @endsection
