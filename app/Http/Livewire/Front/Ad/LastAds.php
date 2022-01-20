@@ -39,6 +39,7 @@ class LastAds extends Component
  {
   $ads = Ad::with([
                    'state',
+                   'city',
                    'media' => function ($q) {
                     $q->whereCollectionName('SpecialImage');
                    },

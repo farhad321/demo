@@ -22,7 +22,7 @@
  @include('front.layouts.footer')
 </footer>
 <!-- modal -->
-@include('front.layouts.modal-category.modal-category')
+@include('front.layouts.modal-category.modal-category2')
 @include('front.layouts.returnToTop')
 <!-- script -->
 @include('front.layouts.script')

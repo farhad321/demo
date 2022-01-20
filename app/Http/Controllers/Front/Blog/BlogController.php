@@ -13,6 +13,9 @@ class BlogController extends Controller
  {
   $post = Post::whereSlug($slug)
               ->firstOrFail();
+  $post->update([
+                 'views' => $post->views + 1,
+                ]);
   request()->request->add([
                            'post' => $post,
                           ]);

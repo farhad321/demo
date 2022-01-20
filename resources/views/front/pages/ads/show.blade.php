@@ -10,5 +10,9 @@
 
 @section('script')
 
-
+ <script>
+   $(document).ready(function () {
+     Livewire.emit('viewed')
+   })
+ </script>
 @endsection

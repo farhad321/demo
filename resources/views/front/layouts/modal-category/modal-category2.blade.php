@@ -14,10 +14,9 @@
        id="accordionExample">
    @php
 
-
-    $parents=\App\Models\Ad\Category::whereParentId(null)->orderBy('position')
- ->orderBy('name')
- ->get();
+    $all=\App\Models\Ad\Category::all();
+        $parents=$all->where('parent_id',null)->sortBy('position')
+     ->sortBy('name');
    @endphp
 
    @foreach($parents as $parent)
@@ -47,12 +46,10 @@
       <div class="accordion-body">
        <ul class="children">
         @php
-         $children=\App\Models\Ad\Category::whereParentId($parent->id)
-    ->orderBy('position')
-    ->orderBy('name')
-    ->get();
+         $children=$all->where('parent_id',$parent->id)->sortBy('position')
+     ->sortBy('name');
         @endphp
-        @includeWhen($children->count(),'front.layouts.modal-category.sub-category',['children'=>$children])
+        @includeWhen($children->count(),'front.layouts.modal-category.sub-category2',['children'=>$children,'all'=>$all])
        </ul>
       </div>
      </div>

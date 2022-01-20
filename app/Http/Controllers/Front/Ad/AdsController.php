@@ -48,6 +48,9 @@ class AdsController extends Controller
                  ])
           ->whereSlug(urlencode($slug))
           ->first();
+  $ad->update([
+               'views' => $ad->views + 1,
+              ]);
   request()->request->add([
                            'ad' => $ad,
                           ]);
@@ -284,7 +287,7 @@ class AdsController extends Controller
            ->whereIsVisible(true)
            ->with('mainCategory', 'media', 'state')
            ->latest()
-           ->paginate(1);
+           ->paginate(16);
   return $ads;
  }
 }

@@ -114,11 +114,15 @@ Route::group(['as' => ''], function () {
       ->name('post-tags');
 });*/
 //new Front
-Route::group(['as' => 'front.'], function () {
+Route::group([
+              'as' => 'front.',
+              'middleware' => 'cacheResponse'
+             ], function () {
  Route::get('', [
   HomeController::class,
   'frontHome'
  ])
+      ->middleware('cacheResponse')
       ->name('home');
  Route::get('login-register', [
   HomeController::class,

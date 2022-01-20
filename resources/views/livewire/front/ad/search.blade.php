@@ -13,7 +13,7 @@
        <option value="0"
                selected>تمام شهر‌ها
        </option>
-       @foreach($cities->where('parent_id',null) as $city)
+       @foreach($cities as $city)
         <option value="{{$city->id}}">{{$city->name}}</option>
        @endforeach
       </select>
@@ -26,12 +26,12 @@
        <option value="0"
                selected>همه دسته‌بندی‌ها
        </option>
-       @foreach($categories->where('parent_id',null) as $category)
+       {{--       @foreach($categories->where('parent_id',null) as $category)--}}
 
-        <option value="{{$category->id}}">{{$category->name}}</option>
+       {{--        <option value="{{$category->id}}">{{$category->name}}</option>--}}
 
-        @include('livewire.front.ad.sub-category',['children'=>$categories->where('parent_id',$category->id),'categories'=>$categories])
-       @endforeach
+       {{--        @include('livewire.front.ad.sub-category',['children'=>$categories->where('parent_id',$category->id),'categories'=>$categories])--}}
+       {{--       @endforeach--}}
       </select>
      </div>
     </div>

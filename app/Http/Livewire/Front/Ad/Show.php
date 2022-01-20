@@ -27,6 +27,7 @@ class Show extends Component
  ];
  protected $listeners = [
   'reportConfirm',
+  'viewed'
  ];
  public $currentUrl;
 
@@ -107,6 +108,11 @@ class Show extends Component
    'confirmButtonText' => '<i class="fa fa-thumbs-up"></i> متوجه شدم',
    'width' => 300
   ]);
+ }
+
+ public function viewed()
+ {
+  $this->ad->update(['views' => $this->ad->views + 1]);
  }
 
  public function render()

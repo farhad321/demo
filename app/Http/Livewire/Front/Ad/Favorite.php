@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Livewire\Front\Ad;
+use Spatie\ResponseCache\Facades\ResponseCache;
+
 trait Favorite
 {
  public $local;
@@ -11,9 +13,9 @@ trait Favorite
  {
   if (auth()->check()) {
    if ($this->isFavorite) {
-    $this->ad->favorites()
-             ->where('user_id', auth()->id())
-             ->delete();
+    \App\Models\Ad\Favorite::whereUserId(auth()->id())
+                           ->whereAdId($this->ad->id)
+                           ->first()?->delete();
     $this->favorits = json_encode([]);
     $mainMassage = 'آگهی با موفقیت از علاقمندی های شما حذف شد.';
     $this->isFavorite = false;
@@ -45,6 +47,7 @@ trait Favorite
    }
    $this->favorits = json_encode($newList);
    $message = '(تنها بر روی این سیستم در دسترس است.)';
+   ResponseCache::clear();
   }
   $this->dispatchBrowserEvent('swal:modal', [
    'icon' => 'success',

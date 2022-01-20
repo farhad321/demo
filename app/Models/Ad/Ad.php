@@ -2,6 +2,7 @@
 
 namespace App\Models\Ad;
 
+use App\Models\Lib\ClearsResponseCache;
 use App\Models\Address\City;
 use App\Models\Address\State;
 use App\Models\User;
@@ -22,6 +23,7 @@ class Ad extends Model implements HasMedia
  use HasFactory;
  use InteractsWithMedia;
  use HasTags;
+ use ClearsResponseCache;
 
  protected $fillable = [
   'title',
@@ -48,7 +50,7 @@ class Ad extends Model implements HasMedia
  public function tags(): MorphToMany
  {
   return $this->morphToMany(self::getTagClassName(), 'taggable', 'taggables', null, 'tag_id')
-              ->orderBy('order_column');
+   ->orderBy('order_column');
  }
 
  public function user(): BelongsTo
@@ -69,14 +71,14 @@ class Ad extends Model implements HasMedia
  public function categories(): BelongsToMany
  {
   return $this->belongsToMany(Category::class, 'ad_category_pivot', 'ad_id', 'ad_category_id')
-              ->withPivot('is_main')
-              ->withTimestamps();
+   ->withPivot('is_main')
+   ->withTimestamps();
  }
 
  public function mainCategory()
  {
   return $this->belongsToMany(Category::class, 'ad_category_pivot', 'ad_id', 'ad_category_id')
-              ->wherePivot('is_main', 1);
+   ->wherePivot('is_main', 1);
  }
 
  public function favorites(): HasMany
@@ -97,8 +99,8 @@ class Ad extends Model implements HasMedia
  public function attrs(): BelongsToMany
  {
   return $this->belongsToMany(Attribute::class, 'ad_attribute_pivot', 'ad_id', 'ad_attribute_id')
-              ->withPivot('text', 'boolean', 'integer', 'float', 'date_time', 'date', 'json',)
-              ->withTimestamps();
+   ->withPivot('text', 'boolean', 'integer', 'float', 'date_time', 'date', 'json',)
+   ->withTimestamps();
  }
 
  public function attrs2(): HasMany
@@ -129,10 +131,10 @@ class Ad extends Model implements HasMedia
 //       ->fit(Manipulations::FIT_STRETCH, 400, 333)
 //       ->performOnCollections('Gallery', 'SpecialImage');
   $this->addMediaConversion('thumb')
-       ->crop(Manipulations::CROP_CENTER, 400, 333)
-       ->performOnCollections('SpecialImage');
+   ->crop(Manipulations::CROP_CENTER, 400, 333)
+   ->performOnCollections('SpecialImage');
   $this->addMediaConversion('70_70')
-       ->crop(Manipulations::CROP_CENTER, 70, 70)
-       ->performOnCollections('SpecialImage');
+   ->crop(Manipulations::CROP_CENTER, 70, 70)
+   ->performOnCollections('SpecialImage');
  }
 }

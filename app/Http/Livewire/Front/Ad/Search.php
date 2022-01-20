@@ -19,18 +19,8 @@ class Search extends Component
   $this->text = request()->query('s') ?? '';
   $this->city_id = request()->query('city_categories') ?? 0;
   $this->category_id = request()->query('category') ?? 0;
-  $this->categories = Category::all([
-                                     'id',
-                                     'name',
-                                     'parent_id'
-                                    ])
-                              ->sortBy('position')
-                              ->sortBy('name');;
-  $this->cities = City::all([
-                             'id',
-                             'name'
-                            ])
-                      ->sortBy('name');
+  $this->categories = Category::all();
+  $this->cities = City::all();
  }
 
  public function render()

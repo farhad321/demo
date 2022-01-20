@@ -3,6 +3,7 @@
 namespace App\Models\Ad;
 
 
+use App\Models\Lib\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,7 @@ class Category extends Model
 {
  use HasFactory;
 // use InteractsWithMedia;
+ use ClearsResponseCache;
 
  /**
   * @var string
@@ -54,8 +56,8 @@ class Category extends Model
  public function ads(): belongsToMany
  {
   return $this->belongsToMany(Ad::class, 'ad_category_pivot', 'ad_id', 'ad_category_id')
-              ->withPivot('is_main')
-              ->withTimestamps();
+   ->withPivot('is_main')
+   ->withTimestamps();
  }
 
  public function attrs(): BelongsToMany

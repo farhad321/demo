@@ -2,6 +2,7 @@
 
 namespace App\Models\Blog;
 
+use App\Models\Lib\ClearsResponseCache;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ class Post extends Model implements HasMedia
  use HasFactory;
  use HasTags;
  use InteractsWithMedia;
+ use ClearsResponseCache;
 
  /**
   * @var string
@@ -43,7 +45,6 @@ class Post extends Model implements HasMedia
   'published_at' => 'date',
  ];
 
-
  public function user(): BelongsTo
  {
   return $this->belongsTo(User::class);
@@ -57,14 +58,14 @@ class Post extends Model implements HasMedia
  public function registerMediaConversions(Media $media = null): void
  {
   $this->addMediaConversion('thumb')
-       ->crop(Manipulations::CROP_CENTER, 400, 333)
-       ->performOnCollections('SpecialImage');
+   ->crop(Manipulations::CROP_CENTER, 400, 333)
+   ->performOnCollections('SpecialImage');
 //  $this->addMediaConversion('singlePage')
 //       ->crop(Manipulations::CROP_CENTER, 641, 534)
 //       ->performOnCollections('SpecialImage');
   $this->addMediaConversion('150_150')
-       ->crop(Manipulations::CROP_CENTER, 150, 150)
-       ->performOnCollections('SpecialImage');
+   ->crop(Manipulations::CROP_CENTER, 150, 150)
+   ->performOnCollections('SpecialImage');
 //  $this->addMediaConversion('300x300')
 //       ->crop(Manipulations::CROP_CENTER, 150, 150)
 //       ->performOnCollections('SpecialImage','gallery');
