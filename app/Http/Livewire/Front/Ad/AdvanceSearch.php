@@ -31,6 +31,7 @@ class AdvanceSearch extends Component
  public string $sort = '';
  public string $orderBy = '';
  public string $asc = 'asc';
+ public array $attributes = [];
 // const orderByView = 'views';
 // const orderByRelation = '';
  protected $rules = [
@@ -44,6 +45,7 @@ class AdvanceSearch extends Component
 
  public function booted()
  {
+
   request()->request->add([
                            'category' => $this->category_id,
                            's' => $this->text,
@@ -62,6 +64,19 @@ class AdvanceSearch extends Component
                              'name'
                             ])
                       ->sortBy('name');
+  if ($this->category_id) {
+   $category = Category::with('attrs')
+                       ->find($this->category_id);
+   $list = [];
+   foreach ($category?->attrs?->toArray() as $attribute) {
+    $attribute['value'] = '';
+    $list = [
+     ...$list,
+     $attribute
+    ];
+   }
+   $this->attributes = $list;
+  }
  }
 
  public function updatedSort()
@@ -69,16 +84,20 @@ class AdvanceSearch extends Component
   $this->startSearch();
  }
 
+
  public function startSearch()
  {
-  $this->validate();
+//  $this->validate();
+  $this->validationAll();
   if ($this->sort) {
-   $explode = explode('-',$this->sort);
+   $explode = explode('-', $this->sort);
    $this->orderBy = $explode[0];
    $this->asc = $explode[1];
-  }else{
-   $this->reset('orderBy','asc');
   }
+  else {
+   $this->reset('orderBy', 'asc');
+  }
+//  dump(';;;;', $this->attributes, ';;;');
   request()->request->add([
                            'page' => $this->page,
                            'min' => $this->min,
@@ -86,6 +105,7 @@ class AdvanceSearch extends Component
                            'specialAd' => $this->specialAd,
                            'orderBy' => $this->orderBy,
                            'asc' => $this->asc,
+                           'attributes' => $this->attributes,
                           ]);
   $ads = (new AdsController())->searchAds();
   $this->emit('newAds', $ads->items(), $this->getUrlsSearch($ads));
@@ -110,12 +130,31 @@ class AdvanceSearch extends Component
     $item['label'] = '&raquo;';
    }
    $item['url'] = Str::of($item['url'])
-    ->replaceMatches("/\/page\/\d*/", '',)
+                     ->replaceMatches("/\/page\/\d*/", '',)
 //                     ->replaceMatches("/\?/", '/',)
 //                     ->replaceMatches("/\=/", '/',)
    ;
    return $item;
   });
   return $urls;
+ }
+
+ public function validationAll(): void
+ {
+  $list = [];
+//  foreach ($this->attributes as $key => $attribute) {
+//   if ($attribute['validation'] !== null) {
+//    $list['attributes.' . $key . '.value'] = $attribute['validation'];
+//   }
+//  }
+  $listName = [];
+//  foreach ($this->attributes as $key => $attribute) {
+//   if ($attribute['validation'] !== null) {
+//    $listName['attributes.' . $key . '.value'] = $attribute['name'];
+//   }
+//  }
+  $list = array_merge($this->rules, $list);
+  $listName = array_merge($this->validationAttributes, $listName);
+  $this->validate($list, [], $listName);
  }
 }

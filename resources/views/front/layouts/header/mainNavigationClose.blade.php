@@ -93,18 +93,35 @@
    @case('front.ad.show')
    <h3><a href="{{route('front.ad.show',request()->ad->slug)}}">{{request()->ad->title}}</a></h3>
 
-
+   <div class="d-flex justify-content-between pt-2">
+    <span class="text-secondary"><i class="fal fa-map-marker-alt m-1"></i>
+     @if(request()->ad?->state)
+      <a href="{{route('front.ad.category.city.index.first.page',request()->ad?->state->slug)}}">
+       {{request()->ad?->state->name}}
+      </a>
+     @elseif(request()->ad?->state && request()->ad?->city)
+      >
+     @elseif( request()->ad?->city)
+      <a href="{{route('front.ad.category.city.index.first.page',request()->ad?->city->slug)}}">
+       {{request()->ad?->city->name}}
+      </a>
+     @endif
+    </span>
+    <h4 class="text-secondary"><a href=""
+                                  class="text-secondary">تماس بگیرید</a></h4>
+   </div>
    @break
    @case('front.blog.show')
    <h3><a href="{{route('front.blog.category.blog.index.first.page')}}">{{request()->post->title}}</a></h3>
    <div class="d-flex justify-content-between pt-2">
     <div class="text-secondary d-flex details align-items-center">
-     <h5> <i class="far fa-bookmark"></i>
+     <h5><i class="far fa-bookmark"></i>
       {{request()->post->category->name}}
      </h5>
      <span class="ms-4">
       <i class="fa fa-calendar-o"></i> {{jdate(request()->post->created_at)->ago()}}</span>
-     </span><span><i class="fa fa-pie-chart" aria-hidden="true"></i> {{request()->post->views}} بازدید</span>
+     </span><span><i class="fa fa-pie-chart"
+                     aria-hidden="true"></i> {{request()->post->views}} بازدید</span>
     </div>
    </div>
    @break

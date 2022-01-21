@@ -34,9 +34,7 @@
   @endif
   <span class="price"><span>تماس بگیرید</span></span>
   <div class="card-body  pt-2 pb-1  card-bg">
-   <a href="{{route('front.ad.show',['slug'=>$ad->slug])}}">
-    <h5 class="card-title text-dark">{{$ad->title}}</h5>
-   </a>
+
    {{--   <div id="app_basic">--}}
    {{-- <div
       id="aa"
@@ -54,12 +52,15 @@
    {{--           wire:model="ad.title">--}}
    {{--   </div>--}}
    <div class="meta">
+    <a href="{{route('front.ad.show',['slug'=>$ad->slug])}}">
+     <h5 class="card-title text-dark">{{$ad->title}}</h5>
+    </a>
     <figure>
      <i class="fa fa-calendar-o"></i> {{jdate($ad->created_at)->ago()}}
     </figure>
     @if($ad?->mainCategory->count())
      <figure>
-      <i class="fa fa-folder-open"></i><a href="">{{$ad?->mainCategory->first()->name}}</a>
+      <i class="fa fa-folder-open"></i><a href=""> {{$ad?->mainCategory->first()->name}}</a>
      </figure>
     @endif
    </div>

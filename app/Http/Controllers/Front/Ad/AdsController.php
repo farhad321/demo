@@ -9,6 +9,7 @@ use App\Models\Address\City;
 use App\Models\Address\State;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelIdea\Helper\App\Models\Ad\_IH_Ad_QB;
+use LaravelIdea\Helper\App\Models\Ad\_IH_AdAttribute_QB;
 use Str;
 
 class AdsController extends Controller
@@ -44,7 +45,8 @@ class AdsController extends Controller
                     $q->whereUserId(auth()->id());
                    }
                   },
-                  'mainCategory'
+                  'mainCategory',
+   'attrs'
                  ])
           ->whereSlug(urlencode($slug))
           ->first();
@@ -192,59 +194,86 @@ class AdsController extends Controller
               ->withQueryString();
  }
 
-
  public function getAdQB(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
  {
   return Ad::query()
            ->when(request('min') || request('max'), function ($q) {
-           $q->whereNotNull('price');
-           $q->when(request('min'), function ($q, $v) {
-            $q->where('price', '>=', $v);
-           });
-           $q->when(request('max'), function ($q, $v) {
-            $q->where('price', '<=', $v);
-           });
-          })
+            $q->whereNotNull('price');
+            $q->when(request('min'), function ($q, $v) {
+             $q->where('price', '>=', $v);
+            });
+            $q->when(request('max'), function ($q, $v) {
+             $q->where('price', '<=', $v);
+            });
+           })
            ->when(request('city'), function ($q, $v) {
-           $q->whereCityId($v);
-          })
-          ->when(request('s'), function ($q, $v) {
+            $q->whereCityId($v);
+           })
+           ->when(request('s'), function ($q, $v) {
 //            $q->where(function ($q) use ($v) {
-           $q->OrWhere(function ($q) use ($v) {
-            $q->OrWhere('title', 'like', '%' . $v . '%')
-              ->OrWhere('content', 'like', '%' . $v . '%')
-              ->orWhereHas('tags', function (Builder $q) use ($v) {
-               $q->where('name->fa', $v);
-              });
-           });
-          })
-          ->when(request('category'), function ($q, $v) {
-           $q->whereHas('categories', function (Builder $q) use ($v) {
-            $q->where('ad_categories.id', $v);
-           });
-          })
-          ->when(request('orderBy'), function ($q, $v) {
-           $q->when(request('asc'), function ($q, $asc) use ($v) {
-            $q->orderBy($v, $asc);
-           });
-          })
-          ->when(request('orderBy') !== 'created_at', function ($q, $v) {
-           $q->latest();
-          })
-          ->whereIsVisible(true)
-           ->with([
-                  'state',
-                  'city',
-                  'media' => function ($q) {
-                   $q->whereCollectionName('SpecialImage');
-                  },
-                  'mainCategory',
-                  'favorites' => function ($q) {
-                   if (auth()->check()) {
-                    $q->whereUserId(auth()->id());
-                   }
+            $q->OrWhere(function ($q) use ($v) {
+             $q->OrWhere('title', 'like', '%' . $v . '%')
+               ->OrWhere('content', 'like', '%' . $v . '%')
+               ->orWhereHas('tags', function (Builder $q) use ($v) {
+                $q->where('name->fa', $v);
+               });
+            });
+           })
+           ->when(request('category'), function ($q, $v) {
+            $q->whereHas('categories', function (Builder $q) use ($v) {
+             $q->where('ad_categories.id', $v);
+            });
+           })
+           ->when(request('orderBy'), function ($q, $v) {
+            $q->when(request('asc'), function ($q, $asc) use ($v) {
+             $q->orderBy($v, $asc);
+            });
+           })
+           ->when(request('orderBy') !== 'created_at', function ($q, $v) {
+            $q->latest();
+           })
+           ->when(request('attributes'), function (/*_IH_Ad_QB*/ $q, $v) {
+            $hasValue = false;
+            foreach ($v as $item) {
+             if ($item['value']) {
+              $hasValue = true;
+              break;
+             }
+            }
+            if ($hasValue) {
+             $q->whereHas('attrs', function (/*_IH_AdAttribute_QB*/ $q) use ($v) {
+              foreach ($v as $attribute) {
+               $q->when($attribute['value'], function ($q, $v) use ($attribute) {
+                $q->where(function ($q) use ($attribute) {
+                 $q->whereAdAttributeId($attribute['id']);
+                 if ($attribute['value'] !== 'all') {
+                  switch ($attribute['type']) {
+                   case 'Text':
+                    $q->whereText($attribute['value']);
+                    break;
                   }
-                 ])
+                 }
+                });
+               });
+              }
+             });
+            }
+
+           })
+           ->whereIsVisible(true)
+           ->with([
+                   'state',
+                   'city',
+                   'media' => function ($q) {
+                    $q->whereCollectionName('SpecialImage');
+                   },
+                   'mainCategory',
+                   'favorites' => function ($q) {
+                    if (auth()->check()) {
+                     $q->whereUserId(auth()->id());
+                    }
+                   }
+                  ])
            ->paginate(16);
  }
 }

@@ -38,16 +38,16 @@ if ($item['collection_name'] ==='SpecialImage'){
   @endif
   <span class="price"><span>تماس بگیرید</span></span>
   <div class="card-body   pt-2 pb-1 card-bg">
+   <div class="meta">
    <a href="{{route('front.ad.show',['slug'=>$ad['slug']])}}">
     <h5 class="card-title text-dark">{{$ad['title']}}</h5>
    </a>
-   <div class="meta">
     <figure>
      <i class="fa fa-calendar-o"></i> {{jdate($ad['created_at'])->ago()}}
     </figure>
     @if(count($ad['main_category']))
      <figure>
-      <i class="fa fa-folder-open"></i><a href="">{{$ad['main_category'][0]['name']}}</a>
+      <i class="fa fa-folder-open"></i><a href=""> {{$ad['main_category'][0]['name']}}</a>
      </figure>
     @endif
    </div>

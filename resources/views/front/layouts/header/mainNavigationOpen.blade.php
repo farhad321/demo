@@ -9,7 +9,7 @@
     <p class="d-flex justify-content-between col-12  container">
      <span>
       <a href="{{route('front.home')}}">خانه</a> /
-      <a href="{{route('front.ad.index')}}"> آگهی‌ها</a>
+      <a href="{{route('front.ad.index.first.page')}}"> آگهی‌ها</a>
       / نتیجه جستجو برای “{{request()->s}}”
      </span>
     </p>

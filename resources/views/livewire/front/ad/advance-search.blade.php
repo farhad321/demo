@@ -3,7 +3,7 @@
  <div class="accordion-item bg-transparent position-relative">
   <h2 class="accordion-header bg-transparent"
       id="headingOne">
-   <button class="accordion-button bg-transparent right-apprance"
+   <button class="accordion-button collapsed bg-transparent right-apprance pb-4"
            type="button"
            data-bs-toggle="collapse"
            data-bs-target="#collapseTen"
@@ -34,17 +34,6 @@
       @error('specialAd') <span class=" text-danger">{{ $message }}</span> @enderror
      </div>
      <form class="row g-3 col-md-9">
-      {{-- <div class="col-md-4">
-        <label class="form-label"
-               for="specificSizeSelect">Preference</label>
-        <select class="form-select"
-                id="specificSizeSelect">
-         <option selected>Choose...</option>
-         <option value="1">One</option>
-         <option value="2">Two</option>
-         <option value="3">Three</option>
-        </select>
-       </div>--}}
       <div class="col-md-4">
        <label for="inputEmail4"
               class="form-label">کمترین قیمت</label>
@@ -63,6 +52,7 @@
               id="inputPassword4">
        @error('max') <span class=" text-danger">{{ $message }}</span> @enderror
       </div>
+      @include('livewire.front.ad.attributes')
      </form>
     </div>
     <div>

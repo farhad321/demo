@@ -1,16 +1,16 @@
 <section class=" blog-block m-0 p-4">
  <div class="container border-0 border-bottom">
   <div class="row">
-   <div class="col-12 col-md-7">
+   <div class="col-12 col-md-7  pt-4">
     <img src="{{$ad->getFirstMediaUrl('SpecialImage')}}"
          class="img-fluid"
          alt="{{$ad->title}}">
-    <div class="accordion accordion-flush mt-3 rounded"
+    <div class="accordion accordion-flush mt-4 rounded"
          id="accordionFlushExample">
      <div class="accordion-item">
       <h2 class="accordion-header"
           id="flush-headingOne">
-       <button class="accordion-button pb-0 ps-0 collapsed border-bottom"
+       <button class="accordion-button pb-0 ps-0  border-bottom"
                type="button"
                data-bs-toggle="collapse"
                data-bs-target="#flush-collapseOne"
@@ -37,11 +37,11 @@
           alt="">
     </section>
     <div class="accordion accordion-flush mt-3 mb-4 rounded"
-         id="accordionFlushExample">
+         id="accordionFlushExampleTwo">
      <div class="accordion-item">
       <h2 class="accordion-header"
-          id="flush-headingOne">
-       <button class="accordion-button collapsed border-bottom pb-0 ps-0"
+          id="flush-headingTwo">
+       <button class="accordion-button  border-bottom pb-0 ps-0"
                type="button"
                data-bs-toggle="collapse"
                data-bs-target="#flush-collapseTwo"
@@ -52,8 +52,8 @@
       </h2>
       <div id="flush-collapseTwo"
            class="accordion-collapse collapse show"
-           aria-labelledby="flush-headingOne"
-           data-bs-parent="#accordionFlushExample">
+           aria-labelledby="flush-headingTwo"
+           data-bs-parent="#accordionFlushExampleTwo">
        <div class="accordion-body">
         <div>
          <p>هیچ دیدگاهی برای این محصول نوشته نشده است.</p>
@@ -75,11 +75,11 @@
            <label for="exampleFormControlInput1"
                   class="form-label">نام *
            </label>
-           <input type="name"
+           <input type="text"
                   class="form-control"
                   wire:model="name"
                   id="exampleFormControlInput1"
-                  placeholder="name@example.com">
+                  placeholder="">
           </div>
           <div class="mb-3">
            <label for="exampleFormControlInput1"
@@ -125,9 +125,9 @@
                 type="button"
                 onclick=""
                 class="btn info-btn    @if($isFavorite)btn-primary
-@elsebtn-danger
+@else btn-secondary
                   @endif btn-icon btn-framed col-md-6 col-sm-12 pull-right">
-         <i class="fa fa-bookmark-o"></i></button>
+         <i class="fa fa-bookmark"></i></button>
         {{-- <button data-toggle="tooltip"
                  data-placement="top"
                  title=""
@@ -142,7 +142,7 @@
                  data-original-title="افزودن به علاقه‌مندی"><i class="fa fa-bookmark-o"
                                                                aria-hidden="true"></i></button>--}}
        </div>
-       <ul>
+       <ul class="p-0">
         <li class="border-bottom d-flex justify-content-between pb-2"><span>دسته
           بندی</span>
          @foreach($ad->categories as $category)
@@ -159,6 +159,16 @@
         </li>
         <li class="border-bottom d-flex justify-content-between pb-2"><span>تاریخ
           انتشار</span><span>{{jdate($ad['created_at'])->ago()}}</span></li>
+        @foreach($ad->attrs as $attribute)
+         @if($attribute->is_visible_on_front)
+          @switch($attribute->type)
+           @case('Text')
+           <li class="border-bottom d-flex justify-content-between pb-2">
+            <span>{{$attribute->name}}</span><span>{{$attribute->pivot->text}}</span></li>
+           @break
+          @endswitch
+         @endif
+        @endforeach
         <li class="d-flex justify-content-between pt-2 pb-2"><span>مبلغ</span><span><a href=""
                                                                                        class="text-success">تماس
            بگیرید</a></span></li>
@@ -166,38 +176,39 @@
        <div class="warning_ad">
         آدرس، شماره تلفن و ادرس سایت شغل های و بیزینس های ایرانی در کانادا
        </div>
-       <section class="report_ad mt-3">
+       <section class="report_ad mt-3  text-end">
         <a href="#"
            wire:click.prevent="report"><i class="fa fa-flag"></i> گزارش مشکل آگهی</a>
        </section>
       </div>
-      <section class="box"><img width="69"
-                                height="115"
-                                src="../images/4611.png"
-                                alt=""
-                                style="max-width: 100%; height: auto;"></section>
+      <section class="box  mb-5 mt-4"><img width="69"
+                                           height="115"
+                                           src="../images/4611.png"
+                                           alt=""
+                                           style="max-width: 100%; height: auto;"></section>
       <section>
        <div class="share">
         <span class="post-link__button"><i class="fa fa-files-o"
                                            aria-hidden="true"></i>
          لینک اشتراک گذاری</span>
         <input type="text"
-               id="shortlink">
+               id="shortlink"
+               placeholder="sample text">
        </div>
       </section>
       <div class="crunchify-social">
        <span>
         <i class="fa fa-share-alt"></i> اشتراک گذاری </span>
-       <a class="crunchify-link crunchify-telegram"><i class="fa fa-telegram"></i></a>
-       <a class="crunchify-link crunchify-facebook"
+       <a class="crunchify-link crunchify-telegram mt-2"><i class="fab fa-telegram-plane"></i></a>
+       <a class="crunchify-link crunchify-facebook mt-2"
           href=""
-          target="_blank"><i class="fa fa-facebook-f"></i></a>
-       <a class="crunchify-link crunchify-whatsapp"
+          target="_blank"><i class="fab fa-facebook-f"></i></a>
+       <a class="crunchify-link crunchify-whatsapp mt-2"
           href=""
-          target="_blank"><i class="fa fa-whatsapp"></i></a>
-       <a class="crunchify-link crunchify-twitter"
+          target="_blank"><i class="fab fa-whatsapp"></i></a>
+       <a class="crunchify-link crunchify-twitter mt-2"
           href=""
-          target="_blank"><i class="fa fa-twitter"></i></a>
+          target="_blank"><i class="fab fa-twitter"></i></a>
       </div>
      </div>
     </aside>
