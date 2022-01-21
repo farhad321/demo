@@ -19,7 +19,7 @@ class AdsController extends Controller
                            'page' => $page,
                           ]);
 //  return
-  $ads0 = $this->searchCategoryAds();
+  $ads0 = $this->getAdQB();
   request()->request->add([
                            'total_page' => $ads0->total(),
                           ]);
@@ -81,7 +81,7 @@ class AdsController extends Controller
                            'category_page' => $category,
                           ]);
 //  return
-  $ads0 = $this->searchCategoryAds();
+  $ads0 = $this->getAdQB();
   request()->request->add([
                            'total_page' => $ads0->total(),
                           ]);
@@ -116,7 +116,7 @@ class AdsController extends Controller
     abort(404);
    }
   }
-  $ads0 = $this->searchCategoryAds();
+  $ads0 = $this->getAdQB();
   $urls = $this->getUrls($ads0);
   $ads = [];
   foreach ($ads0->items() as $key => $item) {
@@ -192,10 +192,6 @@ class AdsController extends Controller
               ->withQueryString();
  }
 
- public function searchCategoryAds(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
- {
-  return $this->getAdQB();
- }
 
  public function getAdQB(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
  {

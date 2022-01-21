@@ -28,6 +28,7 @@ class AdvanceSearch extends Component
  public int $min = 0;
  public int $max = 0;
  public bool $specialAd = false;
+ public string $sort = '';
  public string $orderBy = '';
  public string $asc = 'asc';
 // const orderByView = 'views';
@@ -63,28 +64,26 @@ class AdvanceSearch extends Component
                       ->sortBy('name');
  }
 
- public function updatedOrderBy($v)
+ public function updatedSort()
  {
-  if ($v) {
-  $explode = explode('-',$v);
-  $this->orderBy = $explode[0];
-  $this->asc = $explode[1];
-  }
   $this->startSearch();
-  $this->orderBy = $v;
-  $this->asc = 'asc';
  }
 
  public function startSearch()
  {
   $this->validate();
+  if ($this->sort) {
+   $explode = explode('-',$this->sort);
+   $this->orderBy = $explode[0];
+   $this->asc = $explode[1];
+  }else{
+   $this->reset('orderBy','asc');
+  }
   request()->request->add([
                            'page' => $this->page,
                            'min' => $this->min,
                            'max' => $this->max,
                            'specialAd' => $this->specialAd,
-//                           'orderBy' => 'views',
-//                           'asc' => 'desc',
                            'orderBy' => $this->orderBy,
                            'asc' => $this->asc,
                           ]);
