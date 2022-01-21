@@ -8,9 +8,6 @@
        data-bs-ride="carousel">
    <div class="carousel-inner">
     @foreach($posts as $key=>$group)
-
-
-
      <div class="carousel-item @if($loop->first) active @endif">
       <div class="row row-cols-1 row-cols-md-3 {{$css}}  g-3 flex-nowrap flex-md-wrap">
        @foreach($group as $key=>$post)
@@ -18,13 +15,6 @@
        @endforeach
       </div>
      </div>
-
-
-
-
-
-
-
     @endforeach
    </div>
    <button class="carousel-control-prev prev"

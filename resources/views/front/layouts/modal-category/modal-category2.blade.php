@@ -27,7 +27,7 @@
 
     <div class="accordion-item">
      <h2 class="accordion-header"
-         id="headingOne">
+         id="heading{{$parent->id}}">
       <button class="accordion-button collapsed"
               type="button"
               data-bs-toggle="collapse"

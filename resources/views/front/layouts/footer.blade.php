@@ -24,7 +24,16 @@
            class="list-unstyled">
         <li id="menu-item-52"
             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52">
-         <a href="">حساب کاربری</a></li>
+         <a href="{{route('front.home')}}">صفحه اصلی</a></li>
+        <li id="menu-item-52"
+            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52">
+         <a href="{{route('front.blog.category.blog.index')}}">وبلاگ</a></li>
+        <li id="menu-item-52"
+            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52">
+         <a href="{{route('front.blog.category.news.index.first.page')}}">اخبار</a></li>
+        <li id="menu-item-52"
+            class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52">
+         <a href="{{route('front.rules')}}">قوانین و مقررات</a></li>
        </ul>
       </div>
      </nav>

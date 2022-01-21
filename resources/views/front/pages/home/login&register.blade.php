@@ -5,7 +5,7 @@
        content="Here is a precise description of my awesome webpage.">
 @endsection
 @section('content')
- <section class=" blog-block m-0">
+ <section class=" blog-block m-0 pt-5">
   <div class="container">
    <p class="p-3 ps-5">بازدیدها: 719</p>
    <div class="row">

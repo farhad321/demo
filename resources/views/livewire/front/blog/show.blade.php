@@ -11,29 +11,36 @@
    </div>
    <div class="p-3">
     <p class="p-3 ps-5">بازدیدها: {{$post->views}}</p>
-    {!! $post->content !!}
+    {!! nl2br($post->content) !!}
     <div>
+     <div class="p-4">
+      <div class="d-flex">
+       <span>
+        <i class="fas fa-tags"></i> برچسب ها:
+       </span>
+       <div class="blog-tag">
+        @foreach($post->tags as $tag)
+          <span class="ms-2">
+         <a href="{{route('front.blog.tag.index.first.page',$tag->slug)}}">
+          #{{$tag->name}}
+         </a>
+          </span>
+        @endforeach
+       </div>
+      </div>
+     </div>
      @php
-
       $post2=\App\Models\Blog\Post::latest()->where('id','<',$post->id)->first();
-
-
      @endphp
      @if($post2)
       <div class="text-end d-flex justify-content-end">
        <div class="bg-light p-3 col-md-6">
-        @php
-
-
-         $t2=jdate($post2->created_at);
-
-        @endphp
         <span class="text-secondary">مطلب قبلی</span>
         <p class="text-start mt-2">
-        <a href="{{route('front.blog.show',[$t2->getYear(),$t2->getMonth(),$t2->getDay(),$post2->slug])}}">{{$post2->title}}</a>
-       </p>
+         <a href="{{$post2->link}}">{{$post2->title}}</a>
+        </p>
+       </div>
       </div>
-     </div>
      @endif
     </div>
    </div>

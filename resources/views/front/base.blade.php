@@ -21,9 +21,9 @@
 <footer class="footer">
  @include('front.layouts.footer')
 </footer>
+@include('front.layouts.returnToTop')
 <!-- modal -->
 @include('front.layouts.modal-category.modal-category2')
-@include('front.layouts.returnToTop')
 <!-- script -->
 @include('front.layouts.script')
 @yield('script')

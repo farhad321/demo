@@ -12,6 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Tags\HasTags;
 use Spatie\MediaLibrary\HasMedia;
+use Str;
 
 class Post extends Model implements HasMedia
 {
@@ -70,5 +71,22 @@ class Post extends Model implements HasMedia
 //  $this->addMediaConversion('300x300')
 //       ->crop(Manipulations::CROP_CENTER, 150, 150)
 //       ->performOnCollections('SpecialImage','gallery');
+ }
+
+ public function getLinkAttribute()
+ {
+  $t = jdate($this->created_at);
+  return route('front.blog.show', [
+   $t->getYear(),
+   $t->getMonth(),
+   $t->getDay(),
+   $this->slug
+  ]);
+ }
+ public function getLimitContentAttribute()
+ {
+  $content= Str::replace($this->title, '', $this->content);
+  $content= strip_tags($content);
+  return Str::limit($content);
  }
 }

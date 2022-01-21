@@ -76,6 +76,7 @@ class Show extends Component
    'timerProgressBar' => true,
    'timer' => 20000,
    'confirmButtonText' => ' ارسال',
+   'cancelButtonText' => ' صرف نظر',
    'showCancelButton' => true,
    'width' => 600,
    'input' => 'select',
@@ -94,20 +95,20 @@ class Show extends Component
 
  public function reportConfirm($a)
  {
-  cookie('name2', 'va', 10);
-  Cookie::make('sss', 'aaa', 10);
-  $this->ad->reports()
-           ->create([
-                     'title' => $a['value'],
-                    ]);
-  $this->dispatchBrowserEvent('swal:modal', [
-   'icon' => 'success',
-   'title' => 'گزارش شما با موفقیت ثبت شد.',
-   'timerProgressBar' => true,
-   'timer' => 20000,
-   'confirmButtonText' => '<i class="fa fa-thumbs-up"></i> متوجه شدم',
-   'width' => 300
-  ]);
+  if ($a['isConfirmed']) {
+   $this->ad->reports()
+            ->create([
+                      'title' => $a['value'],
+                     ]);
+   $this->dispatchBrowserEvent('swal:modal', [
+    'icon' => 'success',
+    'title' => 'گزارش شما با موفقیت ثبت شد.',
+    'timerProgressBar' => true,
+    'timer' => 20000,
+    'confirmButtonText' => '<i class="fa fa-thumbs-up"></i> متوجه شدم',
+    'width' => 300
+   ]);
+  }
  }
 
  public function viewed()

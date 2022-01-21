@@ -232,12 +232,12 @@ Route::group([
         ->name('news.index.first.page');
   });
   Route::group(['as' => 'tag.'], function () {
-   Route::get('tags/{slug?}', [
+   Route::get('tags/{slug}/page/{page}', [
     BlogController::class,
     'frontBlogTagIndex'
    ])
         ->name('index');
-   Route::get('tags/{slug?}//page/{page}', [
+   Route::get('tags/{slug}', [
     BlogController::class,
     'frontBlogTagIndex'
    ])

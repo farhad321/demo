@@ -187,107 +187,68 @@ class AdsController extends Controller
 
  public function searchAds(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
  {
-  $ads = Ad::with([
-                   'state',
-                   'city',
-                   'media' => function ($q) {
-                    $q->whereCollectionName('SpecialImage');
-                   },
-                   'mainCategory',
-                   'favorites' => function ($q) {
-                    if (auth()->check()) {
-                     $q->whereUserId(auth()->id());
-                    }
-                   }
-                  ])
-           ->when(request('min') || request('max'), function ($q) {
-            $q->whereNotNull('price');
-            $q->when(request('min'), function ($q, $v) {
-             $q->where('price', '>=', $v);
-            });
-            $q->when(request('max'), function ($q, $v) {
-             $q->where('price', '<=', $v);
-            });
-           })
-           ->when(request('city'), function ($q, $v) {
-            $q->whereCityId($v);
-           })
-           ->when(request('s'), function ($q, $v) {
-//            $q->where(function ($q) use ($v) {
-            $q->OrWhere(function ($q) use ($v) {
-             $q->OrWhere('title', 'like', '%' . $v . '%')
-               ->OrWhere('content', 'like', '%' . $v . '%')
-               ->orWhereHas('tags', function (Builder $q) use ($v) {
-                $q->where('name->fa', $v);
-               });
-            });
-           })
-           ->when(request('category'), function ($q, $v) {
-            $q->whereHas('categories', function (Builder $q) use ($v) {
-             $q->where('ad_categories.id', $v);
-            });
-           })
-           ->when(request('orderBy'), function ($q, $v) {
-            $q->orderBy($v);
-           })
-           ->whereIsVisible(true)
-           ->with('mainCategory', 'media', 'state')
-           ->latest()
-           ->paginate(16)
-           ->withPath(route('front.home'))
-           ->withQueryString();
-  return $ads;
+  return $this->getAdQB()
+              ->withPath(route('front.home'))
+              ->withQueryString();
  }
 
  public function searchCategoryAds(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
  {
-  $ads = Ad::with([
-                   'state',
-                   'city',
-                   'media' => function ($q) {
-                    $q->whereCollectionName('SpecialImage');
-                   },
-                   'mainCategory',
-                   'favorites' => function ($q) {
-                    if (auth()->check()) {
-                     $q->whereUserId(auth()->id());
-                    }
-                   }
-                  ])
+  return $this->getAdQB();
+ }
+
+ public function getAdQB(): array|\Illuminate\Pagination\LengthAwarePaginator|\LaravelIdea\Helper\App\Models\Ad\_IH_Ad_C
+ {
+  return Ad::query()
            ->when(request('min') || request('max'), function ($q) {
-            $q->whereNotNull('price');
-            $q->when(request('min'), function ($q, $v) {
-             $q->where('price', '>=', $v);
-            });
-            $q->when(request('max'), function ($q, $v) {
-             $q->where('price', '<=', $v);
-            });
-           })
+           $q->whereNotNull('price');
+           $q->when(request('min'), function ($q, $v) {
+            $q->where('price', '>=', $v);
+           });
+           $q->when(request('max'), function ($q, $v) {
+            $q->where('price', '<=', $v);
+           });
+          })
            ->when(request('city'), function ($q, $v) {
-            $q->whereCityId($v);
-           })
-           ->when(request('s'), function ($q, $v) {
+           $q->whereCityId($v);
+          })
+          ->when(request('s'), function ($q, $v) {
 //            $q->where(function ($q) use ($v) {
-            $q->OrWhere(function ($q) use ($v) {
-             $q->OrWhere('title', 'like', '%' . $v . '%')
-               ->OrWhere('content', 'like', '%' . $v . '%')
-               ->orWhereHas('tags', function (Builder $q) use ($v) {
-                $q->where('name->fa', $v);
-               });
-            });
-           })
-           ->when(request('category'), function ($q, $v) {
-            $q->whereHas('categories', function (Builder $q) use ($v) {
-             $q->where('ad_categories.id', $v);
-            });
-           })
-           ->when(request('orderBy'), function ($q, $v) {
-            $q->orderBy($v);
-           })
-           ->whereIsVisible(true)
-           ->with('mainCategory', 'media', 'state')
-           ->latest()
+           $q->OrWhere(function ($q) use ($v) {
+            $q->OrWhere('title', 'like', '%' . $v . '%')
+              ->OrWhere('content', 'like', '%' . $v . '%')
+              ->orWhereHas('tags', function (Builder $q) use ($v) {
+               $q->where('name->fa', $v);
+              });
+           });
+          })
+          ->when(request('category'), function ($q, $v) {
+           $q->whereHas('categories', function (Builder $q) use ($v) {
+            $q->where('ad_categories.id', $v);
+           });
+          })
+          ->when(request('orderBy'), function ($q, $v) {
+           $q->when(request('asc'), function ($q, $asc) use ($v) {
+            $q->orderBy($v, $asc);
+           });
+          })
+          ->when(request('orderBy') !== 'created_at', function ($q, $v) {
+           $q->latest();
+          })
+          ->whereIsVisible(true)
+           ->with([
+                  'state',
+                  'city',
+                  'media' => function ($q) {
+                   $q->whereCollectionName('SpecialImage');
+                  },
+                  'mainCategory',
+                  'favorites' => function ($q) {
+                   if (auth()->check()) {
+                    $q->whereUserId(auth()->id());
+                   }
+                  }
+                 ])
            ->paginate(16);
-  return $ads;
  }
 }

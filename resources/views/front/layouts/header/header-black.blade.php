@@ -14,9 +14,9 @@
     <div class="collapse navbar-collapse"
          id="navbarNavDropdown">
      <ul class="navbar-nav pt-1 pb-1">
-      <li class="nav-item pt-1 pb-1">
+      <li class="nav-item">
        @auth
-        <a href="#"
+        <a href="{{route('front.panel.user.profile.edit')}}"
            class="nav-link text-white font">
          <i class="fa fa-user text-secondary"></i> خوش آمدید {{auth()->user()->name}} </a>
         <ul class="inner-ul p-0 profile">

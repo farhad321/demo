@@ -14,8 +14,11 @@
   </h2>
   <select class="form-select absolot"
           wire:model="orderBy">
-   <option value="{{\App\Http\Livewire\Front\Ad\AdvanceSearch::orderByRelation}}">مرتب کردن براساس ارتباط</option>
-   <option value="{{\App\Http\Livewire\Front\Ad\AdvanceSearch::orderByView}}">مرتب کردن براساس بازدید</option>
+   <option value="">مرتب کردن براساس ارتباط</option>
+   <option value="views-desc">مرتب کردن براساس بازدید(زیاد به کم)</option>
+   <option value="views-asc">مرتب کردن براساس بازدید(کم به زیاد)</option>
+   <option value="created_at-desc">مرتب کردن براساس تاریخ(جدید به قدیم)</option>
+   <option value="created_at-asc">مرتب کردن براساس تاریخ(قدیم به جدید)</option>
   </select>
   <div id="collapseTen"
        class="accordion-collapse collapse bg-transparent"

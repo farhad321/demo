@@ -29,8 +29,9 @@ class AdvanceSearch extends Component
  public int $max = 0;
  public bool $specialAd = false;
  public string $orderBy = '';
- const orderByView = 'views';
- const orderByRelation = '';
+ public string $asc = 'asc';
+// const orderByView = 'views';
+// const orderByRelation = '';
  protected $rules = [
   'min' => 'lte:max',
   'max' => 'gte:min',
@@ -62,6 +63,18 @@ class AdvanceSearch extends Component
                       ->sortBy('name');
  }
 
+ public function updatedOrderBy($v)
+ {
+  if ($v) {
+  $explode = explode('-',$v);
+  $this->orderBy = $explode[0];
+  $this->asc = $explode[1];
+  }
+  $this->startSearch();
+  $this->orderBy = $v;
+  $this->asc = 'asc';
+ }
+
  public function startSearch()
  {
   $this->validate();
@@ -70,7 +83,10 @@ class AdvanceSearch extends Component
                            'min' => $this->min,
                            'max' => $this->max,
                            'specialAd' => $this->specialAd,
+//                           'orderBy' => 'views',
+//                           'asc' => 'desc',
                            'orderBy' => $this->orderBy,
+                           'asc' => $this->asc,
                           ]);
   $ads = (new AdsController())->searchAds();
   $this->emit('newAds', $ads->items(), $this->getUrlsSearch($ads));

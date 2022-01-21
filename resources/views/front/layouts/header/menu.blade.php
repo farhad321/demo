@@ -16,26 +16,21 @@
  <ul class="navbar-nav">
   <li class="nav-item">
    <a href="{{route('front.home')}}"
-      class="nav-link {{!request()->routeIs('front.home')?:'active-link-primary'}}">صفحه اصلی</a>
-  </li>
+      class="nav-link {{!request()->routeIs('front.home')?:'active-link-primary'}}">صفحه اصلی</a></li>
   <li class="nav-item">
    <a href="{{route('front.blog.category.blog.index')}}"
-      class="nav-link {{!request()->routeIs('front.blog.category.blog.index.first.page')?:'active-link-primary'}} ">وبلاگ</a>
-  </li>
+      class="nav-link {{!request()->routeIs('front.blog.category.blog.index.first.page')?:'active-link-primary'}} ">وبلاگ</a></li>
   <li class="nav-item">
    <a href="{{route('front.blog.category.news.index.first.page')}}"
-      class="nav-link {{!request()->routeIs('front.blog.category.news.index*')?:'active-link-primary'}}">اخبار</a>
-  </li>
+      class="nav-link {{!request()->routeIs('front.blog.category.news.index*')?:'active-link-primary'}}">اخبار</a></li>
   @include('front.layouts.header.category-menu.category-menu')
   {{--  @include('front.layouts.header.category-menu.category-menu2')--}}
   <li class="nav-item">
    <a href="{{route('front.rules')}}"
-      class="nav-link {{!request()->routeIs('front.rules')?:'active-link-primary'}}">قوانین و مقررات</a>
-  </li>
+      class="nav-link {{!request()->routeIs('front.rules')?:'active-link-primary'}}">قوانین و مقررات</a></li>
   <li class="nav-item">
    <a href="{{route('front.contact-us')}}"
-      class="nav-link {{!request()->routeIs('front.contact-us')?:'active-link-primary'}}">تماس با ما</a>
-  </li>
+      class="nav-link {{!request()->routeIs('front.contact-us')?:'active-link-primary'}}">تماس با ما</a></li>
  </ul>
 </div><!-- buttons -->
 <ol class="nav-btn">

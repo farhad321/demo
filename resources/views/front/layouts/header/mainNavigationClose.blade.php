@@ -4,8 +4,8 @@
    @include('front.layouts.header.menu')
   </nav>
  </div>
- <p class="d-flex justify-content-between col-12 border-top container">
-  <span>
+ <p class="d-flex justify-content-between col-12 border-top container colpas-button">
+  <span class="mt-2 text-title">
    <a href="">خانه</a>
    @switch(request()->route()->getName())
     @case('front.rules')
@@ -56,13 +56,14 @@
     @break
    @endswitch
   </span>
-  <button class="btn btn-primary"
+  <button class="btn btn-primary search-icon-btn"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample"
           aria-expanded="false"
           aria-controls="collapseExample">
    <i class="far fa-search text-white"></i>
+   <i class="fas fa-times text-white"></i>
   </button>
  </p>
  <div class="collapse"
@@ -96,6 +97,16 @@
    @break
    @case('front.blog.show')
    <h3><a href="{{route('front.blog.category.blog.index.first.page')}}">{{request()->post->title}}</a></h3>
+   <div class="d-flex justify-content-between pt-2">
+    <div class="text-secondary d-flex details align-items-center">
+     <h5> <i class="far fa-bookmark"></i>
+      {{request()->post->category->name}}
+     </h5>
+     <span class="ms-4">
+      <i class="fa fa-calendar-o"></i> {{jdate(request()->post->created_at)->ago()}}</span>
+     </span><span><i class="fa fa-pie-chart" aria-hidden="true"></i> {{request()->post->views}} بازدید</span>
+    </div>
+   </div>
    @break
   @endswitch
  </div>

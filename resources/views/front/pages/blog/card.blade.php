@@ -1,35 +1,24 @@
-@php
-
- $t=jdate($post->created_at);
-
-@endphp
 <div class="col">
  <div class="card">
-  <a href="{{route('front.blog.show',[$t->getYear(),$t->getMonth(),$t->getDay(),$post->slug])}}">
+  <a href="{{$post->link}}">
    <img src="{{$post->getFirstMedia('SpecialImage')?->getUrl('thumb')}}"
         class="card-img-top"
         alt="...">
   </a>
   <p class="blog-detail">
    <span>
-    <i class="fa fa-calendar-o"></i>{{jdate($post->created_at)->ago()}}</span>
+    <i class="fa fa-calendar-o"></i> {{jdate($post->created_at)->ago()}}</span>
    <span>
-    <i class="fa fa-bookmark"></i>
-    {{$post?->category?->name}} </span>
+    <i class="fa fa-bookmark-o"></i>{{$post?->category?->name}} </span>
    <span><i class="fa fa-pie-chart"
-            aria-hidden="true"></i>{{$post->views}}</span>
+            aria-hidden="true"></i> {{$post->views}} بازدید</span>
   </p>
   <div class="card-body card-bg  p-1 pt-2">
-   <a href="{{route('front.blog.show',[$t->getYear(),$t->getMonth(),$t->getDay(),$post->slug])}}"
+   <a href="{{$post->link}}"
       class="card-title">
     <h4 class="blog-item">{!! strip_tags(Str::padRight($post->title, 100))  !!}</h4>
    </a>
-   @php
-
-    $content= Str::replace($post->title, '', $post->content);
-   $content= strip_tags($content);
-   @endphp
-   <p class="cart-text blog-meta">{!!  Str::limit($content) !!}</p>
+   <p class="cart-text blog-meta">{!! $post->limit_content!!}</p>
   </div>
  </div>
 </div>
