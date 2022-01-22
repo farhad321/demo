@@ -34,8 +34,7 @@ class AdvanceSearch extends Component
  public string $orderBy = '';
  public string $asc = 'asc';
  public array $attributes = [];
-// const orderByView = 'views';
-// const orderByRelation = '';
+ protected $listeners = ['setPage'];
  protected $rules = [
   'min' => 'lte:max',
   'max' => 'gte:min',
@@ -47,7 +46,6 @@ class AdvanceSearch extends Component
 
  public function booted()
  {
-
   request()->request->add([
                            'category' => $this->category_id,
                            'tag' => $this->tag_id,
@@ -64,7 +62,6 @@ class AdvanceSearch extends Component
   $this->city_id = request()->query('city_categories', 0);
   $this->category_id = request()->query('category', 0);
   $this->tag_id = request()->query('tag', 0);
-//  dump(request()->fullUrl());
   $this->path = request()->fullUrl();
   $this->cities = City::all([
                              'id',
@@ -91,37 +88,21 @@ class AdvanceSearch extends Component
   $this->startSearch();
  }
 
-
  public function startSearch()
  {
-//  $this->validate();
-  $this->validationAll();
-  if ($this->sort) {
-   $explode = explode('-', $this->sort);
-   $this->orderBy = $explode[0];
-   $this->asc = $explode[1];
-  }
-  else {
-   $this->reset('orderBy', 'asc');
-  }
-//  dump(';;;;', $this->attributes, ';;;');
-  request()->request->add([
-                           'page' => $this->page,
-                           'min' => $this->min,
-                           'max' => $this->max,
-                           'specialAd' => $this->specialAd,
-                           'orderBy' => $this->orderBy,
-                           'asc' => $this->asc,
-                           'attributes' => $this->attributes,
-                          ]);
-  $ads = (new AdsController())->searchAds();
-  $this->emit('newAds', $ads->items(), $this->getUrlsSearch($ads));
+  $this->page = 1;
+  $this->startSearchBase();
+ }
+
+ public function setPage($page = 1)
+ {
+  $this->page = $page;
+  $this->startSearchBase();
  }
 
  public function getUrlsSearch($ads): \Illuminate\Support\Collection
  {
   $linkCollection = $ads->linkCollection();
-//  dump($linkCollection);
   $urls = $linkCollection->map(function ($item) {
    $item['disabled'] = false;
    $stringable = Str::of($item['label']);
@@ -137,8 +118,8 @@ class AdvanceSearch extends Component
    elseif ($stringable->contains('Next')) {
     $item['label'] = '&raquo;';
    }
-   $item['url'] = Str::of($item['url'])
-                     ->replaceMatches("/\/page\/\d*/", '',)
+   $item['page'] = (int)(string)Str::of($item['url'])
+                                   ->replaceMatches("/^http.*\=/", '',)
 //                     ->replaceMatches("/\?/", '/',)
 //                     ->replaceMatches("/\=/", '/',)
    ;
@@ -164,5 +145,29 @@ class AdvanceSearch extends Component
   $list = array_merge($this->rules, $list);
   $listName = array_merge($this->validationAttributes, $listName);
   $this->validate($list, [], $listName);
+ }
+
+ public function startSearchBase(): void
+ {
+  $this->validationAll();
+  if ($this->sort) {
+   $explode = explode('-', $this->sort);
+   $this->orderBy = $explode[0];
+   $this->asc = $explode[1];
+  }
+  else {
+   $this->reset('orderBy', 'asc');
+  }
+  request()->request->add([
+                           'page' => $this->page,
+                           'min' => $this->min,
+                           'max' => $this->max,
+                           'specialAd' => $this->specialAd,
+                           'orderBy' => $this->orderBy,
+                           'asc' => $this->asc,
+                           'attributes' => $this->attributes,
+                          ]);
+  $ads = (new AdsController())->searchAds();
+  $this->emit('newAds', $ads->items(), $this->getUrlsSearch($ads), 'livewire');
  }
 }

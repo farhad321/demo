@@ -8,6 +8,7 @@ class ListSearch extends Component
 {
  public $ads;
  public $urls;
+ public $searchType = 'link';
  protected $listeners = ['newAds'];
 
  public function mount($ads, $urls)
@@ -21,11 +22,10 @@ class ListSearch extends Component
   return view('livewire.front.ad.search.list-search');
  }
 
- public function newAds($ads, $urls)
+ public function newAds($ads, $urls, $searchType = 'link')
  {
-//  dump($ads, $urls);
-//  dump($this->ads,'1', $ads,'2', $this->urls,'3', $urls,'4');
   $this->ads = $ads;
   $this->urls = $urls;
+  $this->searchType = $searchType;
  }
 }

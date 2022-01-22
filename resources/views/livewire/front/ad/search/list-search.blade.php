@@ -14,11 +14,25 @@
   <div class="mt-3 w-100 d-flex justify-content-center">
    <nav aria-label="Page navigation example">
     <ul class="pagination">
-     @foreach($urls as $url)
-      <li class="page-item rounded @if($url['active']) active @endif  @if($url['disabled'] )disabled
+     @if($searchType == 'link')
+
+      @foreach($urls as $url)
+       <li class="page-item rounded @if($url['active']) active @endif  @if($url['disabled'] )disabled
 @endif"><a class="page-link  bg-transparent"
            href="{{$url['url']}}">{!! $url['label'] !!}</a></li>
-     @endforeach
+      @endforeach
+
+     @elseif($searchType == 'livewire')
+
+      @foreach($urls as $url)
+       <li class="page-item rounded @if($url['active']) active @endif  @if($url['disabled'] )disabled @endif">
+        <a href=""
+           class="page-link  bg-transparent"
+           wire:click.prevent="$emit('setPage',{{$url['page']}})">{!! $url['label'] !!}</a>
+       </li>
+      @endforeach
+
+     @endif
     </ul>
    </nav>
   </div>

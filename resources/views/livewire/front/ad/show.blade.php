@@ -3,7 +3,7 @@
   <div class="row">
    <div class="col-12 col-md-7  pt-4">
     <img src="{{$ad->getFirstMediaUrl('SpecialImage')}}"
-         class="img-fluid"
+         class="img-fluid w-100"
          alt="{{$ad->title}}">
     <div class="accordion accordion-flush mt-4 rounded"
          id="accordionFlushExample">
