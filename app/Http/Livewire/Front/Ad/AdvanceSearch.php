@@ -23,6 +23,8 @@ class AdvanceSearch extends Component
  public string $text = '';
  public int $city_id = 0;
  public int $category_id = 0;
+ public int $tag_id = 0;
+ public string $path = '';
  public $cities;
 //////////////////////////
  public int $min = 0;
@@ -48,6 +50,8 @@ class AdvanceSearch extends Component
 
   request()->request->add([
                            'category' => $this->category_id,
+                           'tag' => $this->tag_id,
+                           'path' => $this->path,
                            's' => $this->text,
                            'city' => $this->city_id,
                           ]);
@@ -59,6 +63,9 @@ class AdvanceSearch extends Component
   $this->text = request()->query('s') ?? '';
   $this->city_id = request()->query('city_categories', 0);
   $this->category_id = request()->query('category', 0);
+  $this->tag_id = request()->query('tag', 0);
+//  dump(request()->fullUrl());
+  $this->path = request()->fullUrl();
   $this->cities = City::all([
                              'id',
                              'name'
@@ -114,6 +121,7 @@ class AdvanceSearch extends Component
  public function getUrlsSearch($ads): \Illuminate\Support\Collection
  {
   $linkCollection = $ads->linkCollection();
+//  dump($linkCollection);
   $urls = $linkCollection->map(function ($item) {
    $item['disabled'] = false;
    $stringable = Str::of($item['label']);

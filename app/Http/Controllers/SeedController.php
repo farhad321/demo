@@ -63,6 +63,9 @@ class SeedController extends Controller
     continue;
    }
    \DB::transaction(function () use ($post) {
+    $extra = new \stdClass();
+    $extra->wordpressId = $post->ID;
+//    dump($extra);
     Ad::create([
                 'title' => $post->title,
                 'slug' => urldecode($post->slug),
@@ -73,7 +76,7 @@ class SeedController extends Controller
                 'seo_title' => $post->_yoast_wpseo_title,
                 'seo_description' => $post->_yoast_wpseo_metadesc,
                 'views' => $post->post_views_count,
-//              'attributes' => ,
+                'extra' => $extra,
                 'created_at' => $post->created_at,
                 'updated_at' => $post->updated_at,
                 'user_id' => $this->userId($post),
@@ -199,7 +202,7 @@ class SeedController extends Controller
                              $ad?->categories()
                                  ->attach($category->id, ['is_main' => true]);
                             }
-                            else  if (!$mainCategoryId || $mainCategoryId !== $taxonomy->term->term_id)  {
+                            else if (!$mainCategoryId || $mainCategoryId !== $taxonomy->term->term_id) {
                              $ad->categories()
                                 ->attach($category->id);
                             }

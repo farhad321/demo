@@ -101,6 +101,20 @@
       </div>
      </div>
     </div>
+    <div>
+     <div class="row align-items-center pb-3 pt-3">
+      <div class="col-5 tag-topic">
+       <i class="fas fa-tags"></i> برچسب ها:
+      </div>
+      <div class="col-7">
+       <div class="rounded-tag">
+        @foreach($ad->tags as $tag)
+        <a href="{{route('front.ad.tag.index.first.page',$tag->slug)}}">#{{$tag->name}}</a>
+        @endforeach
+       </div>
+      </div>
+     </div>
+    </div>
    </div>
    <!--  -->
    <div class="col-12 col-md-5">
@@ -124,23 +138,12 @@
                 wire:click="favorite"
                 type="button"
                 onclick=""
-                class="btn info-btn    @if($isFavorite)btn-primary
-@else btn-secondary
-                  @endif btn-icon btn-framed col-md-6 col-sm-12 pull-right">
-         <i class="fa fa-bookmark"></i></button>
-        {{-- <button data-toggle="tooltip"
-                 data-placement="top"
-                 title=""
-                 type="button"
-                 class="btn  info-btn
-                  @if($isFavorite)
-                  btn-primary
-                  @else
-                   btn-danger
-                   @endif
-                    btn-icon btn-framed col-md-6 col-sm-12 pull-right favorite_7632"
-                 data-original-title="افزودن به علاقه‌مندی"><i class="fa fa-bookmark-o"
-                                                               aria-hidden="true"></i></button>--}}
+                class="btn info-btn btn-primary btn-icon btn-framed col-md-6 col-sm-12 pull-right">
+         <i class="
+         @if($isFavorite)fas
+@else fal
+         @endif fa-bookmark"></i></button>
+
        </div>
        <ul class="p-0">
         <li class="border-bottom d-flex justify-content-between pb-2"><span>دسته
@@ -193,21 +196,22 @@
          لینک اشتراک گذاری</span>
         <input type="text"
                id="shortlink"
-               placeholder="sample text">
+               placeholder="{{$ad->short_link}}">
        </div>
       </section>
       <div class="crunchify-social">
        <span>
         <i class="fa fa-share-alt"></i> اشتراک گذاری </span>
-       <a class="crunchify-link crunchify-telegram mt-2"><i class="fab fa-telegram-plane"></i></a>
+       <a href="https://telegram.me/share/url?text=&url={{route('front.ad.show',$ad->slug)}}"
+          class="crunchify-link crunchify-telegram mt-2"><i class="fab fa-telegram-plane"></i></a>
        <a class="crunchify-link crunchify-facebook mt-2"
-          href=""
+          href="https://www.facebook.com/sharer/sharer.php?u={{route('front.ad.show',$ad->slug)}}"
           target="_blank"><i class="fab fa-facebook-f"></i></a>
        <a class="crunchify-link crunchify-whatsapp mt-2"
-          href=""
+          href="whatsapp://send?text={{$ad->title}} {{route('front.ad.show',$ad->slug)}}"
           target="_blank"><i class="fab fa-whatsapp"></i></a>
        <a class="crunchify-link crunchify-twitter mt-2"
-          href=""
+          href="https://twitter.com/intent/tweet?text={{$ad->title}}&url={{route('front.ad.show',$ad->slug)}}&via=Crunchify"
           target="_blank"><i class="fab fa-twitter"></i></a>
       </div>
      </div>
@@ -255,4 +259,4 @@ $adsUser=$adsUser->chunk(4);
 ->inRandomOrder()->whereNotIn('id',[$ad->id,...$adsUserIds])->limit(8)->get()->chunk(4);
 
 
-@endphp@includeWhen(count($adsUser),'livewire.front.ad.layouts.ad-slider',['ads'=>$adsUser,'title'=>'سایر آگهی‌های این کاربر','id'=>1])@includeWhen(count($adsSimilar),'livewire.front.ad.layouts.ad-slider',['ads'=>$adsSimilar,'title'=>'آگهی‌های مشابه','id'=>2])
+@endphp @includeWhen(count($adsUser),'livewire.front.ad.layouts.ad-slider',['ads'=>$adsUser,'title'=>'سایر آگهی‌های این کاربر','id'=>1])@includeWhen(count($adsSimilar),'livewire.front.ad.layouts.ad-slider',['ads'=>$adsSimilar,'title'=>'آگهی‌های مشابه','id'=>2])

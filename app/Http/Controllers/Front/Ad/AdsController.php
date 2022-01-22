@@ -7,6 +7,7 @@ use App\Models\Ad\Ad;
 use App\Models\Ad\Category;
 use App\Models\Address\City;
 use App\Models\Address\State;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\Builder;
 use LaravelIdea\Helper\App\Models\Ad\_IH_Ad_QB;
 use LaravelIdea\Helper\App\Models\Ad\_IH_AdAttribute_QB;
@@ -46,13 +47,11 @@ class AdsController extends Controller
                    }
                   },
                   'mainCategory',
-   'attrs'
+                  'attrs',
+                  'tags'
                  ])
-          ->whereSlug(urlencode($slug))
-          ->first();
-  $ad->update([
-               'views' => $ad->views + 1,
-              ]);
+          ->whereSlug($slug)
+          ->firstOrFail();
   request()->request->add([
                            'ad' => $ad,
                           ]);
@@ -127,9 +126,28 @@ class AdsController extends Controller
   return view('front.pages.ads.city-category.index', compact('urls', 'ads', 'city'));
  }
 
- public function frontAdTagIndex()
+ public function frontAdTagIndex($slug, $page = 1)
  {
-  return view('front.pages.ads.tag.index');
+  $locale = app()->getLocale();
+  $tag = Tag::where("slug->{$locale}", $slug)
+            ->whereType('ad')
+            ->first();
+  request()->request->add([
+                           'page' => $page,
+                           'tag' => $tag->id,
+                           'tag_page' => $tag,
+                          ]);
+//  return
+  $ads0 = $this->getAdQB();
+  request()->request->add([
+                           'total_page' => $ads0->total(),
+                          ]);
+  $urls = $this->getUrls($ads0);
+  $ads = [];
+  foreach ($ads0->items() as $key => $item) {
+   $ads[$key] = $item->toArray();
+  }
+  return view('front.pages.ads.category.index', compact('urls', 'ads'));
  }
 
  public function getUrls($ads): \Illuminate\Support\Collection
@@ -224,6 +242,12 @@ class AdsController extends Controller
              $q->where('ad_categories.id', $v);
             });
            })
+           ->when(request('tag'), function ($q, $v) {
+            $q->whereHas('tags', function (Builder $q) use ($v) {
+             $q->where("tags.id", $v)
+               ->whereType('ad');
+            });
+           })
            ->when(request('orderBy'), function ($q, $v) {
             $q->when(request('asc'), function ($q, $asc) use ($v) {
              $q->orderBy($v, $asc);
@@ -258,7 +282,6 @@ class AdsController extends Controller
               }
              });
             }
-
            })
            ->whereIsVisible(true)
            ->with([

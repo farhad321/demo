@@ -35,7 +35,7 @@ class Ad extends Model implements HasMedia
   'seo_title',
   'seo_description',
   'views',
-  'attributes',
+  'extra',
   'user_id',
   'state_id',
   'city_id',
@@ -44,7 +44,7 @@ class Ad extends Model implements HasMedia
  ];
  protected $casts = [
   'is_visible' => 'boolean',
-  'attributes' => 'json',
+  'extra' => 'json',
  ];
 
  public function tags(): MorphToMany
@@ -136,5 +136,25 @@ class Ad extends Model implements HasMedia
   $this->addMediaConversion('70_70')
    ->crop(Manipulations::CROP_CENTER, 70, 70)
    ->performOnCollections('SpecialImage');
+ }
+
+ public function getShortLinkAttribute()
+ {
+  $id = null;
+  if (isset($this->extra->wordpressId)) {
+   $id = $this->extra->wordpressId;
+  }else{
+   $id = $this->id;
+  }
+  return route('front.home', ['p' => $id]);
+ }
+ public function setExtraAttribute($value)
+ {
+  $this->attributes['extra'] = json_encode($value);
+ }
+
+ public function getExtraAttribute()
+ {
+  return json_decode($this->attributes['extra']);
  }
 }

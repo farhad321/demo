@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Front\Home;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Front\Ad\AdsController;
+use App\Models\Ad\Ad;
 
 class HomeController extends Controller
 {
@@ -11,6 +12,17 @@ class HomeController extends Controller
  {
   if (request()->query('s') || request()->query('city_categories') || request()->query('category')) {
    return (new AdsController())->frontAdSearch();
+  }
+  elseif (request()->query('p')) {
+   $adWordpressId = Ad::where('extra->wordpressId', request()->query('p'))
+                      ->first();
+   if ($adWordpressId) {
+    $slug = $adWordpressId->slug;
+   }
+   else {
+    $slug = Ad::firstOrFail(request()->query('p'))->slug;
+   }
+   return (new AdsController())->frontAdShow($slug);
   }
   return view('front.pages.home.home.home');
  }

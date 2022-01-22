@@ -45,9 +45,11 @@
     @php
      $class=new App\Services\AdCategory\AdCategory();
     @endphp
+   @if(count(request()->ad->mainCategory))
     @foreach($class->categoryAddress(request()->ad->mainCategory[0]) as $category)
      / <a href="{{route('front.ad.category.index.first.page',$category->slug)}}"> {{$category->name}}</a>
     @endforeach
+    @endif
     / {{request()->ad->title}}
     @break
     @case('front.blog.show')
@@ -71,7 +73,7 @@
   @livewire('front.ad.search')
  </div>
  <div class="container p-0 pt-5
-            pb-5">
+            pb-5  flex-direction">
   {{--  <h3>آخرین آگهی‌ها</h3>--}}
   @switch(request()->route()->getName())
    @case('front.rules')
@@ -100,7 +102,7 @@
        {{request()->ad?->state->name}}
       </a>
      @elseif(request()->ad?->state && request()->ad?->city)
-      >
+      <i class="fa fa-angle-left" aria-hidden="true"></i>
      @elseif( request()->ad?->city)
       <a href="{{route('front.ad.category.city.index.first.page',request()->ad?->city->slug)}}">
        {{request()->ad?->city->name}}

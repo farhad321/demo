@@ -196,11 +196,16 @@ Route::group([
         ->name('index.first.page');
   });
   Route::group(['as' => 'tag.'], function () {
-   Route::get('product-tag/{slug?}', [
+   Route::get('product-tag/{slug?}/page/{page?}', [
     AdsController::class,
     'frontAdTagIndex'
    ])
         ->name('index');
+   Route::get('product-tag/{slug?}', [
+    AdsController::class,
+    'frontAdTagIndex'
+   ])
+        ->name('index.first.page');
   });
  });
  Route::group(['as' => 'blog.'], function () {
@@ -306,51 +311,29 @@ Route::group(['as' => ''], function () {
  });
 });
 Route::get('/test', function () {
-// return
-// \Corcel\Model\Post::whereHas('attachment')
-//                   ->first();
- $posts = Post::all();
- foreach ($posts as $post) {
-  preg_match_all('/https:\/\/kiusk\.ca\/wp-content\/uploads.*\.(?:gif|jpeg|jpg|png|psd|bmp|tiff|tiff|jp2|iff|vnd\.microsoft\.icon|xbm|vnd\.wap\.wbmp|webp|)/',
-                 $post->content, $matchs, PREG_PATTERN_ORDER, 0);
-  $list = [];
-  foreach ($matchs[0] as $key => $match) {
-   preg_match('/\d+x\d+/', $match, $ms);
-   $rr = preg_replace('/-\d+x\d+/', '', $match);
-   $meta = preg_replace('/https:\/\/kiusk\.ca\/wp-content\/uploads\//', '', $rr);
-   if (count($ms)) {
-    $a = [
-     'replace' => $match,
-     'main' => $rr,
-     'meta' => $meta,
-     'responsive' => [
-      $ms[0],
-      (int)explode('x', $ms[0])[0],
-      (int)explode('x', $ms[0])[1]
-     ],
-    ];
-   }
-   else {
-    $a = [
-     'replace' => $match,
-     'main' => $rr,
-     'meta' => $meta,
-    ];
-   }
-   $list[] = $a;
-  }
-  dump([
-        $post->id,
-        $list
-       ]);
- }
-// return $list;
-// gif|jpeg|png|psd|bmp|tiff|tiff|jp2|iff|vnd.microsoft.icon|xbm|vnd.wap.wbmp|webp|
-//
-// return \App\Models\Tag::
-//
-// withCount('ads', 'posts')
-//                       ->orderBy('posts_count', 'desc')
-//                       ->limit(10)
-//                       ->get();
+ return \App\Models\Tag::find(4);
+
+
+ \Corcel\Model\Post::
+//type('post')
+type('product')
+//                  ->
+//with([
+//      'taxonomies' => function ($q) {
+//       $q->where('taxonomy', 'product_tag');
+//      }
+//     ])
+//                  ->
+// whereHas('taxonomies', function ($q) {
+//  $q->where('taxonomy', 'product_tag');
+// })
+//                  ->
+// whereHas('taxonomies', function ($q) {
+//                   $q->where('taxonomy', 'post_tag');
+// })
+                  ->
+                  without('meta','thumbnail')
+                   ->published()
+                   ->limit(10)
+                   ->get('ID');
 });

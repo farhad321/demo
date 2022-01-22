@@ -29,7 +29,7 @@ class CreateAdsTable extends Migration
          ->nullable();
    $table->bigInteger('views')
          ->default(0);
-   $table->json('attributes')
+   $table->json('extra')
          ->nullable();
    $table->timestamps();
   });
