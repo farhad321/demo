@@ -1,8 +1,8 @@
 @extends('front.base')
 @section('seo')
- <title>kiusk</title>
- <meta name="description"
-       content="Here is a precise description of my awesome webpage.">
+ {{-- <title>{{$ad->seo_title}}</title>--}}
+ {{-- <meta name="description"--}}
+ {{--       content="{{$ad->seo_description}}">--}}
 @endsection
 @section('content')
  <section class=" blog-block m-0 p-4  pt-5">

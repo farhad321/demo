@@ -14,6 +14,7 @@ if ($item['collection_name'] ==='SpecialImage'){
    <a href="{{route('front.ad.show',['slug'=>$ad['slug']])}}">
     <img src="{{$src}}"
          class="card-img-top "
+         title="{{$ad['title']}}"
          alt="...">
    </a>
 
@@ -33,15 +34,17 @@ if ($item['collection_name'] ==='SpecialImage'){
   <span class="ad_visit">{{$ad['views']}} بازدید</span>
   @if($ad['state'])
    <h4 class="location">
-    <a class="" href="">{{$ad['state']['name']}}</a>
+    <a class=""
+       href="">{{$ad['state']['name']}}</a>
    </h4>
   @endif
   <span class="price"><span>تماس بگیرید</span></span>
   <div class="card-body   pt-2 pb-1 card-bg">
    <div class="meta">
-   <a href="{{route('front.ad.show',['slug'=>$ad['slug']])}}">
-    <h5 class="card-title text-dark">{{$ad['title']}}</h5>
-   </a>
+    <a href="{{route('front.ad.show',['slug'=>$ad['slug']])}}">
+     <h5 class="card-title text-dark"
+         title="{{$ad['title']}}">{{$ad['title']}}</h5>
+    </a>
     <figure>
      <i class="fa fa-calendar-o"></i> {{jdate($ad['created_at'])->ago()}}
     </figure>

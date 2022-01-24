@@ -155,6 +155,7 @@ return [
       * Package Service Providers...
       */
      Telegram\Bot\Laravel\TelegramServiceProvider::class,
+     Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
      /*
       * Application Service Providers...
       */

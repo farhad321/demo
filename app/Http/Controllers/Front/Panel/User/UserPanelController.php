@@ -17,7 +17,7 @@ class UserPanelController extends Controller
 
  public function frontPanelUserFavoriteIndex()
  {
-  return view('');
+  return view('front.pages.panel.user.favorites.index');
  }
 
  public function frontPanelUserPaymentIndex()

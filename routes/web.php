@@ -311,12 +311,86 @@ Route::group(['as' => ''], function () {
  });
 });
 Route::get('/test', function () {
- return \App\Models\Tag::find(4);
-
-
- \Corcel\Model\Post::
+// return
+ $content = \Corcel\Model\Post::find(1354)->content;
+// /$content = addslashes($content);
+// $content = addcslashes($content,'"');
+// $content = Str::replace('"', "\"", $content);
+// return
+// $content = stripslashes($content);
+// $content = Str::replace('"', "'", $content);
+// return $content;
+// $content = htmlspecialchars($content,ENT_QUOTES, 'UTF-8');
+// $content = html_entity_decode($content);
+// $content =(string) html_entity_decode($content);
+// $content =html_entity_decode((string)$content);
+//  $content =(string) html_entity_decode($content);
+// $content =html_entity_decode((string)$content);
+// return
+// $content = addslashes($content);
+// $content = mysql_real_escape_string($content);
+// $content = "کمپانی👑 RENOX 👑
+//با تیم کاملا حرفه ای در کوتاه ترین زمان و مناسبت ترین قیمت، خانه رویایی خود را بازسازی نمایید . و انواع خدمات ساختمانی را برایتان انجام میدهد.
+//
+//🧰 انجام کلیه امور ساختمانی و #بازسازی کامل منزل
+//و #لندسکیپ
+//
+//🧰 طراحی و اجرای کامل #بیسمنت
+//
+//🧰 طراحی و باسازی حمام و دستشویی اشپزخانه
+//
+//🧰 #نقاشی ساختمان بصورت کاملا حرفه ای
+//
+//🧰 نصب انواع سرامیک،سنگ،هاردوود و لمینت
+//
+//🧰 کلیه کارهای نجاری (کارپنتری)
+//و نصب کابینت و ونیتی
+//
+//🧰🛠برآورد رایگان 🛠🧰
+//
+//Farzad Rahimi
+//647 563 7070
+//
+//<a href="https://kiusk.ca/blog/1399/09/07/%da%86%da%af%d9%88%d9%86%d9%87-%d8%af%d8%b1-%d8%a7%db%8c%d9%86%d8%aa%d8%b1%d9%86%d8%aa-%d8%af%d9%86%d8%a8%d8%a7%d9%84-%d8%ae%d8%a7%d9%86%d9%87-%d8%a8%da%af%d8%b1%d8%af%db%8c%d9%85%d8%9f/">خرید اینترنتی خانه</a>
+//
+//<a href="http://karyabee.ca/%d8%aa%d9%82%d8%a7%d8%a8%d9%84-%da%a9%d8%a7%d9%86%d8%a7%d8%af%d8%a7-%d9%88-%da%86%db%8c%d9%86-%d8%a8%d9%87-%da%a9%d8%ac%d8%a7-%d8%b1%d8%b3%db%8c%d8%af-%d8%9f/">تقابل کانادا با چین به کجا رسید</a>";
+// $content = "کمپانی👑 RENOX 👑
+//با تیم کاملا حرفه ای در کوتاه ترین زمان و مناسبت ترین قیمت، خانه رویایی خود را بازسازی نمایید . و انواع خدمات ساختمانی را برایتان انجام میدهد.
+//
+//🧰 انجام کلیه امور ساختمانی و #بازسازی کامل منزل
+//و #لندسکیپ
+//
+//🧰 طراحی و اجرای کامل #بیسمنت
+//
+//🧰 طراحی و باسازی حمام و دستشویی اشپزخانه
+//
+//🧰 #نقاشی ساختمان بصورت کاملا حرفه ای
+//
+//🧰 نصب انواع سرامیک،سنگ،هاردوود و لمینت
+//
+//🧰 کلیه کارهای نجاری (کارپنتری)
+//و نصب کابینت و ونیتی
+//
+//🧰🛠برآورد رایگان 🛠🧰
+//
+//Farzad Rahimi
+//647 563 7070
+//
+//<a href=\"https://kiusk.ca/blog/1399/09/07/%da%86%da%af%d9%88%d9%86%d9%87-%d8%af%d8%b1-%d8%a7%db%8c%d9%86%d8%aa%d8%b1%d9%86%d8%aa-%d8%af%d9%86%d8%a8%d8%a7%d9%84-%d8%ae%d8%a7%d9%86%d9%87-%d8%a8%da%af%d8%b1%d8%af%db%8c%d9%85%d8%9f/\">خرید اینترنتی خانه</a>
+//";
+// return
+// (new Ad([
+//         'content' => (string)($content)
+////                                  'content' =>htmlspecialchars_decode($content)
+//        ]))->save();
+ return App\Models\Ad\Ad::create([
+                                  'content' => $content
+//                                  'content' =>htmlspecialchars_decode($content)
+                                 ]);
+ return // \App\Models\Tag::find(4);
+  \Corcel\Model\Post::
 //type('post')
-type('product')
+  type('product')
 //                  ->
 //with([
 //      'taxonomies' => function ($q) {
@@ -331,9 +405,8 @@ type('product')
 // whereHas('taxonomies', function ($q) {
 //                   $q->where('taxonomy', 'post_tag');
 // })
-                  ->
-                  without('meta','thumbnail')
-                   ->published()
-                   ->limit(10)
-                   ->get('ID');
+                    ->without('meta', 'thumbnail')
+                    ->published()
+                    ->limit(10)
+                    ->get();
 });

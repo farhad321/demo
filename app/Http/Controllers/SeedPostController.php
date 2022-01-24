@@ -38,6 +38,8 @@ class SeedPostController extends Controller
                                            $WUser->first_name,
                                            $WUser->last_name
                                           ])->implode(''),
+                        'first_name' => $WUser->first_name,
+                        'last_name' => $WUser->last_name,
                         'phone' => $WUser->user_login,
 //                 'birthday' => $this->faker->dateTimeThisCentury(),
 //                        'address' => $this->faker->address(),
@@ -59,7 +61,7 @@ class SeedPostController extends Controller
 //   return
 //         $WUser = \Corcel\Model\User::whereId($post->author_id)
 //                             ->get()->toArray();
-   if (\App\Models\Blog\Post::whereSlug($post->slug)
+   if (\App\Models\Blog\Post::whereSlug(urldecode($post->slug))
                             ->exists()) {
     continue;
    }
@@ -91,73 +93,6 @@ class SeedPostController extends Controller
   }
  }
 
- public function comments()
- {
-  return // \App\Models\Ad\AdAttribute::with('attribute')
-//                                  ->get();
-   $posts = Post::with('attachment', 'comments')
-                ->has('comments')
-                ->type('product')
-                ->published()
-                ->chunk(20, function ($posts) {
-                 foreach ($posts as $post) {
-                  $ad = Ad::whereSlug($post->slug)
-                          ->get();
-//                  Media::whereModelType('App\Models\Ad\Ad')->whereId($ad->id)
-                  if ($ad->exists()) {
-                   continue;
-                  }
-                  \DB::transaction(function () use ($post) {
-                   Ad::create([
-                               'title' => $post->title,
-                               'slug' => urldecode($post->slug),
-                               'content' => $post->content,
-                               'excerpt' => $post->excerpt,
-                               'is_visible' => 1,
-//              'price' =>,
-//              'seo_title' =>,
-//              'seo_description' => ,
-//              'views' => ,
-//              'attributes' => ,
-//              'created_at' => ,
-//              'updated_at' => ,
-                               'user_id' => $this->userId($post),
-//   'state_id' => function () {
-//    return State::factory()
-//                ->create()->id;
-//   },
-//   'city_id' => function () {
-//    return City::factory()
-//               ->create()->id;
-//   },
-                              ]);
-                  });
-                 }
-                })
-//               ->count()
-//  ->limit(100)
-//   ->get()
-   ;
- }
-
- public function media()
- {
-  return // \App\Models\Ad\AdAttribute::with('attribute')
-//                                  ->get();
-   $posts = Post::with('attachment', 'comments')
-                ->has('comments')
-                ->type('product')
-                ->published()
-                ->chunk(20, function ($posts) {
-                 foreach ($posts as $post) {
-                 }
-                })
-//               ->count()
-//  ->limit(100)
-//   ->get()
-   ;
- }
-
  public function tags()
  {
   return $posts = Post::
@@ -172,7 +107,7 @@ class SeedPostController extends Controller
                          foreach ($post->taxonomies as $taxonomy) {
                           switch ($taxonomy->taxonomy) {
                            case 'category':
-                            $category = \App\Models\Blog\Category::whereSlug($taxonomy->term->slug)
+                            $category = \App\Models\Blog\Category::whereSlug(urldecode($taxonomy->term->slug))
                                                                  ->first();
                             $ad->category()
                                ->associate($category);
@@ -237,7 +172,7 @@ class SeedPostController extends Controller
                         ->get();
   foreach ($categories as $categoryOld) {
    $categoryParent = \App\Models\Blog\Category::firstOrCreate([
-                                                               'slug' => $categoryOld->term->slug
+                                                               'slug' => urldecode($categoryOld->term->slug)
                                                               ], [
                                                                'name' => $categoryOld->term->name,
                                                                'description' => $categoryOld->description,
@@ -254,7 +189,7 @@ class SeedPostController extends Controller
                               ->get();
   foreach ($childrenCategory as $category) {
    $parent = \App\Models\Blog\Category::firstOrCreate([
-                                                       'slug' => $category->term->slug
+                                                       'slug' => urldecode($category->term->slug)
                                                       ], [
                                                        'parent_id' => $categoryParent->id,
                                                        'name' => $category->term->name,

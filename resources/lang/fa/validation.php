@@ -26,6 +26,7 @@ return [
  ],
  "boolean" => "فیلد :attribute فقط میتواند صحیح و یا غلط باشد",
  "confirmed" => ":attribute با تاییدیه مطابقت ندارد.",
+ 'current_password' => 'رمز عبور اشتباه است.',
  "date" => ":attribute یک تاریخ معتبر نیست.",
  "date_format" => ":attribute با الگوی :format مطاقبت ندارد.",
  "different" => ":attribute و :other باید متفاوت باشند.",

@@ -1,8 +1,8 @@
 @extends('front.base')
 @section('seo')
- <title>kiusk</title>
+ <title>{{$ad->seo_title}}</title>
  <meta name="description"
-       content="Here is a precise description of my awesome webpage.">
+       content="{{$ad->seo_description}}">
 @endsection
 @section('content')
  <livewire:front.ad.show :ad="$ad"/>

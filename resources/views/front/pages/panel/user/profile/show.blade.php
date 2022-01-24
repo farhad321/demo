@@ -11,18 +11,21 @@
     <div class="col-12 col-md-3">
      <div class="shadow">
       <div class="top-nav-head">
-       <img src="../images/avatar.png"
-            alt="0922****747">
-       <h3>0922****747</h3>
+       @php
+        $user=auth()->user();
+       @endphp
+       <img src="{{$user?->getFirstMedia('profile')?->getUrl('avatar')}}"
+            alt="{{Str::mask($user->phone,'*',3,4)}}">
+       <h3>{{Str::mask($user->phone,'*',3,4)}}</h3>
       </div>
       <ul class="profile">
        <li><strong><i class="fa fa-phone"
                       aria-hidden="true"></i> شماره تماس: </strong>
-        <p><a href="tel:09228372747">09228372747</a></p>
+        <p><a href="tel:{{$user->phone}}">{{$user->phone}}</a></p>
        </li>
        <li><strong><i class="fa fa-envelope-open"
                       aria-hidden="true"></i> ایمیل: </strong>
-        <p><a href="mailto:ahfateme79@gmail.com">ahfateme79@gmail.com</a></p>
+        <p><a href="mailto:{{$user->email}}">{{$user->email}}</a></p>
        </li>
       </ul>
      </div>

@@ -33,6 +33,17 @@
      @endif
     @endforeach
     @break
+    @case('front.ad.tag.index.first.page')
+    /
+    محصولات برچسب خورده “ {{request()->tag_page->name}}”
+    @break
+    @case('front.ad.tag.index')
+    /  <a href="{{route('front.ad.tag.index.first.page',request()->tag_page->slug)}}">
+     محصولات برچسب خورده “ {{request()->tag_page->name}}”
+    </a> /
+    برگه {{request()->page}}
+
+    @break
     @case('front.ad.index')
     @if(request()->page && request()->page >1)
      <a href="{{route('front.ad.index')}}">/ آگهی ها</a>

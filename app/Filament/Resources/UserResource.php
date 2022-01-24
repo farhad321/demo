@@ -14,6 +14,7 @@ use Filament\Forms\Components\Card;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -58,6 +59,8 @@ class UserResource extends Resource
 //                                                 ->columnSpan([
 //                                                               'sm' => 2,
 //                                                              ]),
+                                      SpatieMediaLibraryFileUpload::make('profile')
+                                                                  ->collection('profile'),
                                      ])
                             ->columns([
                                        'sm' => 2,

@@ -7,6 +7,7 @@
    <a href="{{route('front.ad.show',['slug'=>$ad->slug])}}">
     <img src="{{$ad->getFirstMedia('SpecialImage')?->getUrl('thumb')}}"
          class="card-img-top "
+         title="{{$ad->title}}"
          alt="...">
    </a>
 
@@ -53,7 +54,8 @@
    {{--   </div>--}}
    <div class="meta">
     <a href="{{route('front.ad.show',['slug'=>$ad->slug])}}">
-     <h5 class="card-title text-dark">{{$ad->title}}</h5>
+     <h5 class="card-title text-dark"
+         title="{{$ad->title}}">{{$ad->title}}</h5>
     </a>
     <figure>
      <i class="fa fa-calendar-o"></i> {{jdate($ad->created_at)->ago()}}

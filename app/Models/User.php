@@ -15,8 +15,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements FilamentUser, HasMedia
 {
@@ -30,9 +32,12 @@ class User extends Authenticatable implements FilamentUser, HasMedia
   */
  protected $fillable = [
   'name',
+  'first_name',
+  'last_name',
   'phone',
   'birthday',
   'address',
+  'description',
   'rule',
   'email',
   'password',
@@ -103,5 +108,12 @@ class User extends Authenticatable implements FilamentUser, HasMedia
  public function getExtraAttribute()
  {
   return json_decode($this->attributes['extra']);
+ }
+
+ public function registerMediaConversions(Media $media = null): void
+ {
+  $this->addMediaConversion('avatar')
+       ->crop(Manipulations::CROP_CENTER, 150, 150)
+       ->performOnCollections('profile');
  }
 }

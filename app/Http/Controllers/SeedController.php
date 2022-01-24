@@ -17,7 +17,7 @@ class SeedController extends Controller
  public function ads()
  {
   return $posts = Post::
-
+//  where('ID', '<',2000);
   type('product')
                       ->published()
                       ->chunk(20, function ($posts) {
@@ -58,7 +58,7 @@ class SeedController extends Controller
  public function loop($posts): void
  {
   foreach ($posts as $post) {
-   if (Ad::whereSlug($post->slug)
+   if (Ad::whereSlug(urldecode($post->slug))
          ->exists()) {
     continue;
    }
@@ -66,20 +66,21 @@ class SeedController extends Controller
     $extra = new \stdClass();
     $extra->wordpressId = $post->ID;
 //    dump($extra);
-    Ad::create([
-                'title' => $post->title,
-                'slug' => urldecode($post->slug),
-                'content' => $post->content,
-                'excerpt' => $post->excerpt,
-                'is_visible' => 1,
+//    info($post->content);
+    $a = Ad::create([
+                     'title' => $post->title,
+                     'slug' => urldecode($post->slug),
+                     'content' => (string)$post->content,
+                     'excerpt' => (string)$post->excerpt,
+                     'is_visible' => 1,
 //              'price' =>,
-                'seo_title' => $post->_yoast_wpseo_title,
-                'seo_description' => $post->_yoast_wpseo_metadesc,
-                'views' => $post->post_views_count,
-                'extra' => $extra,
-                'created_at' => $post->created_at,
-                'updated_at' => $post->updated_at,
-                'user_id' => $this->userId($post),
+                     'seo_title' => (string)$post->_yoast_wpseo_title,
+                     'seo_description' => (string)$post->_yoast_wpseo_metadesc,
+                     'views' => $post->post_views_count,
+                     'extra' => $extra,
+                     'created_at' => $post->created_at,
+                     'updated_at' => $post->updated_at,
+                     'user_id' => $this->userId($post),
 //   'state_id' => function () {
 //    return State::factory()
 //                ->create()->id;
@@ -88,76 +89,10 @@ class SeedController extends Controller
 //    return City::factory()
 //               ->create()->id;
 //   },
-               ]);
+                    ]);
+//    info($a->content);
    });
   }
- }
-
- public function comments()
- {
-  return // \App\Models\Ad\AdAttribute::with('attribute')
-//                                  ->get();
-   $posts = Post::with('attachment', 'comments')
-                ->has('comments')
-                ->type('product')
-                ->published()
-                ->chunk(20, function ($posts) {
-                 foreach ($posts as $post) {
-                  $ad = Ad::whereSlug($post->slug)
-                          ->get();
-//                  Media::whereModelType('App\Models\Ad\Ad')->whereId($ad->id)
-                  if ($ad->exists()) {
-                   continue;
-                  }
-                  \DB::transaction(function () use ($post) {
-                   Ad::create([
-                               'title' => $post->title,
-                               'slug' => urldecode($post->slug),
-                               'content' => $post->content,
-                               'excerpt' => $post->excerpt,
-                               'is_visible' => 1,
-//              'price' =>,
-//              'seo_title' =>,
-//              'seo_description' => ,
-//              'views' => ,
-//              'attributes' => ,
-//              'created_at' => ,
-//              'updated_at' => ,
-                               'user_id' => $this->userId($post),
-//   'state_id' => function () {
-//    return State::factory()
-//                ->create()->id;
-//   },
-//   'city_id' => function () {
-//    return City::factory()
-//               ->create()->id;
-//   },
-                              ]);
-                  });
-                 }
-                })
-//               ->count()
-//  ->limit(100)
-//   ->get()
-   ;
- }
-
- public function media()
- {
-  return // \App\Models\Ad\AdAttribute::with('attribute')
-//                                  ->get();
-   $posts = Post::with('attachment', 'comments')
-                ->has('comments')
-                ->type('product')
-                ->published()
-                ->chunk(20, function ($posts) {
-                 foreach ($posts as $post) {
-                 }
-                })
-//               ->count()
-//  ->limit(100)
-//   ->get()
-   ;
  }
 
  public function tags()
@@ -176,26 +111,30 @@ class SeedController extends Controller
                            case 'city_categories':
                             if ($taxonomy->parent && !$ad->city_id) {
                              //city
-                             $city = City::firstOrCreate(['slug' => $taxonomy->term->slug], [
-                              'name' => $taxonomy->term->name,
+                             $city = City::firstOrCreate([
+                                                          'slug' => urldecode($taxonomy->term->slug),
+                                                         ], [
+                                                          'name' => $taxonomy->term->name,
 //                       'state_id' =>
-                             ]);
+                                                         ]);
                              $ad->city()
                                 ->associate($city);
                              $ad->save();
                             }
                             else if (!$taxonomy->parent && !$ad->state_id) {
                              //state
-                             $state = State::firstOrCreate(['slug' => $taxonomy->term->slug], [
-                              'name' => $taxonomy->term->name,
-                             ]);
+                             $state = State::firstOrCreate([
+                                                            'slug' => urldecode($taxonomy->term->slug),
+                                                           ], [
+                                                            'name' => $taxonomy->term->name,
+                                                           ]);
                              $ad->state()
                                 ->associate($state);
                              $ad->save();
                             }
                             break;
                            case 'product_cat':
-                            $category = Category::whereSlug($taxonomy->term->slug)
+                            $category = Category::whereSlug(urldecode($taxonomy->term->slug))
                                                 ->first();
                             $mainCategoryId = $post->getMeta('_yoast_wpseo_primary_product_cat');
                             if ($mainCategoryId && $mainCategoryId == $taxonomy->term->term_id) {
@@ -269,7 +208,7 @@ class SeedController extends Controller
                         ->get();
   foreach ($categories as $categoryOld) {
    $categoryParent = Category::firstOrCreate([
-                                              'slug' => $categoryOld->term->slug
+                                              'slug' => urldecode($categoryOld->term->slug),
                                              ], [
                                               'name' => $categoryOld->term->name,
                                               'description' => $categoryOld->description,
@@ -286,7 +225,7 @@ class SeedController extends Controller
                               ->get();
   foreach ($childrenCategory as $category) {
    $parent = Category::firstOrCreate([
-                                      'slug' => $category->term->slug
+                                      'slug' => urldecode($category->term->slug),
                                      ], [
                                       'parent_id' => $categoryParent->id,
                                       'name' => $category->term->name,

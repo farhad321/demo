@@ -2,6 +2,7 @@
 <html lang="fa"
       dir="rtl">
 <head>
+ {!! SEO::generate() !!}
  @include('front.layouts.head')
  @yield('head')
  @include('front.layouts.Seo')

@@ -15,11 +15,17 @@ return new class () extends Migration {
    $table->id();
    $table->string('name')
          ->nullable();
+   $table->string('first_name')
+         ->nullable();
+   $table->string('last_name')
+         ->nullable();
    $table->string('phone')
          ->nullable();
    $table->date('birthday')
          ->nullable();
    $table->string('address')
+         ->nullable();
+   $table->string('description')
          ->nullable();
    $table->string('rule')
          ->nullable();
